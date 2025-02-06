@@ -20,11 +20,21 @@ connectDB();
 
 // conncet with cloudinary
 
-cloudinary.config({
+// Old method
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET,
+// });
+
+
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
+  secure: true,
 });
+
 
 const PORT = process.env.PORT || 5000;
 
