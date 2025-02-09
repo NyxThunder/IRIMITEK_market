@@ -254,7 +254,7 @@ function Dashboard() {
                 <div
                   className="cardContainer"
                   style={{
-                    backgroundImage: "https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png",
+                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png')",
                     backgroundSize: "cover",
                     transition: "transform 0.2s ease-in-out",
                     cursor: "pointer",
@@ -287,7 +287,7 @@ function Dashboard() {
                 <div
                   className="cardContainer"
                   style={{
-                    backgroundImage: "https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/order_jjaikj.png",
+                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/order_jjaikj.png')",
                     backgroundSize: "cover",
                     transition: "transform 0.2s ease-in-out",
                     cursor: "pointer",
@@ -319,7 +319,7 @@ function Dashboard() {
                 <div
                   className="cardContainer"
                   style={{
-                    backgroundImage: "https://res.cloudinary.com/drosmiklv/image/upload/v1739139291/user_hrfdlg.png",
+                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139291/user_hrfdlg.png')",
                     backgroundSize: "cover",
                     transition: "transform 0.2s ease-in-out",
                     cursor: "pointer",
@@ -360,7 +360,7 @@ function Dashboard() {
                 <div
                   className="revnueContainer"
                   style={{
-                    backgroundImage: "https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png",
+                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png')",
                     backgroundSize: "cover",
                     transition: "transform 0.2s ease-in-out",
                     borderRadius: "5px",
