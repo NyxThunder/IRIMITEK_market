@@ -108,22 +108,22 @@ const footMenu = [
    {
      id: 1,
      icon: <FacebookIcon className="facebook_icon" fontSize="large" />,
-     path: "https://www.instagram.com/iam_nightbot/",
+     path: "https://www.instagram.com/Nyxthunder/",
    },
    {
      id: 2,
      icon: <TwitterIcon className="twitter_icon" fontSize="large" />,
-     path: "https://twitter.com/Iam_DEv22",
+     path: "https://twitter.com/Nyxthunder",
    },
    {
      id: 3,
      icon: <InstagramIcon className="insta_icon" fontSize="large" />,
-     path: "https://www.instagram.com/cricket_weapon_store17",
+     path: "https://www.instagram.com/Nyxthunder",
    },
    {
      id: 4,
      icon: <LinkedInIcon className="likedin_icon" fontSize="large" />,
-     path: "https://www.linkedin.com/in/iam-devesh/",
+     path: "https://www.linkedin.com/in/Nyxthunder/",
    },
  ];
 
@@ -149,10 +149,10 @@ const Footer = () => {
               <div className="foot_logo">
                 <Link to="/" style={{ textDecoration: "none" }}>
                   <img
-                    src={require("../../../Image/Footer/logo.png")}
-                    alt="cricekt weapon logo"
+                    src={require("../../../Image/Footer/logo_footer.webp")}
+                    alt="Irmitek logo"
                   />
-                  <h1 className="Foot_heading">Cricket Weapon</h1>
+                  <h1 className="Foot_heading">Irmitek oü</h1>
                 </Link>
               </div>
 
@@ -180,11 +180,11 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="foot_menu_container">
+            <div className="foot_menu_container">
               {footMenu.map((item) => {
                 const { id, title, menu } = item;
                 return (
-                  <div class="foot_menu foot2" key={id}>
+                  <div className="foot_menu foot2" key={id}>
                     <h4>{title}</h4>
                     <ul>
                       {menu.map((item) => {
@@ -265,9 +265,9 @@ const Footer = () => {
 
               <div className="foot_copyright">
                 <p>
-                  &copy; {currYear} | Cricket weapon, All Rights Reserved.
+                  &copy; {currYear} | Irmitek oü , All Rights Reserved.
                   <span>
-                    <a href="iam-devesh.tech"> | Built by Iam_DEv</a>
+                    <a href="iam-devesh.tech"> | Built by One Enthusiast of Irmitek</a>
                   </span>
                 </p>
               </div>

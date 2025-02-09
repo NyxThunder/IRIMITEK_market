@@ -1,0 +1,66 @@
+.rootPayment {
+    width: 100%;
+    display: flex;
+    gap: 2.5rem;
+    padding: 1rem 0 0 0;
+}
+
+.image {
+    width: 155px;
+    height: 140px;
+    object-fit: cover;
+}
+
+@media (max-width: 899px) {
+    .image {
+        width: 255px;
+        height: 240px;
+    }
+}
+
+.details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.productName {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 8px; /* Assuming theme.spacing(1) is 8px */
+}
+
+.quantity {
+    font-size: 16px;
+    margin-bottom: 8px; /* Assuming theme.spacing(1) is 8px */
+    color: #00000080;
+}
+
+.priceContainer {
+    display: flex;
+    align-items: center;
+}
+
+.finalPrice {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.discountPrice {
+    text-decoration: line-through;
+    color: #9e9e9e; /* Assuming theme.palette.text.secondary is #9e9e9e */
+    margin-left: 8px; /* Assuming theme.spacing(2) is 8px */
+    font-size: 16px;
+}
+
+.paymentStatus {
+    color: green;
+    font-size: 16px;
+    margin-top: 8px; /* Assuming theme.spacing(1) is 8px */
+}
+
+.paymentValue {
+    font-weight: 400;
+    margin-right: 10px;
+    color: #00000080;
+}

@@ -9,7 +9,7 @@
   
 }
 
-.cricket-ball-loader {
+.dropshipping-loader {
   overflow: hidden;
   width: fit-content;
   margin: 10rem auto;
@@ -32,7 +32,7 @@
 }
 
 @media (max-width: 799px) {
-  .cricket-ball-loader {
+  .dropshipping-loader {
     margin: 12rem auto;
   }
 

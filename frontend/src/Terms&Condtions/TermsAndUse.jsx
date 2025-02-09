@@ -8,174 +8,99 @@ const TermsAndConditions = () => {
       <div className="container___">
         <h1>Terms and Conditions of Sale</h1>
         <p>
-          Thank you for shopping with us! We really appreciate your business and
-          your interest in our products. We want to make sure you have a good
-          experience purchasing from our webstore, CricketWeapon.com.
+          Thank you for shopping with Irmitek! We appreciate your interest in our products and your trust in our platform. We are dedicated to providing you with high-quality software and digital products. To ensure a smooth shopping experience, please take a moment to review the following terms and conditions.
         </p>
         <p>
-          As with any shopping experience, there are certain terms and
-          conditions that apply. By placing an order and purchasing a product
-          from our website, you agree to the terms below along with other terms
-          on our website, such as return and warranty policies, our privacy
-          policy, and terms of use. Please make sure to review everything fully
-          and carefully so you are informed about your rights and obligations.
+          By placing an order on our website, you agree to the following Terms and Conditions of Sale ("Terms") as well as other relevant policies, including our return policy, privacy policy, and terms of use. Please review everything thoroughly so you are fully informed about your rights and obligations when purchasing from Irmitek.
         </p>
+
         <h2>Acceptance of These Terms</h2>
         <p>
-          You (“Customer”) may place orders for Products with CricketWeapon
-          ("we," "our") via our website. By placing an order, you consent to
-          these Terms and Conditions of Sale (“Terms”) and acknowledge that we
-          will furnish the Products subject to these Terms. Unless expressly
-          agreed to or set forth in writing by CricketWeapon, any term or
-          condition in any order or other form or correspondence that is in any
-          way inconsistent with these Terms shall be inapplicable and of no
-          force and effect whatsoever.
+          You (“Customer”) may place orders for Products through Irmitek (“we,” “our”) via our website. By placing an order, you consent to these Terms and Conditions of Sale and acknowledge that we will fulfill your orders according to these Terms. Any terms or conditions in an order or correspondence that conflict with these Terms shall be considered inapplicable unless explicitly agreed to by Irmitek.
         </p>
+
         <h2>Orders</h2>
         <p>
-          All orders are subject to CricketWeapon's acceptance. This means
-          CricketWeapon may, for any reason, refuse to accept or may cancel or
-          limit any order, or order quantity, whether or not the order has been
-          confirmed. Your receipt of an order confirmation does not mean our
-          acceptance of your order, nor is it a confirmation of our offer to
-          sell. We are simply confirming that we received your order. If we
-          cancel an order after you have already been charged, CricketWeapon
-          will refund you the charged amount.
+          All orders are subject to Irmitek's acceptance. Irmitek reserves the right to refuse or cancel any order, whether or not the order has been confirmed. Your receipt of an order confirmation does not constitute our acceptance of your order. If we cancel an order after you have been charged, we will promptly issue a refund for the charged amount.
         </p>
+
         <h2>Product Offering</h2>
         <p>
-          All product descriptions on our website are subject to change at any
-          time without notice, at our sole discretion. We reserve the right to
-          change or discontinue a product at any time. We have made every effort
-          to display the colors and images of the products as accurately as
-          possible. However, we cannot guarantee that your device’s display of
-          any color will be accurate and a true reflection of the physical item
-          upon receipt.
+          All product descriptions and listings on our website are subject to change at any time without prior notice. We reserve the right to change or discontinue any product at our discretion. While we make every effort to display the colors and images of our products as accurately as possible, we cannot guarantee that the display of colors on your device will precisely match the actual product.
         </p>
+
         <h2>Price</h2>
         <p>
-          All prices are subject to change up to the time you place your order
-          and it is accepted by CricketWeapon. Prices for products displayed on
-          this website exclude shipping charges, which are calculated and
-          displayed depending on the shipping option for the item you select
-          when you finalize your purchase. Please note that the prices on this
-          website may differ from those in stores that stock CricketWeapon
-          products, as these stores are independent of CricketWeapon.
-          CricketWeapon reserves the right to amend pricing for any pricing
-          errors displayed due to human error, computer malfunction, or any
-          other reason. Where a pricing error is identified after you have
-          submitted an online order, CricketWeapon will notify you of the error
-          in pricing as soon as reasonably practicable, and you may elect to not
-          proceed with the purchase of any product(s) where the price has been
-          corrected.
+          All prices are subject to change at any time before an order is placed and accepted by Irmitek. Prices displayed on our website exclude taxes and shipping charges, which will be calculated and shown at checkout based on your location and the selected shipping method. Prices on the website may differ from those in retail stores, as these are independent of Irmitek. Irmitek also reserves the right to correct any pricing errors, whether caused by human error or technical malfunction.
         </p>
+
         <h2>Special Offers</h2>
         <p>
-          From time to time, we may offer special promotions for some or all of
-          our products, including discounts, limited edition products, or free
-          shipping. These offers may be for a limited time only, and
-          CricketWeapon reserves the right to change or discontinue such offers
-          at any time.
+          From time to time, we may offer special promotions, including discounts, limited-time products, or free shipping. These promotions are available for a limited period and may be modified or discontinued at any time without notice.
         </p>
+
         <h2>Taxes</h2>
         <p>
-          The prices quoted for the products sold hereunder include applicable
-          taxes. Customer shall pay, and reimburse CricketWeapon if it pays, any
-          taxes, except for those based on CricketWeapon's income.
+          Prices for products sold on our platform include applicable taxes, except those based on Irmitek's income. You agree to pay any applicable taxes upon purchase and to reimburse Irmitek for any taxes we may pay on your behalf.
         </p>
+
         <h2>Payment</h2>
         <p>
-          All orders must be paid in full prior to shipment. Payment information
-          is submitted by the customer upon the placement of any order, and
-          fulfillment and shipping of the order are subject to verification of
-          payment information and availability of funds.
+          All orders must be paid in full before shipment. Payment information is provided at the time of order placement, and fulfillment of your order is subject to verification of your payment information and availability of funds.
         </p>
+
         <h2>Shipping</h2>
         <p>
-          Available shipping options will be displayed during the checkout
-          process. Any timeframe provided by CricketWeapon for when the
-          product(s) may ship or be delivered is a good faith estimate. While we
-          do our best to meet that timeframe, it is not a guarantee. Actual
-          delivery of your order can be impacted by many events, some of which
-          are beyond our control. CricketWeapon cannot be held liable for late
-          deliveries. If you no longer have use for an item due to a late
-          delivery, please contact our Customer Service Department immediately.
-          Please refer to our return policy for available options.
+          Shipping options will be displayed during checkout, and estimated shipping times will be provided. Please note that these times are estimates and may be affected by external factors beyond our control. Irmitek cannot be held liable for delayed deliveries. In case of a late delivery, please contact our Customer Service team. If an item is lost or damaged in transit, please reach out to us for assistance.
         </p>
         <p>
-          All risk of loss or damage to the products shall pass to you, or a
-          person designated by you, upon taking physical possession of the
-          product(s). If items are lost or damaged in transit, please contact
-          our Customer Service Department.
+          Risk of loss or damage to products passes to you once the items are physically delivered to you or your designated recipient. If there is an issue during transit, please contact Customer Service.
         </p>
+
         <h2>Returns</h2>
         <p>
-          Once an order has been placed and accepted by CricketWeapon, customer
-          may not cancel such accepted order without CricketWeapon’s prior
-          written consent. Customer may return products for a refund of the
-          purchase price (not including initial shipping charges) plus any
-          applicable tax. Customer shall arrange for and pay return shipping
-          expenses. The product(s) must be returned to CricketWeapon within
-          thirty days of purchase.
+          Once an order is placed and accepted, cancellation is not allowed without prior written consent from Irmitek. Products may be returned within thirty days of purchase for a refund of the purchase price (excluding original shipping charges). Return shipping costs are the responsibility of the customer.
         </p>
+
         <h2>Warranty</h2>
         <p>
-          For more information regarding our warranty policy, please refer to
-          the written warranty included with the product.
+          For warranty information, please refer to the written warranty provided with your product. If no warranty is included, you are entitled to a refund or replacement under the statutory consumer protection laws.
         </p>
+
         <h2>Not for Resale</h2>
         <p>
-          Products sold on our website are for end-user customers only and not
-          for resale. We reserve the right to refuse or cancel any order if we
-          suspect you are purchasing products for resale.
+          Products sold on our platform are for personal use only and not for resale. Irmitek reserves the right to refuse or cancel any orders suspected of being for resale purposes.
         </p>
-        <h2>Governing Law/ Jurisdiction</h2>
+
+        <h2>Governing Law / Jurisdiction</h2>
         <p>
-          These Terms shall be governed and construed in accordance with the
-          laws of Singapore.
+          These Terms will be governed by and construed in accordance with the laws of the jurisdiction in which Irmitek operates.
         </p>
+
         <h2>Dispute Resolution and Applicable Law</h2>
         <p>
-          This Agreement is to be governed by and construed in accordance with
-          all applicable laws in force in Singapore from time to time. The
-          Parties agree that any and all disputes, controversies, or conflicts
-          arising from or in relation to this Agreement, including disputes on
-          its existence, validity, conclusion, binding effect, breach,
-          amendment, expiration, and termination, shall be referred to and
-          finally resolved by arbitration in Singapore administered by the
-          Singapore International Arbitration Centre (“SIAC”) in accordance with
-          the Arbitration Rules of the SIAC for the time being in force. The
-          seat of the arbitration shall be Singapore. The tribunal shall consist
-          of one (1) arbitrator, to be appointed by the President of the Court
-          of Arbitration of the SIAC. The language of the arbitration shall be
-          English.
+          Any disputes arising from these Terms will be resolved through arbitration under the laws applicable in the jurisdiction where Irmitek is based. The arbitration process will be handled by the relevant arbitration center, and the arbitration will take place in the jurisdiction of Irmitek’s operational headquarters.
         </p>
+
         <h2>Indemnification</h2>
         <p>
-          To the fullest extent permitted by applicable law, you agree to
-          indemnify and hold CricketWeapon harmless from and against any and all
-          claims, costs, proceedings, demands, losses, defense costs (including,
-          without limitation, reasonable attorney’s fees and costs) of any kind
-          or nature arising from or in connection with your use of our website
-          or your breach of these Terms.
+          You agree to indemnify and hold Irmitek harmless from any claims, costs, losses, or damages arising from your use of our website, products, or services, including reasonable attorney’s fees, to the fullest extent permitted by law.
         </p>
+
         <h2>Entire Agreement</h2>
         <p>
-          These Terms and Conditions of Sale constitute the entire agreement
-          between the parties and supersede all prior and contemporaneous
-          agreements, proposals, or representations, written or oral, concerning
-          their subject matter.
+          These Terms and Conditions constitute the entire agreement between you and Irmitek regarding the sale of products. Any previous agreements, proposals, or representations are superseded by these Terms.
         </p>
+
         <h2>Contact Information</h2>
         <p>
-          If you have any questions about these Terms and Conditions, please
-          contact us at:
+          If you have any questions regarding these Terms and Conditions, please contact us at: [Your Contact Information]
         </p>
-        <p style={{ fontWeight: "500" }}>CricketWeapon</p>
+        <p style={{ fontWeight: "500" }}>IRMITEK</p>
         <p style={{ fontWeight: "500" }}>123 Main Street, City, Country</p>
         <p style={{ fontWeight: "500" }}>
           Email:{" "}
-          <span style={{ fontWeight: "400" }}>info@cricketweapon.com</span>
+          <span style={{ fontWeight: "400" }}>info@irmitek.com</span>
         </p>
       </div>
     </div>

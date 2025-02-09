@@ -1,0 +1,496 @@
+.formContainer {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-top: 7rem !important;
+  padding-bottom: 3rem !important;
+  height: auto !important;
+  background-color: white !important;
+}
+
+.form {
+  width: 350px !important;
+  margin: auto !important;
+  border-radius: 5px !important;
+  padding: 2rem !important;
+}
+
+.heading {
+  text-align: center !important;
+  margin-bottom: 24px !important; /* Assuming theme.spacing(3) is 24px */
+  color: #414141 !important;
+  font-weight: bold !important;
+}
+
+.nameInput {
+  position: relative !important;
+  padding: 4px 0px !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  margin-bottom: 44px !important; /* Assuming theme.spacing(5.5) is 44px */
+  height: 0.7rem !important;
+}
+
+.nameInput > label {
+  left: 0.2rem !important;
+}
+
+.emailInput {
+  position: relative !important;
+  padding: 4px 0px !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  margin-top: 3rem !important;
+  height: 0.7rem !important;
+}
+
+.emailInput > label {
+  left: 0.2rem !important;
+}
+
+.passwordInput {
+  position: relative !important;
+  padding: 4px 0px !important;
+  width: 100% !important;
+  height: 0.7rem !important;
+  margin-top: 44px !important; /* Assuming theme.spacing(5.5) is 44px */
+}
+
+.passwordInput > label {
+  left: 0.2rem !important;
+}
+
+.passwordInput .MuiOutlinedInput-input {
+  padding: 14px 14px !important;
+}
+
+.strengthIndicator {
+  margin-top: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+.showPasswordButton {
+  position: absolute !important;
+  top: 50% !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-size: 12px !important;
+  right: 16px !important; /* Assuming theme.spacing(2) is 16px */
+  transform: translateY(-50%) !important;
+  border: none !important;
+}
+
+.showPasswordButton:hover {
+  color: #ed1c24 !important;
+  background: none !important;
+}
+
+.rememberMeContainer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 14px !important;
+  margin-top: 56px !important; /* Assuming theme.spacing(7) is 56px */
+}
+
+.rememberMeContainer .MuiIconButton-label {
+  color: black !important;
+}
+
+.forgotPasswordLink {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+.forgotPasswordLink:hover {
+  text-decoration: underline !important;
+  color: #ed1c24 !important;
+}
+
+.termsAndConditionsText {
+  font-family: Roboto !important;
+  color: #727272 !important;
+  text-align: center !important;
+  line-height: 17px !important;
+  padding-left: 4px !important;
+  margin-top: 16px !important; /* Assuming theme.spacing(2) is 16px */
+  font-size: 12px !important;
+}
+
+.loginButton {
+  color: #fff !important;
+  background-color: #000 !important;
+  border: 2px solid #000 !important;
+  margin: 24px 0 !important; /* Assuming theme.spacing(3) is 24px */
+  margin-top: 1rem !important;
+}
+
+.loginButton:disabled {
+  background-color: #444444 !important;
+  color: #fff !important;
+  border-color: #444444 !important;
+}
+
+.loginButton:hover {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+}
+
+.privacyText {
+  margin-left: 4px !important;
+  text-decoration: underline !important;
+  color: black !important;
+  font-size: 14px !important;
+}
+
+.privacyText:hover {
+  color: #ed1c24 !important;
+}
+
+.createAccount {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  color: #121212 !important;
+  padding-left: 6px !important;
+}
+
+.createAccount:hover {
+  color: #ed1c24 !important;
+  text-decoration: underline !important;
+}
+
+.textField {
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+
+/* Target input text when focused */
+.textField .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
+  color: black !important;
+  padding: 12px 14px !important;
+}
+
+/* Target label */
+.textField .MuiInputLabel-root {
+  color: black !important;
+  font-size: 14px !important;
+  text-align: left !important; /* Adjusted from center to left for better alignment */
+}
+
+/* Label when focused */
+.textField .MuiInputLabel-root.Mui-focused {
+  color: black !important;
+  font-size: 14px !important;
+  text-align: left !important;
+}
+
+/* Border and text color on hover */
+.textField .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+}
+
+/* Padding for input field */
+.textField .MuiOutlinedInput-input {
+  padding: 13px 8px !important;
+}
+
+/* Border color when focused */
+.textField .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+  outline: none !important;
+}
+
+/* Ensure proper focus effect */
+.textField .MuiOutlinedInput-root {
+  transition: border-color 0.2s ease-in-out !important;
+}
+
+.avatar {
+  margin: 8px auto !important;
+  background-color: black !important;
+}
+
+.gridcheckbox {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  margin-top: 3rem !important;
+}
+
+.checkbox .MuiTypography-body1 {
+  font-size: 14px !important;
+}
+
+.checkbox {
+  margin-top: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+.checkbox .MuiIconButton-label {
+  color: black !important;
+}
+
+.root {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: 3.5rem !important;
+}
+
+.avatar2 {
+  margin-left: 6px !important;
+  background-color: black !important;
+}
+
+.avatar2.MuiAvatar-colorDefault {
+  color: #fff !important;
+  background-color: black !important;
+}
+
+.avatar2:hover {
+  background-color: #ed1c24 !important;
+}
+
+.input {
+  display: none !important;
+}
+
+.updateProduct {
+  display: flex !important;
+  align-items: flex-start !important;
+  background-color: #f1f1f1 !important;
+  justify-content: center !important;
+  width: 100% !important;
+  gap: 1rem !important;
+  overflow: hidden !important;
+  margin: -1.1rem 0 0 0 !important;
+  padding: 0 !important;
+}
+
+.firstBox1 {
+  width: 20% !important;
+  margin: 0rem !important;
+  height: fit-content !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) !important;
+  display: block !important;
+}
+
+@media (max-width: 999px) {
+  .firstBox1 {
+    display: none !important;
+  }
+}
+
+.toggleBox1 {
+  width: 16rem !important;
+  margin: 0rem !important;
+  height: fit-content !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) !important;
+  display: block !important;
+  z-index: 100 !important;
+  position: absolute !important;
+  top: 58px !important;
+  left: 17px !important;
+}
+
+.secondBox1 {
+  width: 75% !important;
+  background-color: #f1f1f1 !important;
+  height: fit-content !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: -0.5rem 0 0 0 !important;
+  gap: 10px !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 999px) {
+  .secondBox1 {
+    width: 100% !important;
+  }
+}
+
+.navBar1 {
+  margin: 0rem !important;
+}
+
+.form2 {
+  margin-top: -6rem !important;
+}
+
+.uploadAvatarButton {
+  color: white !important;
+  width: fit-content !important;
+  background-color: #414141 !important;
+  height: 2.5rem !important;
+}
+
+.uploadAvatarButton:hover {
+  background-color: #ed1c24 !important;
+}
+
+.uploadAvatarText {
+  font-size: 14px !important;
+  background-color: inherit !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  padding: 0 1rem !important;
+}
+
+.imgIcon {
+  width: auto !important;
+  margin-left: 1rem !important;
+  align-self: center !important;
+}
+
+.imgIcon svg {
+  color: #414141 !important;
+  font-size: 2.5rem !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.descriptionInput {
+  margin-top: 44px !important; /* Assuming theme.spacing(5.5) is 44px */
+}
+
+.descriptionInput .MuiOutlinedInput-root fieldset {
+  border-color: black !important;
+  color: black !important;
+}
+
+.descriptionInput .MuiOutlinedInput-root:hover fieldset {
+  border-color: black !important;
+  color: black !important;
+}
+
+.descriptionInput .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: black !important;
+  color: black !important;
+  outline: none !important;
+}
+
+.descriptionInput .MuiOutlinedInput-input {
+  padding: 13px 8px !important;
+}
+
+.descriptionInput .MuiInputLabel-root {
+  color: black !important;
+  font-size: 14px !important;
+  text-align: center !important;
+}
+
+.descriptionInput .MuiInputLabel-root.Mui-focused {
+  color: black !important;
+  font-size: 14px !important;
+  text-align: center !important;
+}
+
+.descriptionIcon {
+  margin-right: 8px !important; /* Assuming theme.spacing(1) is 8px */
+  color: #727272 !important; /* Assuming theme.palette.text.secondary is #727272 */
+}
+
+.selectOption {
+  margin-top: 44px !important; /* Assuming theme.spacing(5.5) is 44px */
+  position: relative !important;
+  width: 100% !important;
+}
+
+.imageArea {
+  display: flex !important;
+  gap: 18px !important;
+  width: 90% !important;
+  overflow-x: scroll !important;
+  scrollbar-width: 10px !important;
+  margin: 2rem 0 !important;
+  padding: 3px 16px !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important; /* Assuming theme.shape.borderRadius is 4px */
+}
+
+.imageArea::-webkit-scrollbar {
+  width: 10px !important;
+  height: 5px !important;
+}
+
+.image {
+  width: 4.5rem !important;
+  height: 4rem !important;
+  object-fit: cover !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important; /* Assuming theme.shape.borderRadius is 4px */
+}
+
+.labelText {
+  color: #414141 !important;
+  font-size: 14px !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: 14px !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.formControl {
+  width: 100% !important;
+}
+
+.select .MuiOutlinedInput-input {
+  padding: 13px 8px !important;
+}
+
+.select .MuiInputLabel-outlined {
+  pointer-events: none !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  color: #414141 !important;
+}
+
+.select .MuiOutlinedInput-root:hover fieldset {
+  border-color: #ed1c24 !important;
+}
+
+.select .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: black !important;
+  outline-color: black !important;
+}
+
+.select .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+}
+
+.select .MuiSelect-root {
+  padding: 10px !important;
+  color: black !important;
+}
+
+.select .MuiSelect-icon {
+  margin-right: -4px !important;
+  color: gray !important;
+}
+
+.select .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+}
+
+.select .MuiMenuItem-root:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+.menu {
+  margin-top: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+.menu .MuiMenuItem-root {
+  color: black !important;
+}
+
+.menu .MuiMenuItem-root:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}

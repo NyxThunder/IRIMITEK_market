@@ -1,7 +1,7 @@
 const app = require("./app");
 const dotenv = require("dotenv");
 const connectDB = require("./db/connectDB")
-const cloudinary = require("cloudinary");
+const { v2: cloudinary } = require("cloudinary");
 
 // Handling Uncaught Execption => anything not defind Uncaught Execption 
 
@@ -28,7 +28,7 @@ connectDB();
 // });
 
 
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,

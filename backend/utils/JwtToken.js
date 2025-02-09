@@ -10,9 +10,10 @@ const sendJWtToken  = (user , statusCode , res) =>{
     const options = {
         expires: new Date(
             // expiry date from now to  + process.env.COOKIE_EXPIRE (eg 5day) + convert it mili sec
-            Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+            Date.now() + 5 * 24 * 60 * 60 * 1000
         ),
         httpOnly: true,
+        sameSite: 'Lax', ///For development purpose
     };
     
     // wrapping all data into cookie eg token and options data

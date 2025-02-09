@@ -1,0 +1,210 @@
+.reviewRoot {
+  padding: 16px !important; /* Assuming theme.spacing(2) is 16px */
+  margin-top: 2rem !important;
+  background-color: white !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.reviewHeader {
+  margin: 1rem auto !important;
+  text-align: center !important;
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  margin-bottom: 16px !important; /* Assuming theme.spacing(2) is 16px */
+  color: #414141 !important;
+}
+
+.subHeadings {
+  font-size: 16px !important;
+  color: #414141 !important;
+  font-weight: 700 !important;
+}
+
+.bodyText {
+  font-size: 14px !important;
+  color: #414141 !important;
+  font-weight: 500 !important;
+}
+
+.radioText {
+  font-size: 14px !important;
+  color: #414141 !important;
+}
+
+.radioButton {
+  color: #000000 !important;
+}
+
+.submitBtn {
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  min-height: 48px !important;
+  padding: 0px 16px !important;
+  width: fit-content !important;
+  background: rgb(37, 37, 37) !important;
+  color: rgb(255, 255, 255) !important;
+}
+
+.submitBtn:hover {
+  background-color: rgba(222, 9, 9, 0.744) !important;
+  border-color: rgba(222, 9, 9, 0.744) !important;
+  transform: scale(1.05) !important;
+}
+
+.ratingContainer {
+  margin-top: 1rem 0 !important;
+  display: inline-block !important;
+  margin-right: 8px !important; /* Assuming theme.spacing() is 8px */
+}
+
+.star {
+  color: black !important;
+  font-size: 24px !important;
+  margin-top: 2px !important;
+}
+
+.ratingNumber {
+  display: inline-block !important;
+  margin-left: 8px !important; /* Assuming theme.spacing(1) is 8px */
+  margin-right: 12px !important; /* Assuming theme.spacing(1.5) is 12px */
+  font-weight: bold !important;
+  font-size: 1rem !important;
+}
+
+#selectContainer {
+  text-align: right !important;
+  margin-top: -50px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-right: 1.5rem !important;
+}
+
+.sortBy {
+  visibility: hidden !important;
+}
+
+@media (max-width: 600px) {
+  .sortBy {
+    visibility: hidden !important;
+  }
+}
+
+.selectReviewCard .MuiOutlinedInput-input {
+  padding: 10px 30px !important;
+}
+
+.selectReviewCard .MuiInputLabel-outlined {
+  pointer-events: none !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  color: #414141 !important;
+}
+
+.selectReviewCard .MuiOutlinedInput-root:hover fieldset {
+  border-color: #ed1c24 !important;
+}
+
+.selectReviewCard .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: black !important;
+  outline-color: black !important;
+}
+
+.selectReviewCard .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+}
+
+.selectReviewCard .MuiSelect-root {
+  padding: 10px !important;
+  color: black !important;
+}
+
+.selectReviewCard .MuiSelect-icon {
+  margin-right: -4px !important;
+  color: gray !important;
+}
+
+.selectReviewCard .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+}
+
+.selectReviewCard .menuItem:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+.selectReviewCard {
+  margin-top: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+.selectReviewCard .menuItem {
+  color: black !important;
+}
+
+.selectReviewCard .menuItem:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+.textField .MuiOutlinedInput-root {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: black !important;
+}
+
+.textField .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #414141 !important;
+}
+
+.dialog {
+  width: 80vw !important;
+  height: 70vh !important;
+  margin: 0 !important;
+  padding: 3rem !important;
+  overflow: hidden !important;
+}
+
+.dialogContent {
+  height: 100% !important;
+  overflow-y: scroll !important;
+}
+
+.dialogContent::-webkit-scrollbar {
+  width: 0.2em !important;
+  height: 0.2em !important;
+}
+
+.dialogContent::-webkit-scrollbar-thumb {
+  background-color: white !important;
+  border-radius: 10px !important;
+}
+
+.dialogContent::-webkit-scrollbar-track {
+  background-color: white !important;
+  border-radius: 10px !important;
+}
+
+.container {
+  display: flex !important;
+  flex-direction: row !important;
+  overflow-x: scroll !important;
+  margin-right: 40px !important;
+  background-color: #fff !important;
+  margin-top: 1rem !important;
+}
+
+.container::-webkit-scrollbar {
+  width: 0.5em !important;
+  height: 0.5em !important;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #414141 !important;
+  border-radius: 10px !important;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #000 !important;
+  border-radius: 10px !important;
+}

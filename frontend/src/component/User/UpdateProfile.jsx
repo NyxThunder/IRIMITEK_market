@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import {
   clearErrors,
   updateProfile,
@@ -12,7 +12,7 @@ import { UPDATE_PROFILE_RESET } from "../../constants/userConstanat";
 import MetaData from "../layouts/MataData/MataData";
 import { useNavigate} from "react-router-dom";
 import UpdateIcon from "@mui/icons-material/Update";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import { Link } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
@@ -25,7 +25,6 @@ function UpdateProfile() {
     (state) => state.profileData
   );
   const { user } = useSelector((state) => state.userData);
-  const classes = useStyles();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -107,21 +106,21 @@ function UpdateProfile() {
     <>
       <MetaData title="Update Profile" />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form">
+            <Avatar className="avatar">
               <UpdateIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Update Profile Deatils
             </Typography>
             <TextField
               label="Name"
               variant="outlined"
               fullWidth
-              className={`${classes.nameInput} ${classes.textField}`}
+              className={"nameInput textField"}
               value={name}
               error={!isValidName && name !== ""}
               helperText={
@@ -136,7 +135,7 @@ function UpdateProfile() {
               label="Email"
               variant="outlined"
               fullWidth
-              className={`${classes.emailInput} ${classes.textField}`}
+              className={"emailInput textField"}
               value={email}
               onChange={handleEmailChange}
               error={!isValidEmail && email !== ""}
@@ -147,15 +146,15 @@ function UpdateProfile() {
               }
             />
 
-            <div className={classes.root}>
+            <div className="root">
               <Avatar
                 alt="Avatar Preview"
                 src={avatarPreview}
-                className={classes.avatar2}
+                className="avatar2"
               />
               <input
                 accept="image/*"
-                className={classes.input}
+                className="input"
                 id="avatar-input"
                 type="file"
                 onChange={handleAvatarChange}
@@ -163,19 +162,19 @@ function UpdateProfile() {
               <label htmlFor="avatar-input">
                 <Button
                   variant="contained"
-                  color="default"
+                  color="primary"
                   startIcon={<CloudUploadIcon style={{ color: "#FFFFFF" }} />}
                   component="span"
-                  className={classes.uploadAvatarButton}
+                  className="uploadAvatarButton"
                 >
-                  <p className={classes.uploadAvatarText}>Upload Avatar</p>
+                  <p className="uploadAvatarText">Upload Avatar</p>
                 </Button>
               </label>
             </div>
 
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               disabled={isSignInDisabled}
               style={{ marginTop: "3rem" }}
@@ -188,7 +187,7 @@ function UpdateProfile() {
               align="center"
               style={{ marginTop: ".5rem" }}
             >
-              <Link to="/account" className={classes.createAccount}>
+              <Link to="/account" className="createAccount">
                 Cancel
               </Link>
             </Typography>

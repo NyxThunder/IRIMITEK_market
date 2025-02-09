@@ -14,8 +14,7 @@ exports.registerUser = asyncWrapper(async (req, res) => {
     width: 150,
     crop: "scale",
   });
-
-
+  console.log("cloudinary", myCloud);
 
   const { name, email, password } = req.body;
   const user = await userModel.create({

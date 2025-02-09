@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Avatar,
   Button,
@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import MetaData from "../layouts/MataData/MataData";
 import { Link } from "react-router-dom";
 import { signUp, clearErrors } from "../../actions/userAction";
@@ -17,13 +17,13 @@ import { useAlert } from "react-alert";
 import { useNavigate} from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Signup() {
-  const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +40,7 @@ function Signup() {
     checkbox2: false,
   });
   const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
 
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -54,9 +55,9 @@ function Signup() {
 
     if (isAuthenticated) {
       alert.success("User Registered Successfully");
-      navigate("/account");
+      navigateRef.current("/account");
     }
-  }, [dispatch, isAuthenticated, loading, error, alert , history]);
+  }, [dispatch, isAuthenticated, loading, error, alert]);
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -95,6 +96,10 @@ function Signup() {
 
   const handleShowPasswordClick = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPasswordClick = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleCheckboxChange = (checkboxName) => (event) => {
@@ -140,21 +145,21 @@ function Signup() {
     <>
       <MetaData title={"Sign Up"} />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form">
+            <Avatar className="avatar">
               <LockOutlinedIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Sign Up for an Account ! 
             </Typography>
             <TextField
               label="Name"
               variant="outlined"
               fullWidth
-              className={`${classes.nameInput} ${classes.textField}`}
+              className={"nameInput textField"}
               value={name}
               onChange={handleNameChange}
               error={!isValidName && name !== ""}
@@ -167,7 +172,7 @@ function Signup() {
               label="Email"
               variant="outlined"
               fullWidth
-              className={`${classes.emailInput} ${classes.textField}`}
+              className={"emailInput textField"}
               value={email}
               onChange={handleEmailChange}
               error={!isValidEmail && email !== ""}
@@ -182,14 +187,14 @@ function Signup() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               error={!isValidPassword && password !== ""}
                helperText={ !isValidPassword && password !== "" ? "Password must be at least 8 characters." : ""}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -202,17 +207,17 @@ function Signup() {
             <TextField
               label="Confirm Password"
               variant="outlined"
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
+                    className="showPasswordButton"
+                    onClick={handleShowConfirmPasswordClick}
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                   </Button>
                 ),
               }}
@@ -220,15 +225,15 @@ function Signup() {
               onChange={handleConfirmPasswordChange}
             />
 
-            <div className={classes.root}>
+            <div className="root">
               <Avatar
                 alt="Avatar Preview"
                 src={avatarPreview}
-                className={classes.avatar2}
+                className="avatar2"
               />
               <input
                 accept="image/*"
-                className={classes.input}
+                className="input"
                 id="avatar-input"
                 type="file"
                 onChange={handleAvatarChange}
@@ -236,27 +241,27 @@ function Signup() {
               <label htmlFor="avatar-input">
                 <Button
                   variant="contained"
-                  color="default"
+                  color="primary"
                   startIcon={<CloudUploadIcon style={{ color: "#FFFFFF" }} />}
                   component="span"
-                  className={classes.uploadAvatarButton}
+                  className="uploadAvatarButton"
                 >
-                  <p className={classes.uploadAvatarText}>Upload Avatar</p>
+                  <p className="uploadAvatarText">Upload Avatar</p>
                 </Button>
               </label>
             </div>
 
             <Grid
               container
-              className={classes.gridcheckbox}
+              className="gridcheckbox"
               justify="flex-start"
               alignItems="center"
             >
               <Grid item>
                 <FormControlLabel
                   control={<Checkbox />}
-                  label="I Accept The Cricket Weapon Terms & Conditions"
-                  className={classes.checkbox}
+                  label="I Accept The IRMITEK Terms & Conditions"
+                  className="checkbox"
                   checked={areCheckboxesChecked.checkbox1}
                   onChange={handleCheckboxChange("checkbox1")}
                 />
@@ -264,8 +269,8 @@ function Signup() {
               <Grid item>
                 <FormControlLabel
                   control={<Checkbox />}
-                  label="I Accept The Cricket Weapon Terms Of Use"
-                  className={classes.checkbox}
+                  label="I Accept The IRMITEK Terms Of Use"
+                  className="checkbox"
                   checked={areCheckboxesChecked.checkbox2}
                   onChange={handleCheckboxChange("checkbox2")}
                 />
@@ -274,18 +279,18 @@ function Signup() {
 
             <Typography
               variant="body2"
-              className={classes.termsAndConditionsText}
+              className="termsAndConditionsText"
             >
-              I acknowledge Cricket Weapon will use my information in accordance
+              I acknowledge IRMITEK will use my information in accordance
               with its
-              <Link href="#" className={classes.privacyText}>
+              <Link href="#" className="privacyText">
                 Privacy Policy.
               </Link>
             </Typography>
 
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               onClick={handleSignUpSubmit}
               disabled={isSignInDisabled || loading}
@@ -299,7 +304,7 @@ function Signup() {
               style={{ marginTop: "1rem" }}
             >
               Already have an account?
-              <Link to="/login" className={classes.createAccount}>
+              <Link to="/login" className="createAccount">
                 Login
               </Link>
             </Typography>

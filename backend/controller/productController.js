@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary");
 
 // >>>>>>>>>>>>>>>>>>>>> createProduct Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
 exports.createProduct = asyncWrapper(async (req, res) => {
-  let images = []; 
+  let images = [];
 
   if (req.body.images) {
     if (typeof req.body.images === "string") {
@@ -33,10 +33,10 @@ exports.createProduct = asyncWrapper(async (req, res) => {
         })
       );
 
-      
+
       const results = await Promise.all(uploadPromises); // wait for all the promises to resolve and store the results in results array eg: [{}, {}, {}] 3 images uploaded successfully and their details are stored in results array
 
-      for (let result of results) { 
+      for (let result of results) {
         imagesLinks.push({
           product_id: result.public_id,
           url: result.secure_url,
@@ -87,15 +87,39 @@ exports.getAllProducts = asyncWrapper(async (req, res) => {
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all product admin route>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 exports.getAllProductsAdmin = asyncWrapper(async (req, res) => {
-  const products = await ProductModel.find();
+  // const products = await ProductModel.find();
 
-  res.status(201).json({  
+  // res.status(201).json({  
+  //   success: true,
+  //   products,
+  // });
+  const resultPerPage = 6; // Number of products visible per page
+  const productsCount = await ProductModel.countDocuments(); // Get total number of products
+
+  // Create an instance of the ApiFeatures class, passing the ProductModel.find() query and req.query (queryString)
+  const apiFeature = new ApiFeatures(ProductModel.find(), { "keyword": "", "price[gte]": 0, "price[lte]": 100000, "ratings[gte]": 0 })
+    .search() // Apply search filter based on the query parameters
+    .filter(); // Apply additional filters based on the query parameters
+
+  let products = await apiFeature.query; // Fetch the products based on the applied filters and search
+
+  let filteredProductCount = products.length; // Number of products after filtering (for pagination)`
+
+  apiFeature.Pagination(resultPerPage); // Apply pagination to the products
+
+  // Mongoose no longer allows executing the same query object twice, so use .clone() to retrieve the products again
+  products = await apiFeature.query.clone(); // Retrieve the paginated products
+
+  res.status(201).json({
     success: true,
-    products,
+    products: products,
+    productsCount: productsCount,
+    resultPerPage: resultPerPage,
+    filteredProductCount: filteredProductCount,
   });
 });
 
-  
+
 
 
 //>>>>>>>>>>>>>>>>>> Update Admin Route >>>>>>>>>>>>>>>>>>>>>>>
@@ -210,7 +234,7 @@ exports.createProductReview = asyncWrapper(async (req, res, next) => {
         rev.ratings = ratings;
         rev.comment = comment;
         rev.recommend = recommend;
-        
+
         rev.title = title;
         product.numOfReviews = product.reviews.length;
       }
@@ -261,22 +285,22 @@ exports.deleteReview = asyncWrapper(async (req, res, next) => {
   const product = await ProductModel.findById(req.query.productId);
 
   if (!product) {
-    return next(new ErrorHandler("Product not found", 404)); 
+    return next(new ErrorHandler("Product not found", 404));
   }
 
   // check if ther any review avalible with given reviwe id. then filter the review array store inside reviews without that review
   const reviews = product.reviews.filter(
-    (rev) => { return rev._id.toString() !== req.query.id.toString()}
+    (rev) => { return rev._id.toString() !== req.query.id.toString() }
   );
   // once review filterd then update new rating from prdoduct review
   let avg = 0;
   reviews.forEach((rev) => {
-   
+
     avg += rev.ratings;
   });
 
 
-  
+
   let ratings = 0;
   if (reviews.length === 0) {
     ratings = 0;

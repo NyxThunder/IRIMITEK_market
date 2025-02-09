@@ -60,7 +60,6 @@ function UserList() {
       flex: 0.5,
       headerClassName: "column-header hide-on-mobile",
     },
-
     {
       field: "email",
       headerName: "Email",
@@ -68,7 +67,6 @@ function UserList() {
       flex: 0.7,
       headerClassName: "column-header hide-on-mobile",
     },
-
     {
       field: "role",
       headerName: "Role",
@@ -77,9 +75,7 @@ function UserList() {
       flex: 0.3,
       headerClassName: "column-header hide-on-mobile",
       cellClassName: (params) => {
-        return params.getValue(params.id, "role") === "admin"
-          ? "greenColor"
-          : "redColor";
+        return params.row.role === "admin" ? "greenColor" : "redColor";
       },
     },
     {
@@ -88,20 +84,15 @@ function UserList() {
       headerName: "Actions",
       minWidth: 150,
       type: "number",
-
       headerClassName: "column-header hide-on-mobile",
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/admin/user/${params.getValue(params.id, "id")}`}>
+            <Link to={`/admin/user/${params.row.id}`}>
               <EditIcon className="icon-" />
             </Link>
-
-            <Button
-              onClick={() =>
-                deleteUserHandler(params.getValue(params.id, "id"))
-              }
-            >
+  
+            <Button onClick={() => deleteUserHandler(params.row.id)}>
               <DeleteIcon className="iconbtn" />
             </Button>
           </>
@@ -174,7 +165,7 @@ function UserList() {
                   columns={columns}
                   pageSize={10}
                   disableSelectionOnClick
-                  className="productListTable"
+                  className="dataTable"
                   autoHeight
                 />
               </div>

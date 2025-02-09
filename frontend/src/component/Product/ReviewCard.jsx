@@ -1,69 +1,47 @@
 import React, { useState, lazy, Suspense } from "react";
 import { Typography, Grid, Select, MenuItem, Button } from "@mui/material";
 import Rating from "@mui/material/Rating";
- import CricketBallLoader from "../layouts/loader/Loader";
-import { useStyles } from "./ReviewStyle";
+import IrimiLoader from "../layouts/loader/Loader";
+import "./ReviewStyle.css";
 import MyCard from "./Card";
 import { useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const DialogBox = lazy(() => import("./DialogBox"));
 
-
-const ReviewCard = ({ product }) => { 
-  const classes = useStyles();
+const ReviewCard = ({ product }) => {
   const { isAuthenticated } = useSelector((state) => state.userData);
   const alert = useAlert();
   const navigate = useNavigate();
   const [sortValue, setSortValue] = useState("highest");
+  const [open, setOpen] = useState(false);
 
   const handleSortChange = (event) => {
-
     setSortValue(event.target.value);
   };
 
-
-  // const sortedData = yourData.sort((a, b) => {
-  //   switch (sortValue) {
-  //     case "highest":
-  //       return b.rating - a.rating;
-  //     case "lowest":
-  //       return a.rating - b.rating;
-  //     case "latest":
-  //       return new Date(b.date) - new Date(a.date);
-  //     case "oldest":
-  //       return new Date(a.date) - new Date(b.date);
-  //     default:
-  //       return 0;
-  //   }
-  // });
-
-
-
-
-  const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
-     if (!isAuthenticated) {
+    if (!isAuthenticated) {
       alert.error("Please Login to write a review");
-     navigate("/login");
+      navigate("/login");
+      return;
     }
     setOpen(true);
   };
 
   const handleClose = () => {
-    console.log("called");
     setOpen(false);
   };
 
   return (
-    <div className={classes.reviewRoot}>
-      <Typography variant="h5" component="h1" className={classes.reviewHeader}>
+    <div className="reviewRoot">
+      <Typography variant="h5" component="h1" className="reviewHeader">
         Users Reviews
       </Typography>
       <Button
         variant="contained"
-        className={classes.submitBtn}
+        className="submitBtn"
         fullWidth
         style={{ marginTop: "2rem" }}
         onClick={handleClickOpen}
@@ -71,72 +49,61 @@ const ReviewCard = ({ product }) => {
         Write your Review
       </Button>
 
-      <Suspense fallback={<CricketBallLoader />}>
-        <DialogBox
-          open={open}
-          handleClose={handleClose}
-          className={classes.dialog}
-        />
+      <Suspense fallback={<IrimiLoader />}>
+        <DialogBox open={open} handleClose={handleClose} className="dialog" />
       </Suspense>
+
       <Grid container alignItems="center" style={{ marginTop: "2rem" }}>
-        <Grid item className={classes.ratingContainer}>
+        <Grid item className="ratingContainer">
           <Rating
-            value={product.ratings}
+            value={product?.ratings || 0} // Fix: Ensure value exists
             precision={0.5}
             readOnly
-            className={classes.star}
+            className="star"
           />
         </Grid>
-        <Typography variant="body2" className={classes.ratingNumber}>
-          {product.ratings} stars
+        <Typography variant="body2" className="ratingNumber">
+          {product?.ratings || 0} stars
         </Typography>
         <Grid item>
           <Typography variant="body2">
-            <strong> Total Reviews : </strong>
-            {product.numOfReviews}
+            <strong>Total Reviews:</strong> {product?.numOfReviews || 0}
           </Typography>
         </Grid>
       </Grid>
 
-      <Grid container justify="flex-end" className={classes.selectContainer}>
+      <Grid container justifyContent="flex-end" id="selectContainer">
         <Grid item>
-          <Typography
-            variant="body2"
-            style={{ fontSize: "12px" }}
-            className={classes.sortBy}
-          >
-            SortBy :
+          <Typography variant="body2" style={{ fontSize: "12px" }} className="sortBy">
+            SortBy:
           </Typography>
         </Grid>
         <Grid item>
           <Select
-            value={sortValue ? sortValue : "highest"}
-            className={classes.select}
-            onClick={handleSortChange}
-            MenuProps={{
-              anchorOrigin: { vertical: "bottom", horizontal: "left" },
-              getContentAnchorEl: null,
-              MenuListProps: { disableScrollLock: true },
-            }}
+            value={sortValue}
+            className="selectReviewCard"
+            onChange={handleSortChange} // Fix: Use onChange instead of onClick
           >
-            <MenuItem value="highest" className={classes.menuItem}>
+            <MenuItem value="highest" className="menuItem">
               Highest Rated
             </MenuItem>
-            <MenuItem value="lowest" className={classes.menuItem}>
+            <MenuItem value="lowest" className="menuItem">
               Lowest Rated
             </MenuItem>
-            <MenuItem value="latest" className={classes.menuItem}>
+            <MenuItem value="latest" className="menuItem">
               Latest Reviews
             </MenuItem>
-            <MenuItem value="oldest" className={classes.menuItem}>
+            <MenuItem value="oldest" className="menuItem">
               Oldest Reviews
             </MenuItem>
           </Select>
         </Grid>
       </Grid>
-      <div className={classes.container}>
-        {product.reviews &&
-          product.reviews.map((review) => <MyCard review={review} />)}
+
+      <div className="container">
+        {product?.reviews?.map((review) => (
+          <MyCard key={review._id} review={review} />
+        ))}
       </div>
     </div>
   );

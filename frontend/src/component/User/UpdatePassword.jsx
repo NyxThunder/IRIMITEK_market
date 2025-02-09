@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword, clearErrors } from "../../actions/userAction";
 import { useAlert } from "react-alert";
@@ -15,13 +15,13 @@ import { useNavigate} from "react-router-dom";
 
 function UpdatePassword() {
   const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
   const dispatch = useDispatch();
   const { loading, isUpdated, error } = useSelector(
     (state) => state.profileData
   );
   const alert = useAlert();
 
-  const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -69,9 +69,9 @@ function UpdatePassword() {
       dispatch({
         type: UPDATE_PASSWORD_RESET,
       });
-      navigate("/account");
+      navigateRef.current("/account");
     }
-  }, [dispatch, error, alert, isUpdated, loading, history]);
+  }, [dispatch, error, alert, isUpdated, loading]);
 
   const isSignInDisabled = !(
     newPassword &&
@@ -84,14 +84,14 @@ function UpdatePassword() {
     <>
       <MetaData title={"Update Password"} />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form">
+            <Avatar className="avatar">
               <SecurityUpdateGoodIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Update Password
             </Typography>
 
@@ -101,12 +101,12 @@ function UpdatePassword() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -122,7 +122,7 @@ function UpdatePassword() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               error={!isValidPassword && newPassword !== ""}
               helperText={
                 !isValidPassword && newPassword !== ""
@@ -133,7 +133,7 @@ function UpdatePassword() {
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -154,12 +154,12 @@ function UpdatePassword() {
                   ? "Password must be at least 8 characters"
                   : ""
               }
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -172,7 +172,7 @@ function UpdatePassword() {
 
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               disabled={isSignInDisabled}
               style={{ marginTop: "3.5rem" }}
@@ -185,7 +185,7 @@ function UpdatePassword() {
               align="center"
               style={{ marginTop: ".5rem" }}
             >
-              <Link to="/account" className={classes.createAccount}>
+              <Link to="/account" className="createAccount">
                 Cancel
               </Link>
             </Typography>

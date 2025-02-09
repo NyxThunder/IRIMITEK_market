@@ -5,7 +5,7 @@ import { saveShippingInfo } from "../../actions/cartAction";
 import MetaData from "../layouts/MataData/MataData";
 import CheckoutSteps from "./CheckoutSteps ";
 import { useAlert } from "react-alert";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   Typography,
@@ -15,55 +15,7 @@ import {
   FormControlLabel,
   Grid,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-
-
-const useStyles = makeStyles((theme) => ({
-  shippingRoot: {
-    width: "60%",
-    margin: "auto",
-  },
-  heading: {
-    marginBottom: theme.spacing(2),
-    alignSelf: "flex-start",
-  },
-  formControl: {
-    marginBottom: theme.spacing(2),
-    minWidth: 200,
-  },
-  submitButton: {
-    marginTop: theme.spacing(2),
-    width: "50%",
-    backgroundColor: "#000000",
-    color: "#FFFFFF",
-    height: "3rem",
-    "&:hover": {
-      backgroundColor: "#ed1c24",
-      color: "#FFFFFF",
-    },
-  },
-  outlinedInput: {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#000000",
-      },
-      "&:hover fieldset": {
-        borderColor: "#000000", 
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#000000", 
-      },
-    },
-    "& .MuiInputBase-input": {
-      color: "#000000", 
-    },
-    "& .MuiInputLabel-root": {
-      color: "#000000", 
-    },
-  },
-
-
-}));
+import "./Shipping.css";
 
 const Shipping = () => {
   const alert = useAlert();
@@ -71,20 +23,19 @@ const Shipping = () => {
   const navigate = useNavigate();
   const { shippingInfo } = useSelector((state) => state.cart);
 
-  const classes = useStyles();
   const [address, setAddress] = React.useState(shippingInfo.address);
   const [firstName, setFirstName] = React.useState(shippingInfo.firstName);
   const [lastName, setLastName] = React.useState(shippingInfo.lastName);
   const [city, setCity] = React.useState(shippingInfo.city);
   const [pinCode, setPinCode] = React.useState(shippingInfo.pinCode);
   const [state, setState] = React.useState(shippingInfo.state);
-  const [country, setCountry] = React.useState(shippingInfo.country || "India");
+  const [country, setCountry] = React.useState(shippingInfo.country || "Estonia");
   const [phoneNo, setPhone] = React.useState(shippingInfo.phoneNo || "");
   const [email, setEmail] = React.useState(shippingInfo.email);
   const [saveAddress, setSaveAddress] = React.useState(false);
   const [sameBillingDelivery, setSameBillingDelivery] = React.useState(false);
-const [isValidEmail, setIsValidEmail] = React.useState(true);
-const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
+  const [isValidEmail, setIsValidEmail] = React.useState(true);
+  const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
 
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
@@ -111,24 +62,24 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
     setState(event.target.value);
   };
 
-  const handleCountryChange = (value) => {
-    setCountry(value.label);
+  const handleCountryChange = (event) => {
+    setCountry(event.target.value);
   };
 
   const handlePhoneChange = (event) => {
     const newPhoneNo = event.target.value;
     setPhone(newPhoneNo);
     setIsPhoneNoValid(newPhoneNo !== "" && newPhoneNo.length === 10);
-  }; 
+  };
 
- const handleEmailChange = (event) => {
-   const newEmail = event.target.value;
-   
-   setEmail(newEmail);
-   setIsValidEmail(
-     newEmail === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)
-   );
- };
+  const handleEmailChange = (event) => {
+    const newEmail = event.target.value;
+
+    setEmail(newEmail);
+    setIsValidEmail(
+      newEmail === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)
+    );
+  };
 
   const handleSaveAddressChange = (event) => {
     setSaveAddress(event.target.checked);
@@ -138,49 +89,44 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
     setSameBillingDelivery(event.target.checked);
   };
 
- const handleSubmit = (event) => {
-   event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-   if (
-     email === "" ||
-     firstName === "" ||
-     lastName === "" ||
-     address === "" ||
-     city === "" ||
-     state === "" ||
-     country === "" ||
-     pinCode === "" ||
-     phoneNo === ""
-   ) {
-     alert.error("Please fill all the fields");
-     return;
-   }
+    if (
+      email === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      address === "" ||
+      city === "" ||
+      state === "" ||
+      country === "" ||
+      pinCode === "" ||
+      phoneNo === ""
+    ) {
+      alert.error("Please fill all the fields");
+      return;
+    }
 
-   if (phoneNo && phoneNo.length !== 10) {
-     alert.error("Phone Number should be 10 digits Long");
-     return;
-   }
+    if (phoneNo && phoneNo.length !== 10) {
+      alert.error("Phone Number should be 10 digits Long");
+      return;
+    }
 
-   dispatch(
-     saveShippingInfo({
-       address,
-       city,
-       state,
-       country,
-       pinCode,
-       phoneNo,
-       email,
-       firstName,
-       lastName,
-     })
-   );
-   navigate("/process/payment");
- };
-
-
-  
-
-
+    dispatch(
+      saveShippingInfo({
+        address,
+        city,
+        state,
+        country,
+        pinCode,
+        phoneNo,
+        email,
+        firstName,
+        lastName,
+      })
+    );
+    navigate("/process/payment");
+  };
 
   return (
     <>
@@ -190,10 +136,10 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
 
         <div className="shippingPage__container">
           <div className="shippingPage__container__left">
-            <div className={classes.shippingRoot}>
+            <div className="shippingRoot">
               <form onSubmit={handleSubmit}>
-                <Typography variant="h6" className={classes.heading}>
-                  SHIPPING ADDRESS
+                <Typography variant="h6" className="heading">
+                  BILLING INFORMATION
                 </Typography>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
@@ -203,7 +149,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={firstName}
                       onChange={handleFirstNameChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -213,7 +159,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={lastName}
                       onChange={handleLastNameChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -223,7 +169,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={address}
                       onChange={handleAddressChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -233,7 +179,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={city}
                       onChange={handleCityChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -243,7 +189,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={pinCode}
                       onChange={handlePincodeChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -253,7 +199,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={state}
                       onChange={handleStateChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -263,7 +209,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={country}
                       onChange={handleCountryChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                     />
                   </Grid>
 
@@ -274,7 +220,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={phoneNo}
                       onChange={handlePhoneChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                       error={!isPhoneNoValid && phoneNo !== ""}
                       helperText={
                         !isPhoneNoValid &&
@@ -290,7 +236,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       fullWidth
                       value={email}
                       onChange={handleEmailChange}
-                      className={classes.outlinedInput}
+                      className="outlinedInput"
                       error={!isValidEmail && email !== ""}
                       helperText={
                         !isValidEmail &&
@@ -328,8 +274,7 @@ const [isPhoneNoValid, setIsPhoneNoValid] = React.useState(true);
                       type="submit"
                       variant="contained"
                       color="primary"
-                      className={classes.submitButton}
-                     
+                      className="submitButton"
                     >
                       Continue
                     </Button>

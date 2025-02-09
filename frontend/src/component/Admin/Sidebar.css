@@ -1,0 +1,102 @@
+.admin-sidebar {
+    background-color: #fff !important;
+    padding: 2rem 0 !important;
+    box-shadow: 2px 10px 6px rgba(0, 0, 0, 0.4) !important;
+    border-radius: 5px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+.admin-sidebar-avatar11 {
+    width: 80px !important;
+    height: 80px !important;
+    border: 5px solid #414141 !important;
+    margin: 0 auto !important;
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.admin-sidebar-name {
+    font-weight: 500 !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+}
+
+.admin-sidebar-email {
+    color: #414141 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+    font-size: 0.9rem !important;
+}
+
+.admin-sidebar-divider {
+    height: 2px !important;
+    width: 75% !important;
+    background-color: #414141 !important;
+    margin: 2rem 37px 2rem 37px !important;
+}
+
+.adminSidbarbutton {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+    background-color: #292929 !important;
+    color: white !important;
+    width: 70% !important;
+    padding: 0.8rem 2rem !important;
+    border-radius: 4px !important;
+}
+
+.adminSidbarbutton:hover {
+    background-color: #ed1c24 !important;
+    color: white !important;
+}
+
+#admin-sidebar-sideBarMenu {
+    list-style-type: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+.admin-sidebar-sideBarMenuItem {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.9rem 1rem !important;
+    border-radius: 2px !important;
+    margin-top: 1.3rem !important;
+    width: 75% !important;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.admin-sidebar-sideBarMenuItem:hover {
+    background-color: #ed1c24 !important;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+.admin-sidebar-sideBarMenuItem:hover svg {
+    color: white !important;
+}
+
+.admin-sidebar-sideBarMenuItem:hover span {
+    color: white !important;
+}
+
+.admin-sidebar-sideBarMenuItem svg {
+    color: #414141 !important;
+    font-size: 26px !important;
+    margin: 0 20px 0 !important;
+}
+
+.admin-sidebar-sideBarMenuItem span {
+    color: #414141 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin-left: 1rem !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.placeCenterItems {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}

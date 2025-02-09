@@ -1,163 +1,173 @@
 .product-list {
-  display: flex;
-  align-items: flex-start;
-  background-color: #f1f1f1;
-  justify-content: center;
-  width: 100%;
-  gap: 1rem;
-  overflow: hidden;
+  display: flex !important;
+  align-items: flex-start !important;
+  background-color: #f1f1f1 !important;
+  justify-content: center !important;
+  width: 100% !important;
+  gap: 1rem !important;
+  overflow: hidden !important;
   margin-top: -1rem !important;
-  padding: 0;
+  padding: 0 !important;
 }
 
 .listSidebar {
-  width: 20%;
-  margin: 0;
-  height: fit-content;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  display: block;
+  width: 20% !important;
+  margin: 0 !important;
+  height: fit-content !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) !important;
+  display: block !important;
 }
 
+.toggleBox {
+  width: 16rem !important;
+  margin: 0 !important;
+  height: fit-content !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) !important;
+  display: block !important;
+  z-index: 100 !important;
+  position: absolute !important;
+  top: 58px !important;
+  left: 17px !important;
+}
 
-
-  .toggleBox {
-    width: 16rem;
-    margin: 0;
-    height: fit-content;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    display: block;
-    z-index: 100;
-    position: absolute;
-    top: 58px;
-    left: 17px;
-  }
 @media only screen and (max-width: 999px) {
   .listSidebar {
-    display: none;
+    display: none !important;
   }
 }
 
-
 .list-table {
-  width: 80%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
+  width: 80% !important;
+  height: fit-content !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  justify-content: center !important;
 }
 
 @media only screen and (max-width: 999px) {
   .list-table {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
-.productListContainer
-{ background-color: white ;
-  width: 96%;
-  height: fit-content;
-  padding: 1rem;
-  border-radius: 1px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-
-}
-.productListTable {
-  width: 100%;
-  overflow-x: auto; 
-  scrollbar-width: thin; 
-  scrollbar-color: #000 #f1f1f1; 
-  width: calc(100% - 30px); 
+.productListContainer {
+  background-color: white !important;
+  width: 96% !important;
+  height: fit-content !important;
+  padding: 1rem !important;
+  border-radius: 1px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) !important;
 }
 
-
-.productListHeading {
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding: 10px;
-  margin: 0;
-  padding: 0;
-  color: #414141;
-  width: 100%;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  text-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) ;
-}
-.column-header{
-  width: fit-content  ;
-  padding: 0px 10px ;
-  font-size: 16px ;
-  font-weight: 600 ;
-  align-items: center;
-  margin: 0px 0px 0px 15px ;
+/* 🌟 Table Styling */
+.dataTable {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 16px !important;
+  background: #f9f9f9 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
 
-.column-header:hover{
-  color: #ed1c24;
-  background-color: #f2f2f2c1;
-  cursor: pointer;
+/* 🌟 Table Header */
+.dataTable thead {
+  background: #2c3e50 !important;
+  color: #ffffff !important;
 }
 
-
-.column-header1 {
-  width: fit-content ;
-  padding: 0px 10px ;
-  font-size: 16px ;
-  font-weight: 600 ;
-  margin-left: 3rem ;
+.dataTable thead th {
+  padding: 12px !important;
+  text-align: left !important;  /* Align Left */
+  font-weight: bold !important;
+  border-bottom: 2px solid #34495e !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
 }
 
-
-
-.icon-{
-  font-size: 20px;
-  color: #fff;
-  background-color: #414141;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 3rem ;
-}
-.iconbtn {
-   font-size: 20px;
-  color: #fff;
-  background-color: #414141;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 0.5rem;
-}
-.icon-:hover{
- background-color: #ed1c24;
-
-}
-.iconbtn:hover{
- background-color: #ed1c24;
-
+/* 🌟 Table Rows */
+.dataTable tbody tr {
+  border-bottom: 1px solid #ddd !important;
+  transition: background 0.3s ease !important;
 }
 
-.MuiDataGrid-root .MuiDataGrid-cell--textLeft{
-  margin-left: 1.2rem !important;
-  color: #000 !important;
+.dataTable tbody tr:hover {
+  background: #ecf0f1 !important;
 }
 
-@media (max-width: 699px) {
-  .hide-on-mobile {
-    display: none;
+/* 🌟 Table Cells */
+.dataTable tbody td {
+  padding: 12px !important;
+  text-align: left !important;  /* Align Left */
+  font-size: 15px !important;
+  color: #2c3e50 !important;
+}
+
+/* 🌟 Actions Column */
+.dataTable .actions {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.dataTable .actions button {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  transition: color 0.3s ease !important;
+}
+
+.dataTable .actions .edit {
+  color: #27ae60 !important;
+}
+
+.dataTable .actions .delete {
+  color: #e74c3c !important;
+}
+
+.dataTable .actions .edit:hover {
+  color: #2ecc71 !important;
+}
+
+.dataTable .actions .delete:hover {
+  color: #c0392b !important;
+}
+
+/* 🌟 Responsive Design */
+@media screen and (max-width: 768px) {
+  .dataTable thead {
+    display: none !important;
   }
-}
 
+  .dataTable tbody tr {
+    display: block !important;
+    margin-bottom: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    padding: 8px !important;
+  }
 
-/* orderList status  */
-.greenColor {
-  color: green !important;
-  font-weight: 600;
-}
+  .dataTable tbody td {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    border-bottom: 1px solid #ddd !important;
+  }
 
-.redColor {
-  color: red !important;
-  font-weight: 600;
+  .dataTable tbody td::before {
+    content: attr(data-label) !important;
+    font-weight: bold !important;
+    text-transform: capitalize !important;
+    color: #2c3e50 !important;
+  }
+
+  .dataTable .actions {
+    justify-content: flex-start !important;
+  }
 }

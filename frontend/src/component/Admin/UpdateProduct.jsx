@@ -32,14 +32,14 @@ import Select from "@mui/material/Select";
 import InfoIcon from "@mui/icons-material/Info";
 import MenuItem from "@mui/material/MenuItem";
 import Navbar from "./Navbar";
-import useStyles from "../User/LoginFromStyle";
+import "../User/LoginFromStyle.css";
+
 function UpdateProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   const alert = useAlert();
 
-  const classes = useStyles();
   const { id: productId } = useParams();
   const { error, product } = useSelector((state) => state.productDetails);
 
@@ -60,17 +60,15 @@ function UpdateProduct() {
   const fileInputRef = useRef();
   const [toggle, setToggle] = useState(false);
   const categories = [
-    "Cricket Kits",
-    "Batting Gloves",
-    "Batting Pads",
-    "Bats",
-    "Bags",
-    "Helmets",
-    "Balls",
-    "Stumps",
-    "Shoes",
-    "Clothing",
-    "Accessories",
+    "Operating System",
+    "Business & Office",
+    "Antivirus & security",
+    "Design & illustration",
+    "Tools",
+    "Gaming software",
+    "Music & sound",
+    "Video & animation",
+    "Programming",
   ];
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
@@ -167,33 +165,33 @@ function UpdateProduct() {
         <>
           <>
             <MetaData title="Create Product" />
-            <div className={classes.updateProduct}>
+            <div className="updateProduct">
               <div
                 className={
-                  !toggle ? `${classes.firstBox1}` : `${classes.toggleBox1}`
+                  !toggle ? "firstBox1" : "toggleBox1"
                 }
               >
                 <Sidebar />
               </div>
-              <div className={classes.secondBox1}>
-                <div className={classes.navBar1}>
+              <div className="secondBox1">
+                <div className="navBar1">
                   <Navbar toggleHandler={toggleHandler} />
                 </div>
 
                 <div
-                  className={`${classes.formContainer} ${classes.formContainer2}`}
+                  className={"formContainer formContainer2"}
                 >
                   <form
-                    className={`${classes.form} ${classes.form2}`}
+                    className={"form form2"}
                     encType="multipart/form-data"
                   >
-                    <Avatar className={classes.avatar}>
+                    <Avatar className="avatar">
                       <AddCircleOutlineIcon />
                     </Avatar>
                     <Typography
                       variant="h5"
                       component="h1"
-                      className={classes.heading}
+                      className="heading"
                     >
                       Create Product
                     </Typography>
@@ -201,7 +199,7 @@ function UpdateProduct() {
                     <TextField
                       variant="outlined"
                       fullWidth
-                      className={`${classes.nameInput} ${classes.textField}`}
+                      className={"nameInput textField"}
                       label="Product Name"
                       required
                       value={name}
@@ -225,7 +223,7 @@ function UpdateProduct() {
                       value={price}
                       required
                       fullWidth
-                      className={`${classes.passwordInput} ${classes.textField}`}
+                      className={"passwordInput textField"}
                       onChange={(e) => setPrice(e.target.value)}
                       InputProps={{
                         endAdornment: (
@@ -247,7 +245,7 @@ function UpdateProduct() {
                       label="Stock"
                       value={Stock}
                       required
-                      className={`${classes.passwordInput} ${classes.textField}`}
+                      className={"passwordInput textField"}
                       onChange={(e) => setStock(e.target.value)}
                       InputProps={{
                         endAdornment: (
@@ -268,7 +266,7 @@ function UpdateProduct() {
                       label="Prodcut Info"
                       value={info}
                       required
-                      className={`${classes.passwordInput} ${classes.textField}`}
+                      className={"passwordInput textField"}
                       onChange={(e) => setInfo(e.target.value)}
                       InputProps={{
                         endAdornment: (
@@ -285,29 +283,29 @@ function UpdateProduct() {
                       }}
                     />
 
-                    <div className={classes.selectOption}>
+                    <div className="selectOption">
                       {!isCategory && (
                         <Typography
                           variant="body2"
-                          className={classes.labelText}
+                          className="labelText"
                         >
                           Choose Category
                         </Typography>
                       )}
-                      <FormControl className={classes.formControl}>
+                      <FormControl className="formControl">
                         <Select
                           variant="outlined"
                           fullWidth
                           value={category}
                           onChange={handleCategoryChange}
-                          className={classes.select}
+                          className="select"
                           inputProps={{
                             name: "category",
                             id: "category-select",
                           }}
                           MenuProps={{
                             classes: {
-                              paper: classes.menu,
+                              paper: "menu"
                             },
                             anchorOrigin: {
                               vertical: "bottom",
@@ -337,7 +335,7 @@ function UpdateProduct() {
                     <TextField
                       variant="outlined"
                       fullWidth
-                      className={classes.descriptionInput}
+                      className="descriptionInput"
                       label="Product Description"
                       multiline
                       rows={1}
@@ -347,15 +345,15 @@ function UpdateProduct() {
                         endAdornment: (
                           <InputAdornment position="end">
                             <DescriptionIcon
-                              className={classes.descriptionIcon}
+                              className="descriptionIcon"
                             />
                           </InputAdornment>
                         ),
                       }}
                     />
 
-                    <div className={classes.root}>
-                      <div className={classes.imgIcon}>
+                    <div className="root">
+                      <div className="imgIcon">
                         <CollectionsIcon
                           fontSize="large"
                           style={{ fontSize: 40 }}
@@ -365,7 +363,7 @@ function UpdateProduct() {
                       <input
                         type="file"
                         name="avatar"
-                        className={classes.input}
+                        className="input"
                         accept="image/*"
                         onChange={updateProductImagesChange}
                         multiple
@@ -375,8 +373,8 @@ function UpdateProduct() {
                       <label htmlFor="avatar-input">
                         <Button
                           variant="contained"
-                          color="default"
-                          className={classes.uploadAvatarButton}
+                          color="primary"
+                          className="uploadAvatarButton"
                           startIcon={
                             <CloudUploadIcon
                               style={{
@@ -386,7 +384,7 @@ function UpdateProduct() {
                           }
                           onClick={handleImageUpload}
                         >
-                          <p className={classes.uploadAvatarText}>
+                          <p className="uploadAvatarText">
                             Upload Images
                           </p>
                         </Button>
@@ -394,26 +392,26 @@ function UpdateProduct() {
                     </div>
 
                     {imagesPreview.length > 0 ? (
-                      <Box className={classes.imageArea}>
+                      <Box className="imageArea">
                         {imagesPreview &&
                           imagesPreview.map((image, index) => (
                             <img
                               key={index}
                               src={image}
                               alt="Product Preview"
-                              className={classes.image}
+                              className="image"
                             />
                           ))}
                       </Box>
                     ) : (
-                      <Box className={classes.imageArea}>
+                      <Box className="imageArea">
                         {oldImages &&
                           oldImages.map((image, index) => (
                             <img
                               key={index}
                               src={image.url}
                               alt="Old Product Preview"
-                              className={classes.image}
+                              className="image"
                             />
                           ))}
                       </Box>
@@ -421,7 +419,7 @@ function UpdateProduct() {
 
                     <Button
                       variant="contained"
-                      className={classes.loginButton}
+                      className="loginButton"
                       fullWidth
                       onClick={createProductSubmitHandler}
                       disabled={loading ? true : false}

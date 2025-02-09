@@ -1,16 +1,16 @@
 import React, { useState, useEffect, Suspense } from "react";
-import { Route, Routes, Navigate} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { load_UserProfile } from "./actions/userAction";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CricketBallLoader from "./component/layouts/loader/Loader";
+import IrimiLoader from "./component/layouts/loader/Loader";
 import PrivateRoute from "./component/Route/PrivateRoute";
 
 import "./App.css";
 
-import Header from "./component/layouts/Header1.jsx/Header";
+import Header from "./component/layouts/Header/Header";
 import Payment from "./component/Cart/Payment";
 import Home from "./component/Home/Home";
 import Services from "./Terms&Condtions/Service";
@@ -98,47 +98,83 @@ function App() {
 
   return (
     <>
-      <Header />
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<><Header /><Home /><Services /><Footer /></>} />
+        <Route path="/product/:id" element={<><Header /><ProductDetails /><Services /><Footer /></>} />
+        <Route path="/products" element={<><Header /><Products /><Services /><Footer /></>} />
+        <Route path="/products/:keyword" element={<><Header /><Products /><Services /><Footer /></>} />
+        <Route path="/signup" element={<><Header /><Signup /><Services /><Footer /></>} />
+        <Route path="/login" element={<>< Header /><Login /><Services /><Footer /></>} />
+        <Route path="/password/forgot" element={<><Header /><ForgetPassword /><Services /><Footer /></>} />
+        <Route path="/password/reset/:token" element={<><Header /><ResetPassword /><Services /><Footer /></>} />
+        <Route path="/cart" element={<><Header /><Cart /><Services /><Footer /></>} />
+        <Route path="/policy/return" element={<><Header /><ReturnPolicyPage /><Services /><Footer /></>} />
+        <Route path="/policy/Terms" element={<><Header /><TermsUse /><Services /><Footer /></>} />
+        <Route path="/policy/privacy" element={<><Header /><PrivacyPolicy /><Services /><Footer /></>} />
+        <Route path="/terms/conditions" element={<><Header /><TermsAndConditions /><Services /><Footer /></>} />
+        <Route path="/contact" element={<><Header /><ContactForm /><Services /><Footer /></>} />
+        <Route path="/about_us" element={<><Header /><AboutUsPage /><Services /><Footer /></>} />
 
-        {/* Private Routes */}
-        <Route element={<PrivateRoute />}>
-          <Route path="/account" element={<Profile />} />
-        </Route>
-
-        {/* Admin Routes */}
-        <Route element={<PrivateRoute isAdmin={true} />}>
-          <Route path="/admin/dashboard" element={<Suspense fallback={<CricketBallLoader />}><LazyDashboard /></Suspense>} />
-          <Route path="/admin/products" element={<Suspense fallback={<CricketBallLoader />}><LazyProductList /></Suspense>} />
-          <Route path="/admin/product/:id" element={<Suspense fallback={<CricketBallLoader />}><LazyUpdateProduct /></Suspense>} />
-          <Route path="/admin/orders" element={<Suspense fallback={<CricketBallLoader />}><LazyOrderList /></Suspense>} />
-          <Route path="/admin/users" element={<Suspense fallback={<CricketBallLoader />}><LazyUserList /></Suspense>} />
-          <Route path="/admin/new/product" element={<Suspense fallback={<CricketBallLoader />}><LazyNewProduct /></Suspense>} />
-        </Route>
-
-        {/* Payment Route */}
-        {stripeApiKey && (
-          <Route
-            path="/process/payment"
-            element={
-              <Elements stripe={loadStripe(stripeApiKey)}>
-                <Payment />
-              </Elements>
-            }
-          />
-        )}
-
-        {/* Redirect Unknown Routes */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* User routes with protected, currently not implemented. But has to be protected*/}
+        <Route path="/account" element={<><Header /><Profile /><Services /><Footer /></>} />
+        <Route path="/profile/update" element={<><Header /><UpdateProfile /><Services /><Footer /></>} />
+        <Route path="/password/update" element={<><Header /><UpdatePassword /><Services /><Footer /></>} />
+        <Route path="/orders" element={<><Header /><MyOrder /><Services /><Footer /></>} />
+        <Route path="/shipping" element={<><Header /><Shipping /><Services /><Footer /></>} />
+        <Route path="/order/confirm" element={<><Header /><ConfirmOrder /><Services /><Footer /></>} />
+        <Route path="/success" element={<><Header /><OrderSuccess /><Services /><Footer /></>} />
       </Routes>
-      <Footer />
+      {/* Admin routes */}
+      <Routes>
+        <Route path="/admin/dashboard" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyDashboard />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/products" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyProductList />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/product/:id" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyUpdateProduct />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/reviews" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyProductReviews />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/orders" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyOrderList />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/order/:id" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyProcessOrder />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/new/product" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyNewProduct />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/users" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyUserList />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/user/:id" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyUpdateUser />
+          </Suspense>
+        )} />} />
+
+        {/* Stripe Payment Route */}
+        <Route path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)}>{<><Header /><Payment /></>}</Elements>} />
+      </Routes>
     </>
   );
 }

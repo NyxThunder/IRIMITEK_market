@@ -11,7 +11,6 @@ import {
   calculateDiscount,
   dispalyMoney,
 } from "../DisplayMoney/DisplayMoney";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import Rating from "@mui/material/Rating";
 import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +24,7 @@ import {
 import { useAlert } from "react-alert";
 import MetaData from "../layouts/MataData/MataData";
 import { addItemToCart } from "../../actions/cartAction";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import Button from "@mui/material/Button";
 import { PRODUCT_DETAILS_RESET } from "../../constants/productsConstatns";
 
@@ -113,7 +112,7 @@ useEffect(() => {
   return (
     <>
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
         <>
           <div className="prodcutDetialsContainer">
@@ -202,14 +201,10 @@ useEffect(() => {
                       </div>
                       <div className="prod_details_offers">
                         <h4>Offers and Discounts</h4>
-                        <ul>
+                        <ul id="productDetailUl">
                           <li>No Cost EMI on Credit Card</li>
                           <li>Pay Later & Avail Cashback</li>
                         </ul>
-                      </div>
-                      <div className="deliveryText">
-                        <LocalShippingOutlinedIcon />
-                        We deliver! Just say when and how.
                       </div>
                     </div>
                     <div className="seprator2"></div>

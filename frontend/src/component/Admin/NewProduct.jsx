@@ -21,8 +21,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InfoIcon from "@mui/icons-material/Info";
 
 import Navbar from "./Navbar";
-
-import useStyles from "../User/LoginFromStyle";
+import "../User/LoginFromStyle.css";
 import {
   Avatar,
   TextField,
@@ -51,7 +50,6 @@ function NewProduct() {
   const fileInputRef = useRef();
   const [toggle, setToggle] = useState(false);
 
-  const classes = useStyles();
   // togle handler =>
   const toggleHandler = () => {
     console.log("toggle");
@@ -72,18 +70,16 @@ function NewProduct() {
   }, [navigate]);
 
 
-  const categories = [
-    "Cricket Kits",
-    "Batting Gloves",
-    "Batting Pads",
-    "Bats",
-    "Bags",
-    "Helmets",
-    "Balls",
-    "Stumps",
-    "Shoes",
-    "Clothing",
-    "Accessories",
+  const categories = [ 
+    "Operating System",
+    "Business & Office",
+    "Antivirus & security",
+    "Design & illustration",
+    "Tools",
+    "Gaming software",
+    "Music & sound",
+    "Video & animation",
+    "Programming",
   ];
   useEffect(() => {
     if (error) {
@@ -138,42 +134,42 @@ function NewProduct() {
       ) : (
         <>
           <MetaData title={"New Product"} />
-          <div className={classes.updateProduct}>
+          <div className="updateProduct">
             <div
               className={
-                !toggle ? `${classes.firstBox1}` : `${classes.toggleBox1}`
+                !toggle ? "firstBox1" : "toggleBox1"
               }
             >
               <Sidebar />
             </div>
 
-            <div className={classes.secondBox1}>
-              <div className={classes.navBar1}>
+            <div className="secondBox1">
+              <div className="navBar1">
                 <Navbar toggleHandler={toggleHandler} />
               </div>
 
               <div
-                className={`${classes.formContainer} ${classes.formContainer2}`}
+                className={"formContainer formContainer2"}
               >
                 <form
-                  className={`${classes.form} ${classes.form2}`}
+                  className={"form form2"}
                   encType="multipart/form-data"
                   onSubmit={createProductSubmitHandler}
                 >
-                  <Avatar className={classes.avatar}>
+                  <Avatar className="avatar">
                     <AddCircleOutlineIcon />
                   </Avatar>
                   <Typography
                     variant="h5"
                     component="h1"
-                    className={classes.heading}
+                    className="heading"
                   >
                     Create Product
                   </Typography>
                   <TextField
                     variant="outlined"
                     fullWidth
-                    className={`${classes.nameInput} ${classes.textField}`}
+                    className={"nameInput textField"}
                     label="Product Name"
                     required
                     value={name}
@@ -198,7 +194,7 @@ function NewProduct() {
                     value={price}
                     required
                     fullWidth
-                    className={`${classes.passwordInput} ${classes.textField}`}
+                    className={"passwordInput textField"}
                     onChange={(e) => setPrice(e.target.value)}
                     InputProps={{
                       endAdornment: (
@@ -219,7 +215,7 @@ function NewProduct() {
                     label="Stock"
                     value={Stock}
                     required
-                    className={`${classes.passwordInput} ${classes.textField}`}
+                    className={"passwordInput textField"}
                     onChange={(e) => setStock(e.target.value)}
                     InputProps={{
                       endAdornment: (
@@ -240,7 +236,7 @@ function NewProduct() {
                     label="Product info"
                     value={info}
                     required
-                    className={`${classes.passwordInput} ${classes.textField}`}
+                    className={"passwordInput textField"}
                     onChange={(e) => setInfo(e.target.value)}
                     InputProps={{
                       endAdornment: (
@@ -257,26 +253,26 @@ function NewProduct() {
                     }}
                   />
 
-                  <div className={classes.selectOption}>
+                  <div className="selectOption">
                     {!isCategory && (
-                      <Typography variant="body2" className={classes.labelText}>
+                      <Typography variant="body2" className="labelText">
                         Choose Category
                       </Typography>
                     )}
-                    <FormControl className={classes.formControl}>
+                    <FormControl className="formControl">
                       <Select
                         variant="outlined"
                         fullWidth
                         value={category}
                         onChange={handleCategoryChange}
-                        className={classes.select}
+                        className="select"
                         inputProps={{
                           name: "category",
                           id: "category-select",
                         }}
                         MenuProps={{
                           classes: {
-                            paper: classes.menu,
+                            paper: "menu"
                           },
                           anchorOrigin: {
                             vertical: "bottom",
@@ -305,7 +301,7 @@ function NewProduct() {
                   <TextField
                     variant="outlined"
                     fullWidth
-                    className={classes.descriptionInput}
+                    className="descriptionInput"
                     label="Product Description"
                     multiline
                     rows={1}
@@ -315,15 +311,15 @@ function NewProduct() {
                       endAdornment: (
                         <InputAdornment position="end">
                           <DescriptionIcon
-                            className={classes.descriptionIcon}
+                            className="descriptionIcon"
                           />
                         </InputAdornment>
                       ),
                     }}
                   />
 
-                  <div className={classes.root}>
-                    <div className={classes.imgIcon}>
+                  <div className="root">
+                    <div className="imgIcon">
                       <CollectionsIcon
                         fontSize="large"
                         style={{ fontSize: 40 }}
@@ -333,7 +329,7 @@ function NewProduct() {
                     <input
                       type="file"
                       name="avatar"
-                      className={classes.input}
+                      className="input"
                       accept="image/*"
                       onChange={createProductImagesChange}
                       multiple
@@ -343,8 +339,8 @@ function NewProduct() {
                     <label htmlFor="avatar-input">
                       <Button
                         variant="contained"
-                        color="default"
-                        className={classes.uploadAvatarButton}
+                        color="primary"
+                        className="uploadAvatarButton"
                         startIcon={
                           <CloudUploadIcon
                             style={{
@@ -354,28 +350,28 @@ function NewProduct() {
                         }
                         onClick={handleImageUpload}
                       >
-                        <p className={classes.uploadAvatarText}>
+                        <p className="uploadAvatarText">
                           Upload Images
                         </p>
                       </Button>
                     </label>
                   </div>
 
-                  <Box className={classes.imageArea}>
+                  <Box className="imageArea">
                     {imagesPreview &&
                       imagesPreview.map((image, index) => (
                         <img
                           key={index}
                           src={image}
                           alt="Product Preview"
-                          className={classes.image}
+                          className="image"
                         />
                       ))}
                   </Box>
 
                   <Button
                     variant="contained"
-                    className={classes.loginButton}
+                    className="loginButton"
                     fullWidth
                     type="submit"
                     disabled={loading ? true : false}

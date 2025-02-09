@@ -79,21 +79,24 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(fileUpload());
 
 // Enable CORS (Cross-Origin Resource Sharing)
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "*",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "http://localhost:3000", // Enable CORS for your frontend
+  credentials: true,  // If you're sending cookies or credentials
+}));
 
-// Proxy Middleware - Redirect `/api` calls to another server
-app.use(
-  "/api",
-  createProxyMiddleware({
-    target: "http://localhost:5000",
-    changeOrigin: true,
-  })
-);
+// // Proxy Middleware - Redirect `/api` calls to another server
+// app.use(
+//   "/api/v1",
+//   createProxyMiddleware({
+//     target: "http://localhost:5000",
+//     changeOrigin: true,
+//     pathRewrite: {
+//       "^/api/v1": "", // Remove the '/api/v1' prefix before proxying the request
+//     },
+//     timeout: 5000,
+//     proxyTimeout: 5000,
+//   })
+// );
 
 // Serve static files (for production)
 if (process.env.NODE_ENV === "production") {
@@ -109,6 +112,10 @@ const user = require("./route/userRoute");
 const order = require("./route/orderRoute");
 const product = require("./route/productRoute");
 const payment = require("./route/paymentRoute");
+
+app.get("/api/v1/welcome", (req, res) => {
+  res.json({ message: "welcome IrmiTEK server!" });
+});
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);

@@ -14,7 +14,6 @@ import {
 } from "../../actions/userAction";
 import Loader from "../layouts/loader/Loader";
 import { useNavigate, useParams } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Avatar,
@@ -25,172 +24,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-
-const useStyles = makeStyles((theme) => ({
-  updateUser1: {
-    display: "flex",
-    alignItems: "flex-start",
-    backgroundColor: "#f1f1f1",
-    justifyContent: "center",
-    width: "100%",
-    gap: "1rem",
-    overflow: "hidden",
-    margin: "-1.1rem 0 0 0",
-    padding: 0,
-  },
-  firstBox_01: {
-    width: "20%",
-    margin: "0rem",
-    height: "fit-content",
-    backgroundColor: "white",
-    borderRadius: "5px",
-    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.5)",
-    display: "block",
-    [theme.breakpoints.down("999")]: {
-      display: "none",
-    },
-  },
-
-  toggleBox_01: {
-    width: "16rem",
-    margin: "0rem",
-    height: "fit-content",
-    backgroundColor: "white",
-    borderRadius: "5px",
-    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.5)",
-    display: "block",
-    zIndex: "100",
-    position: "absolute",
-    top: "58px",
-    left: "17px",
-  },
-  secondBox_01: {
-    width: "75%",
-
-    height: "fit-content",
-    display: "flex",
-    flexDirection: "column",
-    margin: "-0.5rem 0 0 0",
-    gap: "10px",
-    justifyContent: "center",
-    [theme.breakpoints.down("999")]: {
-      width: "100%",
-    },
-  },
-  navBar_01: {
-    margin: "0rem",
-  },
-  formSection: {
-    width: "100%",
-    margin: "auto",
-    borderRadius: "5px",
-    height: "100vh",
-    backgroundColor: "white",
-    padding: "1rem 2rem",
-  },
-  form: {
-    width: "350px",
-    margin: "-1rem auto 0 auto",
-    borderRadius: "5px",
-    padding: "2rem",
-  },
-
-  avatar: {
-    margin: " 8px auto",
-    backgroundColor: "black",
-  },
-  textField: {
-    marginBottom: theme.spacing(2),
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: "black",
-      padding: "12px 14px",
-    },
-    "& .MuiInputLabel-root": {
-      color: "black",
-      fontSize: "14px",
-      textAlign: "center",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "black",
-      fontSize: "14px",
-      textAlign: "center",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: "black",
-        color: "black",
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: "13px 8px",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "black",
-        color: "black",
-        outline: "none",
-      },
-    },
-  },
-
-  heading: {
-    textAlign: "center",
-    marginBottom: theme.spacing(3),
-    color: "#414141",
-    fontWeight: "bold",
-  },
-
-  nameInput: {
-    position: "relative",
-    "& > label": {
-      left: ".2rem",
-    },
-    padding: "4px 0px",
-    fontSize: "1rem",
-    width: "100%",
-    marginBottom: theme.spacing(5.5),
-    height: ".7rem",
-  },
-
-  loginButton: {
-    color: "#fff",
-    backgroundColor: "#000",
-    border: "2px solid #000",
-    margin: `${theme.spacing(3)}px 0`,
-    marginTop: "1rem",
-    "&:disabled": {
-      backgroundColor: "#444444", // faded black
-      color: "#FFFFFF",
-      borderColor: "#444444",
-    },
-    "&:hover": {
-      backgroundColor: "#ed1c24",
-      color: "#fff",
-      borderColor: "#ed1c24",
-    },
-  },
-  select: {
-    width: "100%",
-    padding: "8px",
-    marginBottom: theme.spacing(2),
-    fontSize: "14px",
-    borderRadius: "4px",
-
-    border: "1px solid rgba(0, 0, 0, 0.267)",
-    "&:focus": {
-      outline: "none",
-      border: "none",
-    },
-    "& .MuiList-root .MuiMenuItem-root:hover": {
-      backgroundColor: "#ed1c24",
-      color: "#fff",
-    },
-  },
-  selectMenuPaper: {
-    "& .MuiMenuItem-root:hover": {
-      backgroundColor: "#ed1c24",
-      color: "#fff",
-    },
-  },
-}));
+import "./UpdateUser.css";
 
 function UpdateUser() {
   const dispatch = useDispatch();
@@ -198,7 +32,6 @@ function UpdateUser() {
   const { id: userId } = useParams();
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
-  const classes = useStyles();
   const { loading, error, user } = useSelector((state) => state.userDetails);
   const { loading: updateLoading, error: updateError, isUpdated } = useSelector(
     (state) => state.profileData
@@ -260,31 +93,31 @@ function UpdateUser() {
       ) : (
         <>
           <MetaData title="Update User" />
-          <div className={classes.updateUser1}>
+          <div className="updateUser1">
             <div
               className={
-                !toggle ? `${classes.firstBox_01}` : `${classes.toggleBox_01}`
+                !toggle ? "firstBox_01" : "toggleBox_01"
               }
             >
               <Sidebar />
             </div>
 
-            <div className={classes.secondBox_01}>
-              <div className={classes.navBar_01}>
+            <div className="secondBox_01">
+              <div className="navBar_01">
                 <Navbar toggleHandler={toggleHandler} />
               </div>
-              <div className={classes.formSection}>
+              <div className="formSection">
                 <form
-                  className={`${classes.form} `}
+                  className="form"
                   onSubmit={updateUserSubmitHandler}
                 >
-                  <Avatar className={classes.avatar}>
+                  <Avatar className="avatar">
                     <AccountCircleIcon />
                   </Avatar>
                   <Typography
                     variant="h5"
                     component="h1"
-                    className={classes.heading}
+                    className="heading"
                   >
                     Update Role
                   </Typography>
@@ -292,18 +125,18 @@ function UpdateUser() {
                   <TextField
                     variant="outlined"
                     fullWidth
-                    className={`${classes.nameInput} ${classes.textField}`}
+                    className="nameInput textField"
                     label="Product Name"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                 
+
                   />
 
                   <TextField
                     variant="outlined"
                     fullWidth
-                    className={`${classes.nameInput} ${classes.textField}`}
+                    className="nameInput textField"
                     label="Email"
                     required
                     value={email}
@@ -337,9 +170,9 @@ function UpdateUser() {
                     <Select
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className={classes.select}
+                      className="select"
                       MenuProps={{
-                        classes: { paper: classes.selectMenuPaper }, // Update the class name here
+                        classes: { paper: "selectMenuPaper" }, // Update the class name here
                         anchorOrigin: {
                           vertical: "bottom",
                           horizontal: "left",
@@ -362,7 +195,7 @@ function UpdateUser() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    className={classes.loginButton}
+                    className="loginButton"
                     disabled={
                       updateLoading ? true : false || role === "" ? true : false
                     }
@@ -382,4 +215,3 @@ function UpdateUser() {
 export default UpdateUser;
 
 
-  

@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import LockClockIcon from "@mui/icons-material/LockClock";
 import { TextField, Button, Typography, Avatar } from "@mui/material";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { forgetPassword, clearErrors } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import MetaData from "../layouts/MataData/MataData";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 
 import { Link } from "react-router-dom";
 
 export default function ForgetPassowrd() {
-  const classes = useStyles();
- 
   const dispatch = useDispatch();
   const alert = useAlert();
   const { error, message, loading } = useSelector(
@@ -61,14 +59,14 @@ export default function ForgetPassowrd() {
     <>
       <MetaData title="Forget Password" />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form} onSubmit={handleforgotPasswordSubmit}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form" onSubmit={handleforgotPasswordSubmit}>
+            <Avatar className="avatar">
               <LockClockIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Forgot your password?
             </Typography>
 
@@ -87,7 +85,7 @@ export default function ForgetPassowrd() {
               label="Email"
               variant="outlined"
               fullWidth
-              className={`${classes.emailInput} ${classes.textField}`}
+              className={"emailInput textField"}
               value={email}
               onChange={handleEmailChange}
               error={!isValidEmail && email !== ""}
@@ -100,7 +98,7 @@ export default function ForgetPassowrd() {
 
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               disabled={isSignInDisabled}
               style={{ marginTop: "3rem" }}
@@ -113,7 +111,7 @@ export default function ForgetPassowrd() {
               align="center"
               style={{ marginTop: ".3rem" }}
             >
-              <Link to="/login" className={classes.createAccount}>
+              <Link to="/login" className="createAccount">
                 Cancel
               </Link>
             </Typography>

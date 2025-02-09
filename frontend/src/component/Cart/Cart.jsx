@@ -233,7 +233,7 @@ const Cart = () => {
 
                 <div className="paymentLogoImg">
                   <img
-                    src={require("../../Image/cart/cart_img.png")}
+                    src="https://res.cloudinary.com/drosmiklv/image/upload/v1739139739/cart_img_ezpceb.png"
                     alt="payemnt-icons"
                     className="paymentImg"
                   />

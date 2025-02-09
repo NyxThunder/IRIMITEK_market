@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
 import "./Profile.css";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userAction";
 import { useAlert } from "react-alert";
@@ -60,17 +60,13 @@ const ProfilePage = () => {
       <div className="profileConatiner">
         <div className="leftCotainer">
           <h4
-          
+
             className="profileHeadingLeft"
           >
             Profile Overview
           </h4>
           <div className="profileSection">
-            <Avatar
-              alt={user.name}
-              src={user.avatar.url}
-              className="profileAvatar"
-            />
+            <Avatar alt={user?.name} src={user?.avatar?.url || "https://res.cloudinary.com/drosmiklv/image/upload/v1739068351/default_avatar_pd5xgd.jpg"} className="profileAvatar" />
             <div className="leftDetails">
               <Typography className="profileText">
                 <h5 className="profileSubHeading">Name :</h5>
@@ -93,7 +89,7 @@ const ProfilePage = () => {
             </Typography>
             <Link
               to="/orders"
-              style={{ textDecoration: "none", color: "inherit" }}
+              style={{ textDecoration: "none", color: "inherit", display: "flex", justifyContent: "center"}}
             >
               <Button variant="contained" className="ordersButton">
                 Orders
@@ -127,7 +123,7 @@ const ProfilePage = () => {
               <Typography className="profileText">GENDER</Typography>
             </div>
 
-            <Link to="/profile/update" style={{ textDecoration: "none" }}>
+            <Link to="/profile/update" style={{ textDecoration: "none", display: "flex", justifyContent: "center"}}>
               <Button variant="contained" className="profileButton">
                 EDIT DETAILS
               </Button>
@@ -156,7 +152,7 @@ const ProfilePage = () => {
             </div>
             <Link
               to="/password/update"
-              style={{ textDecoration: "none", color: "inherit" }}
+              style={{ textDecoration: "none", color: "inherit", display: "flex", justifyContent: "center"}}
             >
               <Button variant="contained" className="profileButton">
                 UPDATE PASSWORD
@@ -173,20 +169,20 @@ const ProfilePage = () => {
               </Typography>
 
               <p className="profileText3">
-                To access the Cricket Weapon Store website again, you need to
-                provide your credentials. This action will log you out from any
-                other web browsers you have used before.
+                To access the IRMITEK Store website again, you need to provide your credentials. This action will log you out from any other web browsers you have used before.
               </p>
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              className="profileButton"
-              startIcon={<LogoutIcon />}
-              onClick={logoutHandler}
-            >
-              Logout Account
-            </Button>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                className="profileButton"
+                startIcon={<LogoutIcon />}
+                onClick={logoutHandler}
+              >
+                Logout Account
+              </Button>
+            </div>
           </div>
         </div>
       </div>

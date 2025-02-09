@@ -4,10 +4,10 @@ import { resetPassword, clearErrors } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import MetaData from "../layouts/MataData/MataData";
 import { useNavigate, useParams } from "react-router-dom";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import LockResetIcon from "@mui/icons-material/LockReset";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
@@ -28,7 +28,6 @@ function ResetPassword() {
 
 
 
-  const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
@@ -85,14 +84,14 @@ function ResetPassword() {
     <>
       <MetaData title="Reset Password" />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form">
+            <Avatar className="avatar">
               <LockResetIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Reset Password
             </Typography>
 
@@ -102,7 +101,7 @@ function ResetPassword() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               error={!isValidPassword && password !== ""}
               helperText={
                 !isValidPassword && password !== ""
@@ -113,7 +112,7 @@ function ResetPassword() {
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -128,12 +127,12 @@ function ResetPassword() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className="showPasswordButton"
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -146,7 +145,7 @@ function ResetPassword() {
 
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               disabled={isSignInDisabled}
               style={{ marginTop: "3.5rem" }}
@@ -160,7 +159,7 @@ function ResetPassword() {
               align="center"
               style={{ marginTop: ".5rem" }}
             >
-              <Link to="/login" className={classes.createAccount}>
+              <Link to="/login" className="createAccount">
                 Cancel
               </Link>
             </Typography>

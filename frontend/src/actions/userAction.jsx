@@ -82,6 +82,7 @@ export function signUp(signupData) {
 
 
 
+
     } catch (error) {
   
       dispatch({ type: REGISTER_USER_FAIL, payload: error.message })

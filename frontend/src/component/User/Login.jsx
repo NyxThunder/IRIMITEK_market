@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   TextField,
   FormControlLabel,
@@ -8,31 +8,31 @@ import {
   Grid,
   Avatar,
 } from "@mui/material";
-import useStyles from "./LoginFromStyle";
+import "./LoginFromStyle.css";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { login, clearErrors } from "../../actions/userAction";
-import CricketBallLoader from "../layouts/loader/Loader";
+import IrimiLoader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData"
 
 export default function Login() {
 
-    const navigate = useNavigate();
-    const loaction = useLocation();
+  const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  const loaction = useLocation();
 
-    const dispatch = useDispatch();
-    const alert = useAlert();
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
-    const { isAuthenticated, loading, error } = useSelector(
-      (state) => state.userData
-    );
+  const { isAuthenticated, loading, error } = useSelector(
+    (state) => state.userData
+  );
 
-  const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,50 +53,50 @@ export default function Login() {
   const handleShowPasswordClick = () => {
     setShowPassword(!showPassword);
   };
-  
+
 
   const isSignInDisabled = !(email && password && isValidEmail);
 
-  
-    const redirect = loaction.search
-      ? loaction.search.split("=")[1]
-      : "/account";
-   useEffect(() => {
-     if (error) {
-       alert.error(error);
-       dispatch(clearErrors());
-     }
 
-     if (isAuthenticated) {
-       navigate(redirect);
-     }
-   }, [dispatch, isAuthenticated, loading, error, alert , history , redirect]);
+  const redirect = loaction.search
+    ? loaction.search.split("=")[1]
+    : "/account";
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
 
-     function handleLoginSubmit(e) {
-       e.preventDefault();
-       dispatch(login(email, password));
-     }
+    if (isAuthenticated) {
+      navigateRef.current(redirect);
+    }
+  }, [dispatch, isAuthenticated, loading, error, alert, redirect]);
+
+  function handleLoginSubmit(e) {
+    e.preventDefault();
+    dispatch(login(email, password));
+  }
 
 
   return (
     <>
       <MetaData title={"Login"} />
       {loading ? (
-        <CricketBallLoader />
+        <IrimiLoader />
       ) : (
-        <div className={classes.formContainer}>
-          <form className={classes.form}>
-            <Avatar className={classes.avatar}>
+        <div className="formContainer">
+          <form className="form">
+            <Avatar className="avatar">
               <LockOpenIcon />
             </Avatar>
-            <Typography variant="h5" component="h1" className={classes.heading}>
+            <Typography variant="h5" component="h1" className="heading">
               Sign in to Your Account
             </Typography>
             <TextField
               label="Email"
               variant="outlined"
               fullWidth
-              className={`${classes.emailInput} ${classes.textField}`}
+              className={"emailInput textField"}
               value={email}
               onChange={handleEmailChange}
               error={!isValidEmail && email !== ""}
@@ -111,12 +111,12 @@ export default function Login() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              className={`${classes.passwordInput} ${classes.textField}`}
+              className={"passwordInput textField"}
               InputProps={{
                 endAdornment: (
                   <Button
                     variant="outlined"
-                    className={classes.showPasswordButton}
+                    className={"showPasswordButton"}
                     onClick={handleShowPasswordClick}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -126,7 +126,7 @@ export default function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
-            <Grid container className={classes.rememberMeContainer}>
+            <Grid container className="rememberMeContainer">
               <Grid item>
                 <FormControlLabel
                   control={<Checkbox color="primary" />}
@@ -136,7 +136,7 @@ export default function Login() {
               <Grid item>
                 <Link
                   to="/password/forgot"
-                  className={classes.forgotPasswordLink}
+                  className="forgotPasswordLink"
                 >
                   Forgot your password?
                 </Link>
@@ -144,17 +144,17 @@ export default function Login() {
             </Grid>
             <Typography
               variant="body2"
-              className={classes.termsAndConditionsText}
+              className="termsAndConditionsText"
             >
-              I accept the Cricket Weapon Terms of Use and acknowledge Cricket
-              Weapon will use my information in accordance with its
-              <Link to="/policy/privacy" className={classes.privacyText}>
+              I accept the IRMITEK Terms of Use and acknowledge IRMITEK
+              will use my information in accordance with its
+              <Link to="/policy/privacy" className="privacyText">
                 Privacy Policy.
               </Link>
             </Typography>
             <Button
               variant="contained"
-              className={classes.loginButton}
+              className="loginButton"
               fullWidth
               disabled={isSignInDisabled}
               onClick={handleLoginSubmit}
@@ -167,7 +167,7 @@ export default function Login() {
               style={{ marginTop: "1rem" }}
             >
               Don't have an account?
-              <Link to="/signup" className={classes.createAccount}>
+              <Link to="/signup" className="createAccount">
                 Create Account
               </Link>
             </Typography>

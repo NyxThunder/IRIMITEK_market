@@ -6,7 +6,7 @@ import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
-import HeroSlider from "./HeroSilder";
+import HomeSlider from "./HomeSlider";
 import FeaturedSlider from "./FeatureSlider";
 function Home() {
   // we provided all parameter for react-alert at index.js
@@ -30,12 +30,11 @@ function Home() {
       ) : (
         <>
           <>
-            <MataData title="Cricket Weapon" />
+            <MataData title="IRMITEK" />
             <div className="Home_Page">
               <div className="heroSlider_Home">
-                <HeroSlider />;
+                <HomeSlider />;
               </div>
-
               <div className="feature" style={{ marginTop: "2.7rem" }}>
                 <h2
                   style={{
@@ -47,16 +46,10 @@ function Home() {
                   Featured Products
                 </h2>
                 {products &&
-             
-                
-                       <FeaturedSlider   products ={products}/> }
-                  
-                 
-              
+                  <FeaturedSlider products={products} />
+                }
               </div>
-
               <h2 className="trending_heading">Trending Products</h2>
-
               <div className="trending-products">
                 {products &&
                   products.map((product) => (

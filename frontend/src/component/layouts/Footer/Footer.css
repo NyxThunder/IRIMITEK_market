@@ -23,7 +23,7 @@ background-color: black;
     padding-left: 11px;
     overflow-x: hidden;
     width: 100vw;
- background-color: hsla(0,0%,6%,.95);
+ background-color: hsla(0, 0%, 0%, 1);
     padding-bottom: 15px;
 }
 
@@ -43,15 +43,15 @@ background-color: black;
 }
 .Foot_heading{
     font-weight: bolder;
-    margin-top: -64px;
+    margin-top: -45px;
     color: #a29d9d;
     font-size: 24px;
-    margin-left: 15px;
+    margin-left: 60px;
 }
 .foot_about img {
      width: 50%;
     padding: 0px;
-    margin: 0px 0px 0px 23px;
+    margin: 0px 0px 0px 40px;
 
 }
 
@@ -263,7 +263,7 @@ display: flex;
     color: #f00;
 }
  .facebook_icon {
- 
+  margin-left: 55px;
   font-size: 18px;
  }
 
@@ -435,7 +435,7 @@ width: 119%;
       }
 
       .foot_social{
-            margin-left: 120px;
+            margin-left: 0px;
       }
   .css-i4bv87-MuiSvgIcon-root{
     font-size: 2rem !important;
@@ -460,7 +460,8 @@ width: 119%;
 /* Responsive font size and margins */
 @media screen and (max-width: 499px) {
   .footer .Foot_heading {
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 16px;
   }
 
   .foot_subs p {

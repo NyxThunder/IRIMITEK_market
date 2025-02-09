@@ -3,12 +3,17 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { positions, transitions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import store from "./store";
 import App from "./App";
+import theme from "./theme";
+import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
 
-const theme = createTheme();
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000"; 
+axios.defaults.withCredentials = true;
+
 const options = {
   timeout: 5000,
   position: positions.BOTTOM_CENTER,
@@ -17,7 +22,6 @@ const options = {
 
 ReactDOM.render(
   <>
-    {/* Wrap the entire application with BrowserRouter */}
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Provider store={store}>

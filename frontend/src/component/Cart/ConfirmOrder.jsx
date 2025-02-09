@@ -5,14 +5,14 @@ import MetaData from "../layouts/MataData/MataData";
 import "./ConfirmOrder.css";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import Loader from "../layouts/loader/Loader"
+
 function ConfirmOrder() {
 
 
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
 
-  const { user , loading} = useSelector((state) => state.userData);
+  const { user, loading } = useSelector((state) => state.userData);
 
   const subTotal = cartItems.reduce((acc, currItem) => {
     return acc + currItem.quantity * currItem.price;
@@ -23,7 +23,7 @@ function ConfirmOrder() {
   const gst = subTotal * 0.18;
 
   const totalFinalPrice = subTotal + gst + shippingCharges;
-  
+
 
   const address = `${shippingInfo.address} , ${shippingInfo.city} ${shippingInfo.state} , ${shippingInfo.pinCode} , ${shippingInfo.country}`;
 
@@ -37,7 +37,7 @@ function ConfirmOrder() {
     // session storage allowd save data untill  browser tab is opend
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
 
-   
+
   }
 
   return (
@@ -86,8 +86,8 @@ function ConfirmOrder() {
                           {item.name}
                         </Link>
                         <span>
-                          {item.quantity} X ₹{item.price}={" "}
-                          <b>₹{item.price * item.quantity}</b>
+                          {item.quantity} X ${item.price}={" "}
+                          <b>${item.price * item.quantity}</b>
                         </span>
                       </div>
                     ))}
@@ -104,24 +104,24 @@ function ConfirmOrder() {
                 <div>
                   <div>
                     <p>Subtotal : </p>
-                    <span>₹{subTotal}</span>
+                    <span>${subTotal}</span>
                   </div>
 
                   <div>
                     <p>Shipping Charges:</p>
-                    <span>₹{shippingCharges}</span>
+                    <span>${shippingCharges}</span>
                   </div>
 
                   <div>
                     <p>GST :</p>
-                    <span>₹{gst}</span>
+                    <span>${gst}</span>
                   </div>
                 </div>
                 <div className="orderSummaryTotal">
                   <p>
                     <b>Total:</b>
                   </p>
-                  <span>₹{totalFinalPrice}</span>
+                  <span>${totalFinalPrice}</span>
                 </div>
                 <button onClick={proceedToPayment}>Proceed To Payment</button>
               </div>

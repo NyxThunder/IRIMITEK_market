@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import "./ProductList.css";
+import "./ProductReviews.css"; //Check ProductList.css
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
@@ -23,160 +23,9 @@ import {
 import Navbar from "./Navbar";
 import Sidebar from "./Siderbar";
 import { DELETE_REVIEW_RESET } from "../../constants/productsConstatns";
-import { makeStyles } from "@mui/styles";
 import StarRateIcon from "@mui/icons-material/StarRate";
 
-const useStyles = makeStyles((theme) => ({
-  updateUser1: {
-    display: "flex",
-    alignItems: "flex-start",
-    backgroundColor: "#f1f1f1",
-    justifyContent: "center",
-    width: "100%",
-    gap: "1rem",
-    overflow: "hidden",
-    margin: "-1.1rem 0 0 0",
-    padding: 0,
-  },
-  firstBox_01: {
-    width: "20%",
-    margin: "0rem",
-    height: "fit-content",
-    backgroundColor: "white",
-    borderRadius: "5px",
-    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.5)",
-    display: "block",
-    [theme.breakpoints.down("999")]: {
-      display: "none",
-    },
-  },
-
-  toggleBox_01: {
-    width: "16rem",
-    margin: "0rem",
-    height: "fit-content",
-    backgroundColor: "white",
-    borderRadius: "5px",
-    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.5)",
-    display: "block",
-    zIndex: "100",
-    position: "absolute",
-    top: "58px",
-    left: "17px",
-  },
-  secondBox_01: {
-    width: "75%",
-
-    height: "fit-content",
-    display: "flex",
-    flexDirection: "column",
-    margin: "-0.5rem 0 0 0",
-    gap: "10px",
-    justifyContent: "center",
-    [theme.breakpoints.down("999")]: {
-      width: "100%",
-    },
-  },
-  navBar_01: {
-    margin: "0rem",
-  },
-  formSection: {
-    width: "100%",
-    margin: "auto",
-    borderRadius: "5px",
-    height: "100vh",
-    backgroundColor: "white",
-    padding: "1rem 2rem",
-  },
-  form: {
-    width: "350px",
-    margin: "-1rem auto 0 auto",
-    borderRadius: "5px",
-    padding: "2rem",
-  },
-
-  avatar: {
-    margin: " 8px auto",
-    backgroundColor: "black",
-  },
-  textField: {
-    marginBottom: theme.spacing(2), 
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: "black",
-      padding: "12px 14px",
-    },
-    "& .MuiInputLabel-root": {
-      color: "black",
-      fontSize: "14px",
-      textAlign: "center",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "black",
-      fontSize: "14px",
-      textAlign: "center",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: "black",
-        color: "black",
-      },
-      "& .MuiOutlinedInput-input": {
-        padding: "13px 8px",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "black",
-        color: "black",
-        outline: "none",
-      },
-    },
-  },
-
-  heading: {
-    textAlign: "center",
-    marginBottom: theme.spacing(3),
-    color: "#414141",
-    fontWeight: "bold",
-  },
-  heading_02: {
-    textAlign: "center",
-    textShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.5)",
-    color: "#414141",
-    fontWeight: "900",
-  },
-
-  nameInput: {
-    position: "relative",
-    "& > label": {
-      left: ".2rem",
-    },
-    padding: "4px 0px",
-    fontSize: "1rem",
-    width: "100%",
-    marginBottom: theme.spacing(5.5),
-    height: ".7rem",
-  },
-
-  loginButton: {
-    color: "#fff",
-    backgroundColor: "#000",
-    border: "2px solid #000",
-    margin: `${theme.spacing(3)}px 0`,
-    marginTop: "1rem",
-    "&:disabled": {
-      backgroundColor: "#444444", // faded black
-      color: "#FFFFFF",
-      borderColor: "#444444",
-    },
-    "&:hover": {
-      backgroundColor: "#ed1c24",
-      color: "#fff",
-      borderColor: "#ed1c24",
-    },
-  },
-}));
-
 function ProductReviews() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();
@@ -340,38 +189,38 @@ function ProductReviews() {
         <>
           <MetaData title="All Reviews" />
 
-          <div className={classes.updateUser1}>
+          <div className="updateUser1">
             <div
               className={
-                !toggle ? `${classes.firstBox_01}` : `${classes.toggleBox_01}`
+                !toggle ? "firstBox_01" : "toggleBox_01"
               }
             >
               <Sidebar />
             </div>
 
-            <div className={classes.secondBox_01}>
-              <div className={classes.navBar_01}>
+            <div className="secondBox_01">
+              <div className="navBar_01">
                 <Navbar toggleHandler={toggleHandler} />
               </div>
-              <div className={classes.formSection}>
+              <div className="formSection">
                 <form
-                  className={`${classes.form}`}
+                  className = "form"
                   onSubmit={productReviewsSubmitHandler}
                 >
-                  <Avatar className={classes.avatar}>
+                  <Avatar className="avatar">
                     <StarRateIcon />
                   </Avatar>
                   <Typography
                     variant="h5"
                     component="h1"
-                    className={classes.heading}
+                    className="heading"
                   >
                     All Reviews
                   </Typography>
                   <TextField
                     variant="outlined"
                     fullWidth
-                    className={`${classes.nameInput} ${classes.textField}`}
+                    className="nameInput textField"
                     label="Product Id"
                     required
                     value={productId}
@@ -395,7 +244,7 @@ function ProductReviews() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    className={classes.loginButton}
+                    className="loginButton"
                     disabled={
                       loading ? true : false || productId === "" ? true : false
                     }
@@ -417,7 +266,7 @@ function ProductReviews() {
                     />
                   </div>
                 ) : (
-                  <h1 className={classes.heading_02}>No Reviews Found</h1>
+                  <h1 className="heading_02">No Reviews Found</h1>
                 )}
               </div>
               ;

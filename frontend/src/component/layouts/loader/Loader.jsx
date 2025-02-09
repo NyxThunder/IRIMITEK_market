@@ -1,11 +1,11 @@
 import React from "react";
-import { ReactComponent as CricketBall } from "../../../Image/Loader-svg/LoaderBlack.svg";
+import { ReactComponent as IrimiLoaderSvg } from "../../../Image/Loader-svg/irimi_loader.svg";
 import "./Loader.css";
 
-const CricketBallLoader = () => (
-  <div className="cricket-ball-loader">
-    <CricketBall className="spinner" />
+const IrimiLoader = () => (
+  <div className="dropshipping-loader">
+    <IrimiLoaderSvg className="spinner" />
   </div>
 );
 
-export default CricketBallLoader;
+export default IrimiLoader;
