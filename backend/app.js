@@ -80,7 +80,7 @@ app.use(fileUpload());
 
 // Enable CORS (Cross-Origin Resource Sharing)
 app.use(cors({
-  origin: "http://localhost:3000", // Enable CORS for your frontend
+  origin: "*", // Enable CORS for all origins
   credentials: true,  // If you're sending cookies or credentials
 }));
 
