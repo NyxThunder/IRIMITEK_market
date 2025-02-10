@@ -17,17 +17,6 @@ process.on("uncaughtException" , (err) =>{
 // Connect With MongoDB
 connectDB();
 
-
-// conncet with cloudinary
-
-// Old method
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-// });
-
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.API_KEY,
