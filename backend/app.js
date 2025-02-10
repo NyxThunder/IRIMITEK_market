@@ -60,7 +60,7 @@
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
-const errorMiddleware = require("./middleware/error");
+const errorMiddleware = require("./middleWare/error");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload"); // For handling file uploads
