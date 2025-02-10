@@ -6,7 +6,7 @@ import MetaData from "../layouts/MataData/MataData";
 import IrimiLoader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
 import OrderCard from "./OrderCard";
-import "./MyOrder.css";
+import "./Myorder.css";
 
 const MyOrder = () => {
   const currentYear = new Date().getFullYear();
