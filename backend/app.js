@@ -21,7 +21,7 @@ app.use(fileUpload());
 
 // Enable CORS (Cross-Origin Resource Sharing)
 app.use(cors({
-  origin: "http://68.183.59.192:3000", // Enable CORS for all origins
+  origin: "http://188.166.1.85:3000", // Enable CORS for all origins
   credentials: true,  // If you're sending cookies or credentials
 }));
 
