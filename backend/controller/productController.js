@@ -87,36 +87,14 @@ exports.getAllProducts = asyncWrapper(async (req, res) => {
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all product admin route>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 exports.getAllProductsAdmin = asyncWrapper(async (req, res) => {
-  // const products = await ProductModel.find();
 
-  // res.status(201).json({  
-  //   success: true,
-  //   products,
-  // });
-  const resultPerPage = 6; // Number of products visible per page
-  const productsCount = await ProductModel.countDocuments(); // Get total number of products
-
-  // Create an instance of the ApiFeatures class, passing the ProductModel.find() query and req.query (queryString)
-  const apiFeature = new ApiFeatures(ProductModel.find(), { "keyword": "", "price[gte]": 0, "price[lte]": 100000, "ratings[gte]": 0 })
-    .search() // Apply search filter based on the query parameters
-    .filter(); // Apply additional filters based on the query parameters
-
-  let products = await apiFeature.query; // Fetch the products based on the applied filters and search
-
-  let filteredProductCount = products.length; // Number of products after filtering (for pagination)`
-
-  apiFeature.Pagination(resultPerPage); // Apply pagination to the products
-
-  // Mongoose no longer allows executing the same query object twice, so use .clone() to retrieve the products again
-  products = await apiFeature.query.clone(); // Retrieve the paginated products
+  const products = await ProductModel.find();
 
   res.status(201).json({
     success: true,
-    products: products,
-    productsCount: productsCount,
-    resultPerPage: resultPerPage,
-    filteredProductCount: filteredProductCount,
+    products,
   });
+
 });
 
 
