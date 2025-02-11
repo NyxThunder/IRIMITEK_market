@@ -67,7 +67,7 @@ function ProductList() {
     );
     const updatedItem = data.find((item) => item.id === id);
     if (updatedItem && updatedItem.status === "Inactive") {
-      fetchDataFromAPI(id);
+      // fetchDataFromAPI(id);
     }
   };
 
