@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrders, clearErrors, deleteOrder } from "../../actions/orderAction";
 import { useAlert } from "react-alert";
-
+import MUIDataTable from "mui-datatables";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import EditIcon from "@mui/icons-material/Edit";
@@ -67,72 +67,83 @@ function OrderList() {
   // DataGrid Columns
   const columns = [
     {
-      field: "id",
-      headerName: "Order ID",
-      minWidth: 120,
-      flex: 0.7,
-      headerClassName: "column-header",
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 100,
-      flex: 0.8,
-      headerClassName: "column-header hide-on-mobile",
-      renderCell: (params) => {
-        const color = params.value === "Delivered" ? "green" : "red";
-        return <div style={{ color, fontWeight: 600 }}>{params.value}</div>;
+      name: "Order ID",
+      label: "Order ID",
+      options: {
+        filter: true,
+        sort: true,
       },
     },
     {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 120,
-      flex: 0.8,
-      headerClassName: "column-header hide-on-mobile",
+      name: "Status",
+      label: "Status",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => {
+          const color = value === "Delivered" ? "green" : "red";
+          return <div style={{ color, fontWeight: 600 }}>{value}</div>;
+        },
+      },
     },
     {
-      field: "amount",
-      headerName: "Amount",
-      type: "number",
-      minWidth: 120,
-      flex: 0.8,
-      headerClassName: "column-header hide-on-mobile",
+      name: "Items Qty",
+      label: "Items Qty",
+      options: {
+        filter: true,
+        sort: true,
+      },
     },
     {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1.5,
-      sortable: false,
-      minWidth: 150,
-      headerClassName: "column-header1",
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/admin/order/${params.row.id}`}>
-              <EditIcon className="icon-" />
-            </Link>
-            <div onClick={() => deleteOrderHandler(params.row.id)}>
-              <DeleteIcon className="iconbtn" />
+      name: "Amount",
+      label: "Amount",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "Actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta) => {
+          const orderId = tableMeta.rowData[0];
+          return (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Link to={`/admin/order/${orderId}`}>
+                <EditIcon className="icon-" />
+              </Link>
+              <div onClick={() => deleteOrderHandler(orderId)}>
+                <DeleteIcon className="iconbtn" />
+              </div>
             </div>
-          </>
-        );
+          );
+        },
       },
     },
   ];
 
-  // DataGrid Rows
-  const rows = [];
+  // MUIDataTable Rows
+  const data = [];
   orders &&
     orders.forEach((item) => {
-      rows.push({
-        id: item._id,
-        itemsQty: item.orderItems.length,
-        amount: item.totalPrice,
-        status: item.orderStatus,
+      data.push({
+        "Order ID": item._id,
+        Status: item.orderStatus,
+        "Items Qty": item.orderItems.length,
+        Amount: item.totalPrice,
+        Actions: item._id,
       });
     });
+
+
+  const options = {
+    filterType: "dropdown",
+    responsive: "scroll",
+    selectableRows: true
+  };
 
   return (
     <>
@@ -148,14 +159,12 @@ function OrderList() {
             <div className="list-table">
               <Navbar toggleHandler={toggleHandler} />
               <div className="productListContainer">
-                <h4 id="productListHeading">ALL ORDERS</h4>
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={10}
-                  disableSelectionOnClick
-                  className="dataTable"
-                  autoHeight
+                <h4 id="productListHeading" style={{fontSize: 24}}>ALL ORDERS</h4>
+                <MUIDataTable
+                  title={"All Orders"}
+                  data={data}
+                  columns={columns_dataTable}
+                  options={options}
                 />
               </div>
             </div>

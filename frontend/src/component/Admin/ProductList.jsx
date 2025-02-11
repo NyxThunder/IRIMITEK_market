@@ -90,14 +90,14 @@ function ProductList() {
         customBodyRender: (value, tableMeta) => {
           const id = tableMeta.rowData[0];
           return (
-            <>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Link to={`/admin/product/${id}`} style={{ marginRight: "1rem" }}>
                 <EditIcon className="icon-" />
               </Link>
               <div onClick={() => deleteProductHandler(id)}>
                 <DeleteIcon className="iconbtn" />
               </div>
-            </>
+            </div>
           );
         },
       },
@@ -106,17 +106,17 @@ function ProductList() {
 
   const data = products
     ? products.map((item) => [
-        item._id,
-        item.name,
-        item.Stock,
-        item.price,
-      ])
+      item._id,
+      item.name,
+      item.Stock,
+      item.price,
+    ])
     : [];
-  
+
   const options = {
-    filterType: "checkbox",
-    responsive: "standard",
-    selectableRows: "none",
+    filterType: "dropdown",
+    responsive: "scroll",
+    selectableRows: true
   };
 
   const toggleHandler = () => {
@@ -145,13 +145,13 @@ function ProductList() {
         <>
           <MetaData title={`ALL PRODUCTS - Admin`} />
           <div className="product-list" style={{ marginTop: 0 }}>
-            <div className={!toggle ? "listSidebar" : "toggleBox"}>
+            <div className={!toggle ? "listSidebar" : "toggleBox"} style={{ flex: 1 }}>
               <Sidebar />
             </div>
-            <div className="list-table">
+            <div className="list-table" style={{ flex: 4 }}>
               <Navbar toggleHandler={toggleHandler} />
-              <div className="productListContainer">
-                <h4 id="productListHeading">ALL PRODUCTS</h4>
+              <div className="productListContainer" style={{ padding: "20px" }}>
+                <h4 id="productListHeading" style={{ fontSize: "24px" }}>ALL PRODUCTS</h4>
                 <MUIDataTable
                   title={"All Products"}
                   data={data}

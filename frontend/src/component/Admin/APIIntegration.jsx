@@ -117,69 +117,11 @@ function ProductList() {
     },
   ];
 
-
-
-  const columns = [
-    {
-      field: "id",
-      headerName: "API ID",
-      minWidth: 230,
-      flex: 0.5,
-      headerClassName: "column-header",
-    },
-    {
-      field: "name",
-      headerName: "API Name",
-      minWidth: 150,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 100,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1,
-      sortable: false,
-      minWidth: 230,
-      headerClassName: "column-header1",
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/admin/api_integration/${params.row.id}`} style={{ marginLeft: "1rem" }}>
-              <EditIcon className="icon-" />
-            </Link>
-            <div onClick={() => deleteProductHandler(params.row.id)}>
-              <DeleteIcon className="iconbtn" />
-            </div>
-          </>
-        );
-      },
-    },
-  ];
-
-  const rows = [];
-
   const options = {
     filterType: "dropdown",
     responsive: "scroll",
     selectableRows: true
   };
-
-  products &&
-    products.forEach((item) => {
-      rows.push({
-        id: item._id,
-        stock: item.Stock,
-        price: item.price,
-        name: item.name,
-      });
-    });
 
   const toggleHandler = () => {
     setToggle(!toggle);
@@ -215,7 +157,7 @@ function ProductList() {
               <div className="productListContainer">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <h4>New Possible APIs</h4>
-                  <Button onClick={() => navigate("/admin/new/product")} className="addProductBtn">Add API</Button>
+                  <Button onClick={() => navigate("/admin/new/product")} className="primary">Add API</Button>
                 </div>
                 <MUIDataTable
                   title={"API Integrations"}

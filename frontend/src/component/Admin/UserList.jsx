@@ -8,13 +8,13 @@ import { Button } from "@mui/material";
 import MetaData from "../layouts/MataData/MataData";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import MUIDataTable from "mui-datatables";
 import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
 import Loader from "../layouts/loader/Loader";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstanat";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function UserList() {
   const dispatch = useDispatch();
@@ -54,72 +54,82 @@ function UserList() {
 
   const columns = [
     {
-      field: "name",
-      headerName: "Name",
-      minWidth: 150,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      minWidth: 150,
-      flex: 0.7,
-      headerClassName: "column-header hide-on-mobile",
-    },
-    {
-      field: "role",
-      headerName: "Role",
-      type: "number",
-      minWidth: 150,
-      flex: 0.3,
-      headerClassName: "column-header hide-on-mobile",
-      cellClassName: (params) => {
-        return params.row.role === "admin" ? "greenColor" : "redColor";
+      name: "Name",
+      label: "Name",
+      options: {
+        filter: true,
+        sort: true,
       },
     },
     {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      headerClassName: "column-header hide-on-mobile",
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/admin/user/${params.row.id}`}>
-              <EditIcon className="icon-" />
-            </Link>
-  
-            <Button onClick={() => deleteUserHandler(params.row.id)}>
-              <DeleteIcon className="iconbtn" />
-            </Button>
-          </>
-        );
+      name: "Email",
+      label: "Email",
+      options: {
+        filter: true,
+        sort: true,
       },
     },
     {
-      field: "id",
-      headerName: "User ID",
-      minWidth: 180,
-      flex: 0.8,
-      sortable: false,
-      headerClassName: "column-header hide-on-mobile",
+      name: "Role",
+      label: "Role",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => {
+          return (
+            <span className={value === "admin" ? "greenColor" : "redColor"}>
+              {value}
+            </span>
+          );
+        },
+      },
+    },
+    {
+      name: "Actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta) => {
+          return (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Link to={`/admin/user/${tableMeta.rowData[4]}`}>
+                <EditIcon className="icon-" />
+              </Link>
+              <Button onClick={() => deleteUserHandler(tableMeta.rowData[4])}>
+                <DeleteIcon className="iconbtn" />
+              </Button>
+            </div>
+          );
+        },
+      },
+    },
+    {
+      name: "ID",
+      label: "User ID",
+      options: {
+        filter: false,
+        sort: false,
+      },
     },
   ];
 
-  const rows = [];
+  const data = users.map((user) => ({
+    Name: user.name,
+    Email: user.email,
+    Role: user.role,
+    Actions: "",
+    ID: user._id,
+  }));
 
-  users &&
-    users.forEach((item) => {
-      rows.push({
-        id: item._id,
-        role: item.role,
-        email: item.email,
-        name: item.name,
-      });
-    });
+
+
+  const options = {
+    filterType: "dropdown",
+    responsive: "scroll",
+    selectableRows: true
+  };
+
 
   // togle handler =>
   const toggleHandler = () => {
@@ -159,14 +169,11 @@ function UserList() {
               <Navbar toggleHandler={toggleHandler} />
               <div className="productListContainer">
                 <h4 id="productListHeading">ALL USERS</h4>
-
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={10}
-                  disableSelectionOnClick
-                  className="dataTable"
-                  autoHeight
+                <MUIDataTable
+                  title={"All Users"}
+                  data={data}
+                  columns={columns_dataTable}
+                  options={options}
                 />
               </div>
             </div>
