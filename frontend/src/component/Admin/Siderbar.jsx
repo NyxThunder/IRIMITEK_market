@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Typography, Button } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
 import AddIcon from "@mui/icons-material/Add";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import RateReviewIcon from "@mui/icons-material/RateReview";
@@ -73,6 +74,19 @@ function Sidebar() {
                   <span className="admin-sidebar-sideBarMenuItem_text">
                     {" "}
                     Products
+                  </span>
+                </li>
+              </Link>
+              <Link
+                to="/admin/api_integration"
+                style={{ color: "inherit", textDecoration: "none", display: "flex", flexDirection: "row", justifyContent: "center" }}
+              >
+                <li className="admin-sidebar-sideBarMenuItem">
+                  <IntegrationInstructionsIcon fontSize="large" />
+
+                  <span className="admin-sidebar-sideBarMenuItem_text">
+                    {" "}
+                    API Integration
                   </span>
                 </li>
               </Link>
