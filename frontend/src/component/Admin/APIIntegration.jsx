@@ -51,6 +51,63 @@ function ProductList() {
     dispatch(deleteProduct(id));
   };
 
+
+
+  const data = products.map((item) => ({
+    id: item._id,
+    name: item.name,
+    status: item.status,
+  }));
+  
+  const columns_dataTable = [
+    {
+      name: "id",
+      label: "API ID",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "name",
+      label: "API Name",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "status",
+      label: "Status",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <>
+              <Link to={`/admin/api_integration/${tableMeta.rowData[0]}`} style={{ marginLeft: "1rem" }}>
+                <EditIcon className="icon-" />
+              </Link>
+              <div onClick={() => deleteProductHandler(tableMeta.rowData[0])}>
+                <DeleteIcon className="iconbtn" />
+              </div>
+            </>
+          );
+        },
+      },
+    },
+  ];
+
+
+
   const columns = [
     {
       field: "id",
@@ -102,7 +159,7 @@ function ProductList() {
     responsive: "scroll",
     selectableRows: true
   };
-  
+
   products &&
     products.forEach((item) => {
       rows.push({
@@ -158,8 +215,8 @@ function ProductList() {
                 <h4>New Datatable test!</h4>
                 <MUIDataTable
                   title={"API Integrations"}
-                  data={products}
-                  columns={columns}
+                  data={data}
+                  columns={columns_dataTable}
                   options={options}
                 />
               </div>
