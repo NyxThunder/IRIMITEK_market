@@ -53,12 +53,24 @@ function ProductList() {
 
 
 
-  const data = products.map((item) => ({
-    id: item._id,
-    name: item.name,
-    status: item.status,
-  }));
-  
+  const [data, setData] = useState([
+    { id: "1", name: "G2A", status: "Active" },
+    { id: "2", name: "Kinguin", status: "Inactive" },
+    { id: "3", name: "Kyesender", status: "Active" },
+  ]);
+
+  const handleToggleStatus = (id) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+      item.id === id ? { ...item, status: item.status === "Active" ? "Inactive" : "Active" } : item
+      )
+    );
+    const updatedItem = data.find((item) => item.id === id);
+    if (updatedItem && updatedItem.status === "Inactive") {
+      fetchDataFromAPI(id);
+    }
+  };
+
   const columns_dataTable = [
     {
       name: "id",
@@ -92,14 +104,13 @@ function ProductList() {
         sort: false,
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
-            <>
-              <Link to={`/admin/api_integration/${tableMeta.rowData[0]}`} style={{ marginLeft: "1rem" }}>
-                <EditIcon className="icon-" />
-              </Link>
-              <div onClick={() => deleteProductHandler(tableMeta.rowData[0])}>
-                <DeleteIcon className="iconbtn" />
-              </div>
-            </>
+            <Button
+              onClick={() => handleToggleStatus(tableMeta.rowData[0])}
+              variant="contained"
+              color={tableMeta.rowData[2] === "Active" ? "secondary" : "primary"}
+            >
+              {tableMeta.rowData[2] === "Active" ? "Deactivate" : "Activate"}
+            </Button>
           );
         },
       },
@@ -202,17 +213,10 @@ function ProductList() {
             <div className="list-table">
               <Navbar toggleHandler={toggleHandler} />
               <div className="productListContainer">
-                <Button onClick={() => navigate("/admin/new/product")} className="addProductBtn">Add API</Button>
-                <h4 id="productListHeading">ALL PRODUCTS</h4>
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={10}
-                  disableSelectionOnClick
-                  className="dataTable"
-                  autoHeight
-                />
-                <h4>New Datatable test!</h4>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h4>New Possible APIs</h4>
+                  <Button onClick={() => navigate("/admin/new/product")} className="addProductBtn">Add API</Button>
+                </div>
                 <MUIDataTable
                   title={"API Integrations"}
                   data={data}

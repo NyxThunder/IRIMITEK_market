@@ -10,7 +10,7 @@ import {
   getAdminProducts,
   deleteProduct,
 } from "../../actions/productAction";
-
+import MUIDataTable from "mui-datatables";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MetaData from "../layouts/MataData/MataData";
@@ -26,7 +26,7 @@ function ProductList() {
   const [toggle, setToggle] = useState(false);
 
   const { error, products, loading } = useSelector((state) => state.products) || {};
-  const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateProduct) || {}; 
+  const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateProduct) || {};
 
   useEffect(() => {
     if (error) {
@@ -48,69 +48,76 @@ function ProductList() {
     dispatch(deleteProduct(id));
   };
 
-  const columns = [
+  const columns_dataTable = [
     {
-      field: "id",
-      headerName: "Product ID",
-      minWidth: 230,
-      flex: 0.5,
-      headerClassName: "column-header",
+      name: "product_id",
+      label: "Product ID",
+      options: {
+        filter: true,
+        sort: true,
+      }
     },
     {
-      field: "name",
-      headerName: "Name",
-      minWidth: 150,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
+      name: "name",
+      label: "Name",
+      options: {
+        filter: true,
+        sort: true,
+      }
     },
     {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
-      minWidth: 100,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
+      name: "stock",
+      label: "Stock",
+      options: {
+        filter: true,
+        sort: true,
+      }
     },
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      minWidth: 200,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
+      name: "price",
+      label: "Price",
+      options: {
+        filter: true,
+        sort: true,
+      }
     },
     {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1,
-      sortable: false,
-      minWidth: 230,
-      headerClassName: "column-header1",
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/admin/product/${params.row.id}`} style={{ marginLeft: "1rem" }}>
-              <EditIcon className="icon-" />
-            </Link>
-            <div onClick={() => deleteProductHandler(params.row.id)}>
-              <DeleteIcon className="iconbtn" />
-            </div>
-          </>
-        );
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta) => {
+          const id = tableMeta.rowData[0];
+          return (
+            <>
+              <Link to={`/admin/product/${id}`} style={{ marginRight: "1rem" }}>
+                <EditIcon className="icon-" />
+              </Link>
+              <div onClick={() => deleteProductHandler(id)}>
+                <DeleteIcon className="iconbtn" />
+              </div>
+            </>
+          );
+        },
       },
     },
   ];
 
-  const rows = [];
-  products &&
-    products.forEach((item) => {
-      rows.push({
-        id: item._id,
-        stock: item.Stock,
-        price: item.price,
-        name: item.name,
-      });
-    });
+  const data = products
+    ? products.map((item) => [
+        item._id,
+        item.name,
+        item.Stock,
+        item.price,
+      ])
+    : [];
+  
+  const options = {
+    filterType: "checkbox",
+    responsive: "standard",
+    selectableRows: "none",
+  };
 
   const toggleHandler = () => {
     setToggle(!toggle);
@@ -145,13 +152,11 @@ function ProductList() {
               <Navbar toggleHandler={toggleHandler} />
               <div className="productListContainer">
                 <h4 id="productListHeading">ALL PRODUCTS</h4>
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={10}
-                  disableSelectionOnClick
-                  className="dataTable"
-                  autoHeight
+                <MUIDataTable
+                  title={"All Products"}
+                  data={data}
+                  columns={columns_dataTable}
+                  options={options}
                 />
               </div>
             </div>
