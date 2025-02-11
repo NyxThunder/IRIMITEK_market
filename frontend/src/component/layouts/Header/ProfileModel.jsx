@@ -23,21 +23,27 @@ const ProfileModal = ({ user, isAuthenticated }) => {
   const modalRef = useRef(null);
 
   const createdAt = (user) => {
-   const createdAt = new Date(user.createdAt);
-   const options = {
-     year: "numeric",
-     month: "2-digit",
-     day: "2-digit",
-     hour: "2-digit",
-     minute: "2-digit",
-     hour12: true,
-     timeZone: "Asia/Kolkata",
-   };
+    const createdAt = new Date(user.createdAt);
+    if (isNaN(createdAt.getTime())) {
+      // Handle invalid date
+      console.error("Invalid date value:", user.createdAt);
+      return "Invalid date";
+    }
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "Asia/Kolkata",
+    };
 
-   const formatter = new Intl.DateTimeFormat("en-IN", options);
-   const formattedDate = formatter.format(createdAt);
-   return formattedDate;
- };
+    const formatter = new Intl.DateTimeFormat("en-IN", options);
+    const formattedDate = formatter.format(createdAt);
+    return formattedDate;
+  };
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {

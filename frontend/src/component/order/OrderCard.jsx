@@ -18,6 +18,11 @@ import "./OrderCard.css";
 
 const createdAt = (user) => {
   const createdAt = new Date(user.createdAt);
+  if (isNaN(createdAt.getTime())) {
+    // Handle invalid date
+    console.error("Invalid date value:", user.createdAt);
+    return "Invalid date";
+  }
   const options = {
     year: "numeric",
     month: "2-digit",
