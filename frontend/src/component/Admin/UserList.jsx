@@ -52,7 +52,7 @@ function UserList() {
 
   // Datagrid  values  and schema
 
-  const columns = [
+  const columns_dataTable = [
     {
       name: "Name",
       label: "Name",

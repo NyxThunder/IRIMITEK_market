@@ -65,7 +65,7 @@ function OrderList() {
   };
 
   // DataGrid Columns
-  const columns = [
+  const columns_dataTable = [
     {
       name: "Order ID",
       label: "Order ID",
