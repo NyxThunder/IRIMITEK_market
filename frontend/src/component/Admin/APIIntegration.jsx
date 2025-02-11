@@ -96,6 +96,13 @@ function ProductList() {
   ];
 
   const rows = [];
+
+  const options = {
+    filterType: "dropdown",
+    responsive: "scroll",
+    selectableRows: true
+  };
+  
   products &&
     products.forEach((item) => {
       rows.push({
