@@ -29,10 +29,13 @@ import {
   
 
 } from "./reducers/orderReducer";
+import { newApiReducer,  apisReducer, deleteUpdateApiReducer, apiDetailsReducer} from "./reducers/apiReducer";
 
 const rootReducer = combineReducers({
   products: productsReducer,
+  apis: apisReducer,
   productDetails: productDetailsReducer,
+  apiDetails: apiDetailsReducer,
   userData: userReducer,
   profileData: profileReducer,
   forgetPassword: forgetPasswordReducer,
@@ -42,6 +45,8 @@ const rootReducer = combineReducers({
   orderDetails: orderDetialsReducer,
   addNewReview: newReviewReducer,
   addNewProduct: newProductReducer,
+  addNewAPI: newApiReducer,
+  deleteUpdateApi: deleteUpdateApiReducer,
   deleteUpdateProduct: deleteUpdateReducer,
   allOrders: allOrdersReducer,
   deleteUpdateOrder: deletUpdateOrderReducer,

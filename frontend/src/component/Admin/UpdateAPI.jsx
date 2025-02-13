@@ -34,26 +34,33 @@ import MenuItem from "@mui/material/MenuItem";
 import Navbar from "./Navbar";
 import "../User/LoginFromStyle.css";
 
-function UpdateProduct() {
+function UpdateAPI() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   const alert = useAlert();
 
+
   const { id: apiId } = useParams();
-  const { error, product } = useSelector((state) => state.productDetails);
+  const { error, api } = useSelector((state) => state.apis);
 
   const { loading, error: updateError, isUpdated } = useSelector(
-    (state) => state.deleteUpdateProduct
+    (state) => state.deleteUpdateApi
   );
 
   const [name, setName] = useState("");
-  const [clientId, setPrice] = useState("");
-  const [clientSecret, setDescription] = useState("");
-  const [toggle, setToggle] = useState(false);
-
+  const [clientId, setClientId] = useState(0);
+  const [clientSecret, setClientSecret] = useState("");
+  
   useEffect(() => {
-    
+    if (apiId && api._id !== apiId) {
+      dispatch(getProductDetails(apiId));
+    } else {
+      setName(api.name);
+      setClientId(api.clientId);
+      setClientSecret(api.clientSecret);
+    }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -65,15 +72,17 @@ function UpdateProduct() {
     }
 
     if (isUpdated) {
-      alert.success("New API Added Successfully");
+      alert.success("API Updated Successfully");
       navigateRef.current("/admin/api_integration");
-      dispatch({ type: UPDATE_API_INTEGRATION });
+      dispatch({ type: UPDATE_API_RESET });
     }
   }, [
     dispatch,
     alert,
     error,
     isUpdated,
+    apiId,
+    api,
     updateError,
   ]);
 
@@ -81,9 +90,10 @@ function UpdateProduct() {
     e.preventDefault();
     const myForm = new FormData();
     myForm.set("name", name);
-    myForm.set("id", clientId);
-    myForm.set("secret", clientSecret);
-    dispatch(updateProduct(apiId, myForm));
+    myForm.set("clientId", clientId);
+    myForm.set("clientSecret", clientSecret);
+
+    dispatch(updateApi(apiId, myForm));
   };
 
   // togle handler =>
@@ -99,7 +109,7 @@ function UpdateProduct() {
       ) : (
         <>
           <>
-            <MetaData title="Add new" />
+            <MetaData title="Update Api" />
             <div className="updateProduct">
               <div
                 className={
@@ -128,14 +138,14 @@ function UpdateProduct() {
                       component="h1"
                       className="heading"
                     >
-                      Connect New API
+                      Create API
                     </Typography>
                     {/* SpellcheckIcon */}
                     <TextField
                       variant="outlined"
                       fullWidth
                       className={"nameInput textField"}
-                      label="Account Name"
+                      label="API Name"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -154,33 +164,33 @@ function UpdateProduct() {
                     />
                     <TextField
                       variant="outlined"
-                      label="Client ID"
-                      value={clientId}
-                      required
                       fullWidth
                       className={"nameInput textField"}
-                      onChange={(e) => setPrice(e.target.value)}
+                      label="Client Id"
+                      required
+                      value={clientId}
+                      onChange={(e) => setClientId(e.target.value)}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            style={{
-                              fontSize: 20,
-                              color: "#414141",
-                            }}
-                          >
+                          <InputAdornment position="end">
+                            <ShoppingCartOutlinedIcon
+                              style={{
+                                fontSize: 20,
+                                color: "#414141",
+                              }}
+                            />
                           </InputAdornment>
                         ),
                       }}
                     />
-
                     <TextField
                       variant="outlined"
                       label="Client Secret"
                       value={clientSecret}
                       required
+                      fullWidth
                       className={"passwordInput textField"}
-                      onChange={(e) => setStock(e.target.value)}
+                      onChange={(e) => setClientSecret(e.target.value)}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment
@@ -190,7 +200,7 @@ function UpdateProduct() {
                               color: "#414141",
                             }}
                           >
-                            <StorageIcon />
+                            <AttachMoneyIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -203,7 +213,7 @@ function UpdateProduct() {
                       onClick={createProductSubmitHandler}
                       disabled={loading ? true : false}
                     >
-                      Add
+                      Update
                     </Button>
                   </form>
                 </div>
@@ -215,4 +225,4 @@ function UpdateProduct() {
     </>
   );
 }
-export default UpdateProduct;
+export default UpdateAPI;
