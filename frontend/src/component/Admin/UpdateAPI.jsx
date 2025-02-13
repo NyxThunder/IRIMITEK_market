@@ -164,7 +164,7 @@ function UpdateProduct() {
       ) : (
         <>
           <>
-            <MetaData title="Create Product" />
+            <MetaData title="Add new" />
             <div className="updateProduct">
               <div
                 className={
@@ -200,7 +200,7 @@ function UpdateProduct() {
                       variant="outlined"
                       fullWidth
                       className={"nameInput textField"}
-                      label="Product Name"
+                      label="Account Name"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -219,7 +219,7 @@ function UpdateProduct() {
                     />
                     <TextField
                       variant="outlined"
-                      label="Price"
+                      label="Client ID"
                       value={price}
                       required
                       fullWidth
@@ -234,7 +234,6 @@ function UpdateProduct() {
                               color: "#414141",
                             }}
                           >
-                            <AttachMoneyIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -242,7 +241,7 @@ function UpdateProduct() {
 
                     <TextField
                       variant="outlined"
-                      label="Stock"
+                      label="Client Secret"
                       value={Stock}
                       required
                       className={"passwordInput textField"}
@@ -261,96 +260,7 @@ function UpdateProduct() {
                         ),
                       }}
                     />
-                    <TextField
-                      variant="outlined"
-                      label="Prodcut Info"
-                      value={info}
-                      required
-                      className={"passwordInput textField"}
-                      onChange={(e) => setInfo(e.target.value)}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            style={{
-                              fontSize: 20,
-                              color: "#414141",
-                            }}
-                          >
-                            <InfoIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-
-                    <div className="selectOption">
-                      {!isCategory && (
-                        <Typography
-                          variant="body2"
-                          className="labelText"
-                        >
-                          Choose Category
-                        </Typography>
-                      )}
-                      <FormControl className="formControl">
-                        <Select
-                          variant="outlined"
-                          fullWidth
-                          value={category}
-                          onChange={handleCategoryChange}
-                          className="select"
-                          inputProps={{
-                            name: "category",
-                            id: "category-select",
-                          }}
-                          MenuProps={{
-                            classes: {
-                              paper: "menu"
-                            },
-                            anchorOrigin: {
-                              vertical: "bottom",
-                              horizontal: "left",
-                            },
-                            transformOrigin: {
-                              vertical: "top",
-                              horizontal: "left",
-                            },
-                            getContentAnchorEl: null,
-                          }}
-                        >
-                          {!category && (
-                            <MenuItem value="">
-                              <em>Choose Category</em>
-                            </MenuItem>
-                          )}
-                          {categories.map((cate) => (
-                            <MenuItem key={cate} value={cate}>
-                              {cate}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </div>
-
-                    <TextField
-                      variant="outlined"
-                      fullWidth
-                      className="descriptionInput"
-                      label="Product Description"
-                      multiline
-                      rows={1}
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <DescriptionIcon
-                              className="descriptionIcon"
-                            />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
+                    
 
                     <div className="root">
                       <div className="imgIcon">
