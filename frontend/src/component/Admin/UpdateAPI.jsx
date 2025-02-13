@@ -48,46 +48,12 @@ function UpdateProduct() {
   );
 
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [isCategory, setIsCategory] = useState(false);
-  const [Stock, setStock] = useState(0);
-  const [images, setImages] = useState([]);
-  const [info , setInfo] = useState('');
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [oldImages, setOldImages] = useState([]);
-  const fileInputRef = useRef();
+  const [clientId, setPrice] = useState("");
+  const [clientSecret, setDescription] = useState("");
   const [toggle, setToggle] = useState(false);
-  const categories = [
-    "Operating System",
-    "Business & Office",
-    "Antivirus & security",
-    "Design & illustration",
-    "Tools",
-    "Gaming software",
-    "Music & sound",
-    "Video & animation",
-    "Programming",
-  ];
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-    setIsCategory(true);
-  };
 
   useEffect(() => {
-    if (product && product._id !== apiId) {
-      dispatch(getProductDetails(apiId));
-    } else {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategory("");
-      setInfo(product.info);  
-      setStock(product.Stock);
-      setOldImages(product.images);
-    }
-
+    
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -99,17 +65,15 @@ function UpdateProduct() {
     }
 
     if (isUpdated) {
-      alert.success("Product Updated Successfully");
-      navigateRef.current("/admin/products");
-      dispatch({ type: UPDATE_PRODUCT_RESET });
+      alert.success("New API Added Successfully");
+      navigateRef.current("/admin/api_integration");
+      dispatch({ type: UPDATE_API_INTEGRATION });
     }
   }, [
     dispatch,
     alert,
     error,
     isUpdated,
-    apiId,
-    product,
     updateError,
   ]);
 
@@ -117,40 +81,11 @@ function UpdateProduct() {
     e.preventDefault();
     const myForm = new FormData();
     myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("Stock", Stock);
-    myForm.set("info", info);
-    images.forEach((currImg) => {
-      myForm.append("images", currImg);
-    });
-
-
+    myForm.set("id", clientId);
+    myForm.set("secret", clientSecret);
     dispatch(updateProduct(apiId, myForm));
   };
 
-
-  const handleImageUpload = () => {
-    fileInputRef.current.click();
-  };
-
-  const updateProductImagesChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImages([]);
-    setImagesPreview([]);
-    setOldImages([]);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((prev) => [...prev, reader.result]);
-          setImages((prev) => [...prev, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
   // togle handler =>
   const toggleHandler = () => {
     console.log("toggle");
@@ -193,7 +128,7 @@ function UpdateProduct() {
                       component="h1"
                       className="heading"
                     >
-                      Create Product
+                      Connect New API
                     </Typography>
                     {/* SpellcheckIcon */}
                     <TextField
@@ -220,10 +155,10 @@ function UpdateProduct() {
                     <TextField
                       variant="outlined"
                       label="Client ID"
-                      value={price}
+                      value={clientId}
                       required
                       fullWidth
-                      className={"passwordInput textField"}
+                      className={"nameInput textField"}
                       onChange={(e) => setPrice(e.target.value)}
                       InputProps={{
                         endAdornment: (
@@ -242,7 +177,7 @@ function UpdateProduct() {
                     <TextField
                       variant="outlined"
                       label="Client Secret"
-                      value={Stock}
+                      value={clientSecret}
                       required
                       className={"passwordInput textField"}
                       onChange={(e) => setStock(e.target.value)}
@@ -260,72 +195,6 @@ function UpdateProduct() {
                         ),
                       }}
                     />
-                    
-
-                    <div className="root">
-                      <div className="imgIcon">
-                        <CollectionsIcon
-                          fontSize="large"
-                          style={{ fontSize: 40 }}
-                        />
-                      </div>
-
-                      <input
-                        type="file"
-                        name="avatar"
-                        className="input"
-                        accept="image/*"
-                        onChange={updateProductImagesChange}
-                        multiple
-                        style={{ display: "none" }}
-                        ref={fileInputRef}
-                      />
-                      <label htmlFor="avatar-input">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className="uploadAvatarButton"
-                          startIcon={
-                            <CloudUploadIcon
-                              style={{
-                                color: "#FFFFFF",
-                              }}
-                            />
-                          }
-                          onClick={handleImageUpload}
-                        >
-                          <p className="uploadAvatarText">
-                            Upload Images
-                          </p>
-                        </Button>
-                      </label>
-                    </div>
-
-                    {imagesPreview.length > 0 ? (
-                      <Box className="imageArea">
-                        {imagesPreview &&
-                          imagesPreview.map((image, index) => (
-                            <img
-                              key={index}
-                              src={image}
-                              alt="Product Preview"
-                              className="image"
-                            />
-                          ))}
-                      </Box>
-                    ) : (
-                      <Box className="imageArea">
-                        {oldImages &&
-                          oldImages.map((image, index) => (
-                            <img
-                              key={index}
-                              src={image.url}
-                              alt="Old Product Preview"
-                              className="image"
-                            />
-                          ))}
-                      </Box>
-                    )}
 
                     <Button
                       variant="contained"
@@ -334,7 +203,7 @@ function UpdateProduct() {
                       onClick={createProductSubmitHandler}
                       disabled={loading ? true : false}
                     >
-                      Create
+                      Add
                     </Button>
                   </form>
                 </div>
