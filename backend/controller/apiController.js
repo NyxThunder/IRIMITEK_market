@@ -1,13 +1,45 @@
 const apiModel = require("../model/apiModel");
+const ProductModel = require("../model/ProductModel");
 const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ApiFeatures = require("../utils/apiFeatures");
+const G2AApi = require("./g2aApiController");
 const cloudinary = require("cloudinary");
+const axios = require('axios');
+const productController = require("./productController");
 
 // >>>>>>>>>>>>>>>>>>>>> createApi Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
 exports.createApi = asyncWrapper(async (req, res) => {
   
   const data = await apiModel.create(req.body);
+
+  if(req.body.name === "G2A"){
+    const g2aApi = new G2AApi();
+    const response = await g2aApi.importProducts({page: 2});
+    console.log(response);
+  }
+
+  if (response && response.products) {
+    for (const product of response.products) {
+      // Ensure the product data is correctly formatted
+      const productData = {
+        body: {
+          name: product.name,
+          price: product.price,
+          description: product.description,
+          category: product.category,
+          Stock: product.Stock,
+          info: product.info,
+          images: product.images,
+        },
+        user: req.user, // Pass the user information if needed
+      };
+      await productController.createProduct(productData);
+    }
+  }
+
+
+
 
   res.status(200).json({ success: true, data: data });
 });

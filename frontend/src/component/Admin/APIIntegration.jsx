@@ -8,9 +8,9 @@ import { useAlert } from "react-alert";
 
 import {
   clearErrors,
-  getAdminProducts,
-  deleteProduct,
-} from "../../actions/productAction";
+  getAdminApis,
+  deleteApi,
+} from "../../actions/apiAction";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,17 +19,17 @@ import Loader from "../layouts/loader/Loader";
 
 import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
-import { DELETE_PRODUCT_RESET } from "../../constants/productsConstatns";
+import { DELETE_API_RESET } from "../../constants/apiConstatns";
 import { Button } from "@mui/material";
 
-function ProductList() {
+function ApiList() {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 
-  const { error, products, loading } = useSelector((state) => state.products) || {};
-  const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateProduct) || {};
+  const { error, apis, loading } = useSelector((state) => state.apis) || {};
+  const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateApi) || {};
 
   useEffect(() => {
     if (error) {
@@ -42,13 +42,13 @@ function ProductList() {
     }
     if (isDeleted) {
       alert.success("API gateway deleted Successfully");
-      dispatch({ type: DELETE_PRODUCT_RESET });
+      dispatch({ type: DELETE_API_RESET });
     }
-    dispatch(getAdminProducts());
+    dispatch(getAdminApis());
   }, [dispatch, error, alert, deleteError, isDeleted]);
 
-  const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
+  const deleteApiHandler = (id) => {
+    dispatch(deleteApi(id));
   };
 
 
@@ -157,7 +157,7 @@ function ProductList() {
               <div className="productListContainer">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <h4>New Possible APIs</h4>
-                  <Button onClick={() => navigate("/admin/new/product")} className="primary">Add API</Button>
+                  <Button onClick={() => navigate("/admin/new/api")} className="primary">Add API</Button>
                 </div>
                 <MUIDataTable
                   title={"API Integrations"}
@@ -174,4 +174,4 @@ function ProductList() {
   );
 }
 
-export default ProductList;
+export default ApiList;
