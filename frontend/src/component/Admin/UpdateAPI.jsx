@@ -14,23 +14,15 @@ import {
 } from "@mui/material";
 import Sidebar from "./Siderbar";
 import {
-  updateProduct,
+  updateApi,
   clearErrors,
-  getProductDetails,
-} from "../../actions/productAction";
+  getApiDetails,
+} from "../../actions/apiAction";
 import { useNavigate} from "react-router-dom";
-import { UPDATE_PRODUCT_RESET } from "../../constants/productsConstatns";
 import { useParams } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
-import Box from "@mui/material/Box";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import CollectionsIcon from "@mui/icons-material/Collections";
-import Select from "@mui/material/Select";
-import InfoIcon from "@mui/icons-material/Info";
-import MenuItem from "@mui/material/MenuItem";
 import Navbar from "./Navbar";
 import "../User/LoginFromStyle.css";
 
@@ -54,7 +46,7 @@ function UpdateAPI() {
   
   useEffect(() => {
     if (apiId && api._id !== apiId) {
-      dispatch(getProductDetails(apiId));
+      dispatch(getApiDetails(apiId));
     } else {
       setName(api.name);
       setClientId(api.clientId);
@@ -86,7 +78,7 @@ function UpdateAPI() {
     updateError,
   ]);
 
-  const createProductSubmitHandler = (e) => {
+  const createApiSubmitHandler = (e) => {
     e.preventDefault();
     const myForm = new FormData();
     myForm.set("name", name);
@@ -109,7 +101,7 @@ function UpdateAPI() {
       ) : (
         <>
           <>
-            <MetaData title="Update Api" />
+            <MetaData title="Update API" />
             <div className="updateProduct">
               <div
                 className={
@@ -200,7 +192,7 @@ function UpdateAPI() {
                               color: "#414141",
                             }}
                           >
-                            <AttachMoneyIcon />
+                            <StorageIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -210,7 +202,7 @@ function UpdateAPI() {
                       variant="contained"
                       className="loginButton"
                       fullWidth
-                      onClick={createProductSubmitHandler}
+                      onClick={createApiSubmitHandler}
                       disabled={loading ? true : false}
                     >
                       Update

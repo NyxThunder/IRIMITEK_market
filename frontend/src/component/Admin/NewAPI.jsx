@@ -4,21 +4,12 @@ import { useAlert } from "react-alert";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import Sidebar from "./Siderbar";
-import { createProduct, clearErrors } from "../../actions/productAction";
+import { createApi, clearErrors } from "../../actions/apiAction";
 import { useNavigate } from "react-router-dom";
-import { NEW_PRODUCT_RESET } from "../../constants/productsConstatns";
 import InputAdornment from "@mui/material/InputAdornment";
-import Box from "@mui/material/Box";
-import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import CollectionsIcon from "@mui/icons-material/Collections"; // Already Correct
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InfoIcon from "@mui/icons-material/Info";
 
 import Navbar from "./Navbar";
 import "../User/LoginFromStyle.css";
@@ -26,28 +17,20 @@ import {
   Avatar,
   TextField,
   Typography,
-  FormControl,
   Button,
 } from "@mui/material";
 
-function NewProduct() {
+function NewAPI() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();
 
   const { loading, error, success } = useSelector(
-    (state) => state.addNewProduct
+    (state) => state.addNewAPI
   );
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [Stock, setStock] = useState(0);
-  const [info, setInfo] = useState("")
-  const [images, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [isCategory, setIsCategory] = useState(false);
-  const fileInputRef = useRef();
+  const [clientId, setClientId] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
   const [toggle, setToggle] = useState(false);
 
   // togle handler =>
@@ -56,31 +39,11 @@ function NewProduct() {
     setToggle(!toggle);
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-    setIsCategory(true);
-  };
-
-  const handleImageUpload = () => {
-    fileInputRef.current.click();
-  };
-
   const redirectToAdminDashboard = useCallback(() => {
     navigate("/admin/dashboard");
   }, [navigate]);
 
 
-  const categories = [ 
-    "Operating System",
-    "Business & Office",
-    "Antivirus & security",
-    "Design & illustration",
-    "Tools",
-    "Gaming software",
-    "Music & sound",
-    "Video & animation",
-    "Programming",
-  ];
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -88,43 +51,20 @@ function NewProduct() {
     }
 
     if (success) {
-      alert.success("Product Created Successfully");
+      alert.success("API Created Successfully");
       redirectToAdminDashboard();
-      dispatch({ type: NEW_PRODUCT_RESET });
+      dispatch({ type: NEW_API_RESET });
     }
   }, [dispatch, alert, error, redirectToAdminDashboard, success]);
 
-  const createProductSubmitHandler = (e) => {
+  const createApiSubmitHandler = (e) => {
     e.preventDefault();
     const myForm = new FormData();
     myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("Stock", Stock);
-    myForm.set("info", info);
-    images.forEach((currImg) => {
-      myForm.append("images", currImg);
-    });
+    myForm.set("clienId", clientId);
+    myForm.set("clientSecret", clientSecret);
 
-    dispatch(createProduct(myForm));
-  };
-
-  const createProductImagesChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImages([]);
-    setImagesPreview([]);
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    dispatch(createApi(myForm));
   };
 
   return (
@@ -133,7 +73,7 @@ function NewProduct() {
         <Loader />
       ) : (
         <>
-          <MetaData title={"New Product"} />
+          <MetaData title={"New API"} />
           <div className="updateProduct">
             <div
               className={
@@ -154,7 +94,7 @@ function NewProduct() {
                 <form
                   className={"form form2"}
                   encType="multipart/form-data"
-                  onSubmit={createProductSubmitHandler}
+                  onSubmit={createApiSubmitHandler}
                 >
                   <Avatar className="avatar">
                     <AddCircleOutlineIcon />
@@ -164,13 +104,13 @@ function NewProduct() {
                     component="h1"
                     className="heading"
                   >
-                    Create Product
+                    Create API
                   </Typography>
                   <TextField
                     variant="outlined"
                     fullWidth
                     className={"nameInput textField"}
-                    label="Product Name"
+                    label="API Name"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -187,36 +127,36 @@ function NewProduct() {
                       ),
                     }}
                   />
-
                   <TextField
                     variant="outlined"
-                    label="Price"
-                    value={price}
-                    required
                     fullWidth
-                    className={"passwordInput textField"}
-                    onChange={(e) => setPrice(e.target.value)}
+                    className={"nameInput textField"}
+                    label="Client Id"
+                    required
+                    value={clientId}
+                    onChange={(e) => setClientId(e.target.value)}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          style={{
-                            fontSize: 20,
-                            color: "#414141",
-                          }}
-                        >
-                          <AttachMoneyIcon />
+                        <InputAdornment position="end">
+                          <ShoppingCartOutlinedIcon
+                            style={{
+                              fontSize: 20,
+                              color: "#414141",
+                            }}
+                          />
                         </InputAdornment>
                       ),
                     }}
                   />
+
                   <TextField
                     variant="outlined"
-                    label="Stock"
-                    value={Stock}
+                    label="Client Secret"
+                    value={clientSecret}
                     required
+                    fullWidth
                     className={"passwordInput textField"}
-                    onChange={(e) => setStock(e.target.value)}
+                    onChange={(e) => setClientSecret(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment
@@ -231,144 +171,6 @@ function NewProduct() {
                       ),
                     }}
                   />
-                  <TextField
-                    variant="outlined"
-                    label="Product info"
-                    value={info}
-                    required
-                    className={"passwordInput textField"}
-                    onChange={(e) => setInfo(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          style={{
-                            fontSize: 20,
-                            color: "#414141",
-                          }}
-                        >
-                          <InfoIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <div className="selectOption">
-                    {!isCategory && (
-                      <Typography variant="body2" className="labelText">
-                        Choose Category
-                      </Typography>
-                    )}
-                    <FormControl className="formControl">
-                      <Select
-                        variant="outlined"
-                        fullWidth
-                        value={category}
-                        onChange={handleCategoryChange}
-                        className="select"
-                        inputProps={{
-                          name: "category",
-                          id: "category-select",
-                        }}
-                        MenuProps={{
-                          classes: {
-                            paper: "menu"
-                          },
-                          anchorOrigin: {
-                            vertical: "bottom",
-                            horizontal: "left",
-                          },
-                          transformOrigin: {
-                            vertical: "top",
-                            horizontal: "left",
-                          },
-                          getContentAnchorEl: null,
-                        }}
-                      >
-                        {!category && (
-                          <MenuItem value="">
-                            <em>Choose Category</em>
-                          </MenuItem>
-                        )}
-                        {categories.map((cate) => (
-                          <MenuItem key={cate} value={cate}>
-                            {cate}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    className="descriptionInput"
-                    label="Product Description"
-                    multiline
-                    rows={1}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <DescriptionIcon
-                            className="descriptionIcon"
-                          />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <div className="root">
-                    <div className="imgIcon">
-                      <CollectionsIcon
-                        fontSize="large"
-                        style={{ fontSize: 40 }}
-                      />
-                    </div>
-
-                    <input
-                      type="file"
-                      name="avatar"
-                      className="input"
-                      accept="image/*"
-                      onChange={createProductImagesChange}
-                      multiple
-                      style={{ display: "none" }}
-                      ref={fileInputRef}
-                    />
-                    <label htmlFor="avatar-input">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className="uploadAvatarButton"
-                        startIcon={
-                          <CloudUploadIcon
-                            style={{
-                              color: "#FFFFFF",
-                            }}
-                          />
-                        }
-                        onClick={handleImageUpload}
-                      >
-                        <p className="uploadAvatarText">
-                          Upload Images
-                        </p>
-                      </Button>
-                    </label>
-                  </div>
-
-                  <Box className="imageArea">
-                    {imagesPreview &&
-                      imagesPreview.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image}
-                          alt="Product Preview"
-                          className="image"
-                        />
-                      ))}
-                  </Box>
-
                   <Button
                     variant="contained"
                     className="loginButton"
@@ -387,4 +189,4 @@ function NewProduct() {
     </>
   );
 }
-export default NewProduct;
+export default NewAPI;

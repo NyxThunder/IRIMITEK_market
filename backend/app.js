@@ -53,6 +53,7 @@ const user = require("./route/userRoute");
 const order = require("./route/orderRoute");
 const product = require("./route/productRoute");
 const payment = require("./route/paymentRoute");
+const api = require("./route/apiRoute");
 
 app.get("/api/v1/welcome", (req, res) => {
   res.json({ message: "welcome IrmiTEK server!" });
@@ -62,6 +63,7 @@ app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
+app.use("/api/v1", api);
 
 // Error Middleware (should be after all routes)
 app.use(errorMiddleware);
