@@ -5,29 +5,22 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config/config.env" });
 
 const G2A_BASE_URL = process.env.G2A_BASE_URL;
-const G2A_CLIENT_ID = process.env.G2A_CLIENT_ID;
-const G2A_CLIENT_SECRET = process.env.G2A_CLIENT_SECRET;
 
 // Store the access token globally (cache it to avoid unnecessary requests)
 let accessToken = null;
 
 // Function to get an OAuth2 token
-const authenticate = async () => {
+const authenticate = async (authData) => {
     try {
         const response = await axios.post(
             `${G2A_BASE_URL}/oauth/token`,
-            new URLSearchParams({
-                client_id: G2A_CLIENT_ID,
-                client_secret: G2A_CLIENT_SECRET,
-                grant_type: "client_credentials",
-            }),
+            authData,
             {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             }
         );
-
         accessToken = response.data.access_token; // Save the access token
         return accessToken;
     } catch (error) {
@@ -36,19 +29,13 @@ const authenticate = async () => {
     }
 };
 
-// Function to get authorization headers
-const getHeaders = async () => {
-  if (!accessToken) await authenticate(); // Refresh token if not set
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-  };
-};
-
 // Import products from G2A
 const importProducts = async (params = {}) => {
     try {
-        const headers = await getHeaders();
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${accessToken}`,
+        };
         const response = await axios.get(`${G2A_BASE_URL}/v1/products`, {
             headers,
             params: {
@@ -72,7 +59,10 @@ const importProducts = async (params = {}) => {
 // Get bestsellers from G2A
 const getBestsellers = async (params = {}) => {
     try {
-        const headers = await getHeaders();
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${accessToken}`,
+        };
         const response = await axios.get(`${G2A_BASE_URL}/v3/sales/bestsellers`, {
             headers,
             params: {
@@ -92,14 +82,17 @@ const getBestsellers = async (params = {}) => {
 
 // Export a product to G2A
 const exportProduct = async (productData) => {
-  try {
-    const headers = await getHeaders();
-    const response = await axios.post(`${G2A_BASE_URL}/v1/products`, productData, { headers });
-    return response.data;
-  } catch (error) {
-    console.error("Error Exporting Product:", error.response?.data || error.message);
-    throw new Error("Failed to export product to G2A.");
-  }
+    try {
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await axios.post(`${G2A_BASE_URL}/v1/products`, productData, { headers });
+        return response.data;
+    } catch (error) {
+        console.error("Error Exporting Product:", error.response?.data || error.message);
+        throw new Error("Failed to export product to G2A.");
+    }
 };
 
 module.exports = { authenticate, importProducts, exportProduct, getBestsellers };

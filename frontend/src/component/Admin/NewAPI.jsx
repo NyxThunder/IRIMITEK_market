@@ -10,6 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import StorageIcon from "@mui/icons-material/Storage";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { NEW_API_RESET } from "../../constants/apiConstatns";
 
 import Navbar from "./Navbar";
 import "../User/LoginFromStyle.css";
@@ -61,8 +62,9 @@ function NewAPI() {
     e.preventDefault();
     const myForm = new FormData();
     myForm.set("name", name);
-    myForm.set("clienId", clientId);
+    myForm.set("clientId", clientId);
     myForm.set("clientSecret", clientSecret);
+    myForm.set("status", "Active");
 
     dispatch(createApi(myForm));
   };

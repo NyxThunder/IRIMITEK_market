@@ -5,6 +5,7 @@ import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
+import { UPDATE_API_RESET } from "../../constants/apiConstatns";
 import {
   Avatar,
   Button,
@@ -31,7 +32,7 @@ function UpdateAPI() {
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   const alert = useAlert();
-
+  const [toggle, setToggle] = useState(false);
 
   const { id: apiId } = useParams();
   const { error, api } = useSelector((state) => state.apis);

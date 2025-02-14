@@ -4,43 +4,44 @@ const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ApiFeatures = require("../utils/apiFeatures");
 const G2AApi = require("./g2aApiController");
+const { authenticate, importProducts, exportProduct, getBestsellers } = require("./g2aApiController");
 const cloudinary = require("cloudinary");
 const axios = require('axios');
 const productController = require("./productController");
 
 // >>>>>>>>>>>>>>>>>>>>> createApi Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
 exports.createApi = asyncWrapper(async (req, res) => {
-  
+
+  if(req.body.name == "G2A"){
+
+    const myForm = new FormData();
+    myForm.set("grant_type", "client_credentials");
+    myForm.set("client_id", req.body.clientId);
+    myForm.set("client_secret", req.body.clientSecret);
+
+    const response = await authenticate(myForm);
+
+    if (response) {
+      const products = await importProducts({ page: 1 });
+
+      for (const product of products.products) {
+        const productData = {
+          body: {
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            category: product.category,
+            Stock: product.Stock,
+            info: product.info,
+            images: product.images,
+          },
+          user: req.user,
+        };
+        await productController.createProduct(productData);
+      }
+    }   
+  }
   const data = await apiModel.create(req.body);
-
-  if(req.body.name === "G2A"){
-    const g2aApi = new G2AApi();
-    const response = await g2aApi.importProducts({page: 2});
-    console.log(response);
-  }
-
-  if (response && response.products) {
-    for (const product of response.products) {
-      // Ensure the product data is correctly formatted
-      const productData = {
-        body: {
-          name: product.name,
-          price: product.price,
-          description: product.description,
-          category: product.category,
-          Stock: product.Stock,
-          info: product.info,
-          images: product.images,
-        },
-        user: req.user, // Pass the user information if needed
-      };
-      await productController.createProduct(productData);
-    }
-  }
-
-
-
-
   res.status(200).json({ success: true, data: data });
 });
 

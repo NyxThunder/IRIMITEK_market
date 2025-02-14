@@ -155,7 +155,7 @@ function App() {
             <LazyUpdateAPI />
           </Suspense>
         )} />} />
-        <Route path="/admin/new/api_integration" element={<PrivateRoute isAdmin={true} component={() => (
+        <Route path="/admin/new/api" element={<PrivateRoute isAdmin={true} component={() => (
           <Suspense fallback={<IrimiLoader />}>
             <LazyNewAPI />
           </Suspense>
