@@ -64,7 +64,6 @@ function NewAPI() {
     myForm.set("name", name);
     myForm.set("clientId", clientId);
     myForm.set("clientSecret", clientSecret);
-    myForm.set("status", "Active");
 
     dispatch(createApi(myForm));
   };

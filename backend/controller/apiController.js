@@ -11,8 +11,9 @@ const productController = require("./productController");
 
 // >>>>>>>>>>>>>>>>>>>>> createApi Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
 exports.createApi = asyncWrapper(async (req, res) => {
+  let images = [];
 
-  if(req.body.name == "G2A"){
+  if (req.body.name == "G2A") {
 
     const myForm = new FormData();
     myForm.set("grant_type", "client_credentials");
@@ -24,31 +25,76 @@ exports.createApi = asyncWrapper(async (req, res) => {
     if (response) {
       const products = await importProducts({ page: 1 });
 
-      for (const product of products.products) {
+      for (const product of products.docs) {
         const productData = {
           body: {
             name: product.name,
-            price: product.price,
-            description: product.description,
-            category: product.category,
-            Stock: product.Stock,
-            info: product.info,
-            images: product.images,
-          },
-          user: req.user,
+            price: product.minPrice,
+            description: product.name,
+            category: product.categories[0].name,
+            Stock: product.qty,
+            info: product.platform,
+            images: product.thumbnail,
+            user: req.user.id,
+          }          
         };
-        await productController.createProduct(productData);
+
+        if (productData.body.images) {
+          if (typeof productData.body.images === "string") {
+            images.push(productData.body.images);
+          } else {
+            images = productData.body.images;
+          }
+
+          const imagesLinks = [];
+
+          // Split images into chunks due to cloudinary upload limits only 3 images can be uploaded at a time so we are splitting into chunks and uploading them separately eg: 9 images will be split into 3 chunks and uploaded separately
+          const chunkSize = 3;
+          const imageChunks = [];
+          while (images.length > 0) {
+            imageChunks.push(images.splice(0, chunkSize));
+          }
+
+
+          // Upload images in separate requests. for loop will run 3 times if there are 9 images to upload each time uploading 3 images at a time
+          for (let chunk of imageChunks) {
+            const uploadPromises = chunk.map((img) =>
+              cloudinary.v2.uploader.upload(img, {
+                folder: "Products",
+                timeout: 120000, // Increase timeout to 2 minutes
+              })
+            );
+
+            try {
+              const results = await Promise.all(uploadPromises); // wait for all the promises to resolve and store the results in results array eg: [{}, {}, {}] 3 images uploaded successfully and their details are stored in results array
+
+              for (let result of results) {
+                imagesLinks.push({
+                  product_id: result.public_id,
+                  url: result.secure_url,
+                });
+              }
+            } catch (error) {
+              console.error("Error uploading images to Cloudinary:", error);
+              // Retry logic can be added here if needed
+            }
+          }
+
+          productData.body.images = imagesLinks;
+        }
+
+        await ProductModel.create(productData.body);
       }
-    }   
+    }
   }
-  const data = await apiModel.create(req.body);
-  res.status(200).json({ success: true, data: data });
+  // const data = await apiModel.create(req.body);
+  res.status(200).json({ success: true, data: req.body });
 });
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all apis >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.getAllApis = asyncWrapper(async (req, res) => {
-  const resultPerPage = 6; 
-  const apisCount = await apiModel.countDocuments(); 
+  const resultPerPage = 6;
+  const apisCount = await apiModel.countDocuments();
 
   // Create an instance of the ApiFeatures class, passing the apiModel.find() query and req.query (queryString)
   const apiFeature = new ApiFeatures(apiModel.find(), req.query)

@@ -13,11 +13,6 @@ const apiSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter client Secret"],
   },
-  status: {
-    type: String,
-    default: "Inactive",
-    required: [true, "Please Enter client Secret"],
-  },
   
   // when two admins are there. tab ye pta chalgea kiss admin ne product add kiya hai
   user: {

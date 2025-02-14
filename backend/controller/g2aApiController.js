@@ -13,7 +13,7 @@ let accessToken = null;
 const authenticate = async (authData) => {
     try {
         const response = await axios.post(
-            `${G2A_BASE_URL}/oauth/token`,
+            `https://api.g2a.com/oauth/token`,
             authData,
             {
                 headers: {
@@ -36,7 +36,7 @@ const importProducts = async (params = {}) => {
             "Content-Type": "application/x-www-form-urlencoded",
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await axios.get(`${G2A_BASE_URL}/v1/products`, {
+        const response = await axios.get(`https://api.g2a.com/v1/products`, {
             headers,
             params: {
                 page: params.page || 1,
@@ -63,7 +63,7 @@ const getBestsellers = async (params = {}) => {
             "Content-Type": "application/x-www-form-urlencoded",
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await axios.get(`${G2A_BASE_URL}/v3/sales/bestsellers`, {
+        const response = await axios.get(`https://api.g2a.com/v3/sales/bestsellers`, {
             headers,
             params: {
                 daysNumber: params.daysNumber || 2,
@@ -87,7 +87,7 @@ const exportProduct = async (productData) => {
             "Content-Type": "application/x-www-form-urlencoded",
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await axios.post(`${G2A_BASE_URL}/v1/products`, productData, { headers });
+        const response = await axios.post(`https://api.g2a.com/v1/products`, productData, { headers });
         return response.data;
     } catch (error) {
         console.error("Error Exporting Product:", error.response?.data || error.message);
