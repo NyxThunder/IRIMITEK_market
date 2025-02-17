@@ -69,11 +69,15 @@ function ApiList() {
     }
   };
 
-  const handleImportProduct = (name) => {
+  const handleConnectAPI = (name) => {
+    navigate(`/admin/new/api/connect?name=${name}`);
+  };
+  
+  const handleImportProductFromAPI = (name) => {
     navigate(`/admin/new/api/import?name=${name}`);
   };
 
-  const handleExportProduct = (name) => {
+  const handleExportProductFromAPI = (name) => {
     navigate(`/admin/new/api/export?name=${name}`);
   };
 
@@ -119,11 +123,12 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleImportProduct(tableMeta.rowData[1])}
+              onClick={() => handleConnectAPI(tableMeta.rowData[1])}
               variant="contained"
               color="secondary"
-              text="Connect"
-            />
+            >
+              Connect
+            </Button>
           );
         },
       },
@@ -137,11 +142,12 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleImportProduct(tableMeta.rowData[1])}
+              onClick={() => handleImportProductFromAPI(tableMeta.rowData[1])}
               variant="contained"
               color="primary"
-              text="Import"
-            />
+            >
+              Import
+            </Button>
           );
         },
       },
@@ -155,11 +161,12 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleExportProduct(tableMeta.rowData[1])}
+              onClick={() => handleExportProductFromAPI(tableMeta.rowData[1])}
               variant="contained"
               color="primary"
-              text="Export"
-            />
+            >
+              Export
+            </Button>
           );
         },
       },

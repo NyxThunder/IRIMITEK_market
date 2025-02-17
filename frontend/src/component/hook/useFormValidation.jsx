@@ -23,7 +23,6 @@ const useFormValidation = (initialValues, validationRules) => {
         }
     };
 
-    // Handle image upload validation
     const validateImageUpload = (e) => {
         const files = Array.from(e.target.files);
         let newErrors = "";
@@ -40,7 +39,24 @@ const useFormValidation = (initialValues, validationRules) => {
             }
         }
 
-        setValues({ ...values, images: files });
+        const convertToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result); // Converts to Base64
+                reader.onerror = (error) => reject(error);
+            });
+        };
+
+        Promise.all(files.map(file => convertToBase64(file)))
+            .then((base64Images) => {
+                setValues((prevValues) => ({
+                    ...prevValues,
+                    images: [...prevValues.images, ...base64Images], // Store Base64 instead of File objects
+                }));
+            })
+            .catch((error) => console.error("Image conversion error:", error));
+
         setErrors((prevErrors) => ({ ...prevErrors, images: newErrors }));
     };
 
@@ -56,7 +72,7 @@ const useFormValidation = (initialValues, validationRules) => {
 
         // Check image validation
         if (!values.images || values.images.length === 0) {
-            newErrors["images"] = "Please upload at least one .webp image.";
+            newErrors["images"] = "Please upload at least one image.";
         }
 
         setErrors(newErrors);

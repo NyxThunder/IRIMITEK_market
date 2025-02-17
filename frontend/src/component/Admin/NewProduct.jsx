@@ -121,8 +121,16 @@ function NewProduct() {
     if (!validateForm()) return;
 
     const myForm = new FormData();
-    Object.keys(values).forEach((key) => myForm.set(key, values[key]));
-    values.images.forEach((file) => myForm.append("images", file));
+    Object.keys(values).forEach((key) => {
+      if (key !== "images") {
+        myForm.set(key, values[key]);
+      }
+    });
+
+    // Append Base64 images instead of raw file objects
+    values.images.forEach((base64Image) => {
+      myForm.append("images", base64Image);
+    });
 
     dispatch(createProduct(myForm));
   };
@@ -237,11 +245,13 @@ function NewProduct() {
                           ),
                         }}
                       />
+
                       <TextField
                         variant="outlined"
-                        required
                         fullWidth
-                        label="Product info"
+                        required
+                        name="info"
+                        label="Product Info"
                         value={values.info}
                         onChange={handleChange}
                         error={!!errors.info}
@@ -249,13 +259,7 @@ function NewProduct() {
                         sx={{ mt: 2 }}
                         InputProps={{
                           endAdornment: (
-                            <InputAdornment
-                              position="end"
-                              style={{
-                                fontSize: 20,
-                                color: "#414141",
-                              }}
-                            >
+                            <InputAdornment position="end">
                               <InfoIcon />
                             </InputAdornment>
                           ),
@@ -300,7 +304,7 @@ function NewProduct() {
                         component="label"
                         startIcon={<CloudUploadIcon />}
                         fullWidth
-                        sx={{ mb: 2, mt: 2}}
+                        sx={{ mb: 2, mt: 2 }}
                       >
                         Upload Images
                         <input
@@ -314,17 +318,29 @@ function NewProduct() {
                       </Button>
                       {errors.images && <FormHelperText error>{errors.images}</FormHelperText>}
 
-                      {/* Image Preview */}
                       <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 2 }}>
                         {values.images.length > 0 &&
-                          values.images.map((file, index) => (
-                            <img
-                              key={index}
-                              src={URL.createObjectURL(file)}
-                              alt="Preview"
-                              style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 4 }}
-                            />
-                          ))}
+                          values.images.map((file, index) => {
+                            if (file instanceof File) {
+                              return (
+                                <img
+                                  key={index}
+                                  src={URL.createObjectURL(file)}
+                                  alt="Preview"
+                                  style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 4 }}
+                                />
+                              );
+                            } else {
+                              return (
+                                <img
+                                  key={index}
+                                  src={file} // Base64 fallback
+                                  alt="Preview"
+                                  style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 4 }}
+                                />
+                              );
+                            }
+                          })}
                       </Box>
 
                       <Button
@@ -332,6 +348,7 @@ function NewProduct() {
                         className="loginButton"
                         fullWidth
                         type="submit"
+                        sx={{ mt: 2 }}
                         disabled={loading ? true : false}
                       >
                         Create
