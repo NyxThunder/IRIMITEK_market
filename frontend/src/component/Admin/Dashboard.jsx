@@ -4,7 +4,7 @@ import Highcharts from "highcharts";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import PeopleIcon from "@mui/icons-material/People";
-
+import MUIDataTable from "mui-datatables";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts3D from "highcharts/highcharts-3d";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,84 +16,67 @@ import { getAllOrders } from "../../actions/orderAction";
 import { getAllUsers } from "../../actions/userAction";
 import Navbar from "./Navbar";
 import Sidebar from "./Siderbar";
-import { useNavigate} from "react-router-dom";
-import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Grid, Card } from "@mui/material";
+import TotalAmountCard from "./widgets/TotalAmountCard";
 import "./Dashboard.css";
+import axios from "axios";
+import OrderList from "./OrderList";
 Highcharts3D(Highcharts);
-
-
 
 function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [metrics, setMetrics] = useState({
+    "OutOfStock": 0,
+    "TotalAmount": 0,
+    "MonthlyTarget": 0,
+});
   const [toggle, setToggle] = useState(false);
-  // const { products, loading, error } = useSelector((state) => state.products);
-  // const { orders, error: ordersError } = useSelector(
-  //   (state) => state.allOrders
-  // );
-  // const { users, error: usersError } = useSelector((state) => state.allUsers);
 
-  // Static example data
-  const error = null;
-  const ordersError = null;
-  const usersError = null;
-  const loading = false;
-  const products = [
-    { name: "Game 1", stock: 50 },
-    { name: "Game 2", stock: 0 },
-    { name: "Game 3", stock: 10 },
-    { name: "Game 4", stock: 25 },
-    { name: "Game 5", stock: 0 },
-    { name: "Game 6", stock: 40 },
-  ];
+  const { products, loading, error } = useSelector((state) => state.products);
+  const { orders, orderLoading, error: ordersError } = useSelector(
+    (state) => state.allOrders
+  );
+  const { users, userLoading, error: usersError } = useSelector((state) => state.allUsers);
+  const [metricsLoading, setMetricsLoading] = useState(true);
 
-  const orders = [
-    { totalPrice: 200 },
-    { totalPrice: 350 },
-    { totalPrice: 100 },
-    { totalPrice: 600 },
-    { totalPrice: 750 },
-  ];
 
-  const users = [
-    { name: "User 1" },
-    { name: "User 2" },
-    { name: "User 3" },
-    { name: "User 4" },
-  ];
-  //End example data
 
   const alert = useAlert();
 
-  let OutOfStock = 0;
-  products &&
-    products.forEach((element) => {
-      // check how much items out of stocks in products array
-      if (element.stock === 0) {
-        OutOfStock += 1;
+  const getAllMetrics = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/admin/api/metrics");
+      if (data.success === true) {
+        setMetrics(data.metrics);
       }
-    });
+    } catch (error) {
+      console.error("Error fetching metrics:", error);
+    } finally {
+      setMetricsLoading(false);
+    }
+  };
 
 
 
   useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors);
-    }
-    if (usersError) {
-      alert.error(usersError);
-      dispatch(clearErrors);
-    }
-    if (ordersError) {
-      alert.error(ordersError);
-      dispatch(clearErrors);
-    }
-    
-    dispatch(getAllOrders());
-    dispatch(getAllUsers());
-    dispatch(getAdminProducts());
-  }, [dispatch, error, alert, ordersError, usersError]);
+    const fetchData = async () => {
+      try {
+        await Promise.all([
+          dispatch(getAllOrders()),
+          dispatch(getAllUsers()),
+          dispatch(getAdminProducts()),
+          getAllMetrics(),
+        ]);
+      } catch (error) {
+        alert.error(error);
+        dispatch(clearErrors());
+      }
+    };
+  
+    fetchData();
+  }, [dispatch, alert]);
 
   // togle handler =>
   const toggleHandler = () => {
@@ -101,56 +84,65 @@ function Dashboard() {
     setToggle(!toggle);
   };
 
-  // total Amount Earned
-  let totalAmount = 0;
-  orders &&
-    orders.forEach((item) => {
-      totalAmount += item.totalPrice;
-    });
+  //Tabel data
+  const columns_dataTable = [
+    {
+      name: "product_id",
+      label: "Product ID",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: "name",
+      label: "Name",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: "stock",
+      label: "Stock",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: "price",
+      label: "Price",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+  ];
 
-  // chart js values for Line component
-  const lineOptions = {
-    chart: {
-      type: "line",
-      style: {
-        fontFamily: "Roboto",
-        fontWeight: "900",
-      },
+  const data = products
+    ? products.map((item) => [
+      item._id,
+      item.name,
+      item.Stock,
+      item.price,
+    ])
+    : [];
+
+  const options = {
+    filterType: "dropdown",
+    responsive: "scroll",
+    selectableRows: true,
+    textLabels: {
+      body: { noMatch: "No Best Sellers Found" },
     },
-    xAxis: {
-      categories: ["Initial Amount", "Amount Earned"],
-      labels: {
-        style: {
-          fontWeight: "900",
-        },
-      },
-    },
-    yAxis: {
-      title: {
-        text: null,
-      },
-      labels: {
-        style: {
-          fontWeight: "900",
-        },
-      },
-    },
-    series: [
-      {
-        name: "TOTAL AMOUNT",
-        data: [0, totalAmount],
-      },
-    ],
-    plotOptions: {
-      line: {
-        lineWidth: 4,
-        marker: {
-          enabled: true,
-        },
-        color: "black",
-      },
-    },
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
+    setTableProps: () => ({
+      style: { width: "100%", overflowX: "auto" },
+    }),
   };
+
   // now set the Value of stock of the product for Doughnut component in  chart .
 
   const doughnutOptions = {
@@ -201,11 +193,11 @@ function Dashboard() {
         type: "pie",
         name: "Share",
         data: [
-          ["Out of Stock", products.length - OutOfStock],
+          ["In Stock", products.length - metrics.OutOfStock],
 
           {
             name: "Out of Stock",
-            y: OutOfStock,
+            y: metrics.OutOfStock,
             sliced: true,
             selected: true,
           },
@@ -213,6 +205,41 @@ function Dashboard() {
       },
     ],
   };
+
+  const revenueProgressOptions = {
+    chart: {
+      type: "column",
+      style: {
+        fontFamily: "Roboto",
+      },
+    },
+    title: {
+      text: "Monthly Target",
+    },
+    xAxis: {
+      categories: ["Target", "Current"],
+    },
+    yAxis: {
+      min: 0,
+      max: Math.max(metrics.MonthlyTarget, metrics.TotalAmount),
+      title: {
+        text: "Amount ($)",
+      },
+    },
+    series: [
+      {
+        name: "Monthly Target",
+        data: [metrics.MonthlyTarget],
+        color: "blue",
+      },
+      {
+        name: "Current Revenue",
+        data: [metrics.TotalAmount],
+        color: metrics.TotalAmount >= metrics.MonthlyTarget ? "green" : "red",
+      },
+    ],
+  };
+
 
   // to close the sidebar when the screen size is greater than 1000px
   useEffect(() => {
@@ -231,172 +258,123 @@ function Dashboard() {
 
   return (
     <>
-      {loading ? (
+      {loading || metricsLoading || userLoading || orderLoading? (
         <Loader />
       ) : (
         <>
           <MetaData title="Dashboard - Admin Panel" />
-          <div className="dashboard">
-            <div
-              className={
-                !toggle ? "firstBox" : "toggleBox"
-              }
-            >
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
+
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
+            </Grid>
 
-            <div className="secondBox">
-              <div className="navBar">
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }}>
+
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12} sm={12}>
                 <Navbar toggleHandler={toggleHandler} />
-              </div>
+              </Grid>
 
-              <div className = "summaryCard">
-                <div
-                  className="cardContainer"
-                  style={{
-                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png')",
-                    backgroundSize: "cover",
-                    transition: "transform 0.2s ease-in-out",
-                    cursor: "pointer",
-                    ":hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                  onClick={() => navigate("/admin/products")}
-                >
-                  <div className="headerConetnt">
-                    <ShoppingCartIcon
-                      fontSize="large"
-                      style={{
-                        fontSize: "3rem",
-                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
-                      }}
-                    />
-
-                    <Typography variant="h6" className="heading">
-                      Total Products
-                    </Typography>
-                  </div>
-                  <div className="textContainer">
-                    <Typography variant="body2" className="number">
-                      {products && products.length}
-                    </Typography>
-                  </div>
-                </div>
-
-                <div
-                  className="cardContainer"
-                  style={{
-                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/order_jjaikj.png')",
-                    backgroundSize: "cover",
-                    transition: "transform 0.2s ease-in-out",
-                    cursor: "pointer",
-                    ":hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                  onClick={() => navigate("/admin/orders")}
-                >
-                  <div className="headerConetnt">
-                    <AssignmentIndIcon
-                      fontSize="large"
-                      style={{
-                        fontSize: "3rem",
-                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                      }}
-                    />
-                    <Typography variant="h6" className="heading">
-                      Total Orders
-                    </Typography>
-                  </div>
-                  <div className="textContainer">
-                    <Typography variant="body2" className="number">
-                      {orders && orders.length}
-                    </Typography>
-                  </div>
-                </div>
-
-                <div
-                  className="cardContainer"
-                  style={{
-                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139291/user_hrfdlg.png')",
-                    backgroundSize: "cover",
-                    transition: "transform 0.2s ease-in-out",
-                    cursor: "pointer",
-                    ":hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                  onClick={() => navigate("/admin/users")}
-                >
-                  <div className="headerConetnt">
-                    <PeopleIcon
-                      fontSize="large"
-                      style={{
-                        fontSize: "3rem",
-                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                      }}
-                    />
-                    <Typography variant="h6" className="heading">
-                      Total Users
-                    </Typography>
-                  </div>
-                  <div className="textContainer">
-                    <Typography variant="body2" className="number">
-                      {users && users.length}
-                    </Typography>
-                  </div>
-                </div>
-              </div>
-
-              <div className="revenue">
-                <div className="doughnutChart">
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={doughnutOptions}
+              {/* Cards Section */}
+              <Grid
+                container
+                sx={{
+                  mt: 1,
+                  display: "grid",
+                  gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+                  gap: 2,  // Adds even spacing between items
+                  width: "100%",
+                }}
+              >
+                <Grid item >
+                  <TotalAmountCard
+                    icon={ShoppingCartIcon}
+                    title="Total Products"
+                    amount={products.length}
+                    percentage={1.5}
+                    isPositive={true}
+                    onExpand={() => navigate("/admin/products")}
                   />
-                </div>
+                </Grid>
+                <Grid item >
+                  <TotalAmountCard
+                    icon={BarChartIcon}
+                    title="Total Revenue"
+                    amount={`$${metrics.TotalAmount}`}
+                    percentage={2.6}
+                    isPositive={true}
+                    onExpand={() => navigate("/admin/orders")}
+                  />
+                </Grid>
+                <Grid item >
+                  <TotalAmountCard
+                    icon={AssignmentIndIcon}
+                    title="Total Orders"
+                    amount={orders.length}
+                    percentage={3.6}
+                    isPositive={false}
+                    onExpand={() => navigate("/admin/orders")}
+                  />
+                </Grid>
+                <Grid item >
+                  <TotalAmountCard
+                    icon={PeopleIcon}
+                    title="Total Users"
+                    amount={users.length}
+                    percentage={1.5}
+                    isPositive={true}
+                    onExpand={() => navigate("/admin/users")}
+                  />
+                </Grid>
+              </Grid>
 
-                <div
-                  className="revnueContainer"
-                  style={{
-                    backgroundImage: "url('https://res.cloudinary.com/drosmiklv/image/upload/v1739139290/products_c99r52.png')",
-                    backgroundSize: "cover",
-                    transition: "transform 0.2s ease-in-out",
-                    borderRadius: "5px",
+              {/* Revenue & Doughnut Chart Section */}
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  mt: 1,
+                  overflowX: "hidden",
+                }}
+              >
+                {/* First Chart */}
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ overflowX: "auto" }}>
+                  <Card sx={{ boxShadow: 3, borderRadius: 2, }}>
+                    <HighchartsReact highcharts={Highcharts} options={doughnutOptions} />
+                  </Card>
+                </Grid>
 
-                    width: "42%",
-                  }}
-                >
-                  <div className="headerConetnt">
-                    <BarChartIcon
-                      fontSize="large"
-                      style={{
-                        fontSize: "3rem",
-                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                      }}
-                    />
+                {/* Second Chart */}
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ overflowX: "auto" }}>
+                  <Card sx={{ boxShadow: 3, borderRadius: 2, }}>
+                    <HighchartsReact highcharts={Highcharts} options={revenueProgressOptions} />
+                  </Card>
+                </Grid>
+              </Grid>
 
-                    <Typography variant="h6" className="heading">
-                      Total Revenue
-                    </Typography>
-                  </div>
-                  <div className = "textContainer">
-                    <Typography variant="body2" className="number">
-                      ${totalAmount.toFixed(2)}
-                    </Typography>
-                  </div>
-                </div>
-              </div>
 
-              <div className="lineChart">
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={lineOptions}
-                />
-              </div>
-            </div>
-          </div>
+              {/* Line Chart Section */}
+              <Grid item xs={12} sx={{ mt: 1 }}>
+                <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+                  <HighchartsReact highcharts={Highcharts} options={{ chart: { type: "line" }, title: { text: "Revenue Over Time" }, xAxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"] }, series: [{ name: "Revenue", data: [32, 45, 56, 60, 72, metrics.TotalAmount] }] }} />
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} sx={{ mt: 1 }}>
+                <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+                  <MUIDataTable
+                    title={"Best Sellers"}
+                    data={data}
+                    columns={columns_dataTable}
+                    options={options}
+                  />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
       )}
     </>

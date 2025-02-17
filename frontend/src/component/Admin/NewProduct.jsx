@@ -3,12 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
-import Sidebar from "./Siderbar";
 import { createProduct, clearErrors } from "../../actions/productAction";
 import { useNavigate } from "react-router-dom";
 import { NEW_PRODUCT_RESET } from "../../constants/productsConstatns";
-import InputAdornment from "@mui/material/InputAdornment";
-import Box from "@mui/material/Box";
 import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -16,18 +13,24 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CollectionsIcon from "@mui/icons-material/Collections"; // Already Correct
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import InfoIcon from "@mui/icons-material/Info";
-
+import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
+import useFormValidation from "../hook/useFormValidation";
 import "../User/LoginFromStyle.css";
 import {
-  Avatar,
-  TextField,
-  Typography,
-  FormControl,
+  Grid,
+  Card,
   Button,
+  TextField,
+  FormControl,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Typography,
+  InputAdornment,
+  Avatar,
+  Box,
 } from "@mui/material";
 
 function NewProduct() {
@@ -38,17 +41,31 @@ function NewProduct() {
   const { loading, error, success } = useSelector(
     (state) => state.addNewProduct
   );
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [Stock, setStock] = useState(0);
-  const [info, setInfo] = useState("")
-  const [images, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [isCategory, setIsCategory] = useState(false);
+
   const fileInputRef = useRef();
   const [toggle, setToggle] = useState(false);
+
+
+
+  // Define validation rules
+  const validationRules = {
+    name: (value) => (!value.trim() || value.length < 3 ? "Name must be at least 3 characters." : ""),
+    price: (value) => (!value || isNaN(value) || value <= 0 ? "Price must be a valid number greater than 0." : ""),
+    Stock: (value) => (!value || isNaN(value) || value < 0 ? "Stock must be a non-negative number." : ""),
+    info: (value) => (!value.trim() || value.length < 5 ? "Product info must be at least 5 characters." : ""),
+    description: (value) => (!value.trim() || value.length < 10 ? "Description must be at least 10 characters." : ""),
+    category: (value) => (!value ? "Please select a category." : ""),
+  };
+
+  // Use the custom hook
+  const { values, setValues, errors, handleChange, validateImageUpload, validateForm } = useFormValidation(
+    { name: "", price: "", Stock: "", info: "", description: "", category: "", images: [] },
+    validationRules
+  );
+
+
+
+
 
   // togle handler =>
   const toggleHandler = () => {
@@ -56,10 +73,6 @@ function NewProduct() {
     setToggle(!toggle);
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-    setIsCategory(true);
-  };
 
   const handleImageUpload = () => {
     fileInputRef.current.click();
@@ -70,16 +83,25 @@ function NewProduct() {
   }, [navigate]);
 
 
-  const categories = [ 
-    "Operating System",
-    "Business & Office",
-    "Antivirus & security",
-    "Design & illustration",
-    "Tools",
-    "Gaming software",
-    "Music & sound",
-    "Video & animation",
-    "Programming",
+  const categories = [
+    "Gaming",
+    "VOD",
+    "Cryptocurrencies",
+    "Music",
+    "Cash gift cards",
+    "Special Gift Cards",
+    "Shopping",
+    "Health & beauty",
+    "Fashion",
+    "Mobile Recharges",
+    "Food",
+    "Apps",
+    "Travel",
+    "Entertainment",
+    "Service",
+    "AI",
+    "Books",
+    "Other"
   ];
   useEffect(() => {
     if (error) {
@@ -96,35 +118,13 @@ function NewProduct() {
 
   const createProductSubmitHandler = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("Stock", Stock);
-    myForm.set("info", info);
-    images.forEach((currImg) => {
-      myForm.append("images", currImg);
-    });
+    Object.keys(values).forEach((key) => myForm.set(key, values[key]));
+    values.images.forEach((file) => myForm.append("images", file));
 
     dispatch(createProduct(myForm));
-  };
-
-  const createProductImagesChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImages([]);
-    setImagesPreview([]);
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
   };
 
   return (
@@ -134,254 +134,215 @@ function NewProduct() {
       ) : (
         <>
           <MetaData title={"New Product"} />
-          <div className="updateProduct">
-            <div
-              className={
-                !toggle ? "firstBox1" : "toggleBox1"
-              }
-            >
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
+
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
+            </Grid>
 
-            <div className="secondBox1">
-              <div className="navBar1">
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }}>
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12} sm={12}>
                 <Navbar toggleHandler={toggleHandler} />
-              </div>
+              </Grid>
 
-              <div
-                className={"formContainer formContainer2"}
-              >
-                <form
-                  className={"form form2"}
-                  encType="multipart/form-data"
-                  onSubmit={createProductSubmitHandler}
-                >
-                  <Avatar className="avatar">
-                    <AddCircleOutlineIcon />
-                  </Avatar>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    className="heading"
-                  >
-                    Create Product
-                  </Typography>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    className={"nameInput textField"}
-                    label="Product Name"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <ShoppingCartOutlinedIcon
-                            style={{
-                              fontSize: 20,
-                              color: "#414141",
-                            }}
-                          />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <TextField
-                    variant="outlined"
-                    label="Price"
-                    value={price}
-                    required
-                    fullWidth
-                    className={"passwordInput textField"}
-                    onChange={(e) => setPrice(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          style={{
-                            fontSize: 20,
-                            color: "#414141",
-                          }}
-                        >
-                          <AttachMoneyIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    variant="outlined"
-                    label="Stock"
-                    value={Stock}
-                    required
-                    className={"passwordInput textField"}
-                    onChange={(e) => setStock(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          style={{
-                            fontSize: 20,
-                            color: "#414141",
-                          }}
-                        >
-                          <StorageIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    variant="outlined"
-                    label="Product info"
-                    value={info}
-                    required
-                    className={"passwordInput textField"}
-                    onChange={(e) => setInfo(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          style={{
-                            fontSize: 20,
-                            color: "#414141",
-                          }}
-                        >
-                          <InfoIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <div className="selectOption">
-                    {!isCategory && (
-                      <Typography variant="body2" className="labelText">
-                        Choose Category
+              {/* Input Section */}
+              <Grid container spacing={2} sx={{ mt: 1 }}>
+                <Grid item xs={12}>
+                  <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2 }}>
+                    <form
+                      encType="multipart/form-data"
+                      onSubmit={createProductSubmitHandler}
+                    >
+                      <Typography variant="h5" sx={{ textAlign: "center", fontWeight: "bold", mb: 2 }}>
+                        <Avatar sx={{ bgcolor: "black", mx: "auto", mb: 1 }}>
+                          <AddCircleOutlineIcon />
+                        </Avatar>
+                        Create Product
                       </Typography>
-                    )}
-                    <FormControl className="formControl">
-                      <Select
+                      <TextField
                         variant="outlined"
                         fullWidth
-                        value={category}
-                        onChange={handleCategoryChange}
-                        className="select"
-                        inputProps={{
-                          name: "category",
-                          id: "category-select",
+                        required
+                        name="name"
+                        label="Product Name"
+                        value={values.name}
+                        onChange={handleChange}
+                        error={!!errors.name}
+                        helperText={errors.name}
+                        sx={{ mt: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ShoppingCartOutlinedIcon
+                                style={{
+                                  fontSize: 20,
+                                  color: "#414141",
+                                }}
+                              />
+                            </InputAdornment>
+                          ),
                         }}
-                        MenuProps={{
-                          classes: {
-                            paper: "menu"
-                          },
-                          anchorOrigin: {
-                            vertical: "bottom",
-                            horizontal: "left",
-                          },
-                          transformOrigin: {
-                            vertical: "top",
-                            horizontal: "left",
-                          },
-                          getContentAnchorEl: null,
-                        }}
-                      >
-                        {!category && (
-                          <MenuItem value="">
-                            <em>Choose Category</em>
-                          </MenuItem>
-                        )}
-                        {categories.map((cate) => (
-                          <MenuItem key={cate} value={cate}>
-                            {cate}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    className="descriptionInput"
-                    label="Product Description"
-                    multiline
-                    rows={1}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <DescriptionIcon
-                            className="descriptionIcon"
-                          />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <div className="root">
-                    <div className="imgIcon">
-                      <CollectionsIcon
-                        fontSize="large"
-                        style={{ fontSize: 40 }}
                       />
-                    </div>
 
-                    <input
-                      type="file"
-                      name="avatar"
-                      className="input"
-                      accept="image/*"
-                      onChange={createProductImagesChange}
-                      multiple
-                      style={{ display: "none" }}
-                      ref={fileInputRef}
-                    />
-                    <label htmlFor="avatar-input">
+                      <TextField
+                        variant="outlined"
+                        required
+                        name="price"
+                        label="Price"
+                        value={values.price}
+                        onChange={handleChange}
+                        error={!!errors.price}
+                        helperText={errors.price}
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              style={{
+                                fontSize: 20,
+                                color: "#414141",
+                              }}
+                            >
+                              <AttachMoneyIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <TextField
+                        variant="outlined"
+                        required
+                        name="Stock"
+                        label="Stock"
+                        value={values.Stock}
+                        onChange={handleChange}
+                        error={!!errors.Stock}
+                        helperText={errors.Stock}
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              style={{
+                                fontSize: 20,
+                                color: "#414141",
+                              }}
+                            >
+                              <StorageIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Product info"
+                        value={values.info}
+                        onChange={handleChange}
+                        error={!!errors.info}
+                        helperText={errors.info}
+                        sx={{ mt: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              style={{
+                                fontSize: 20,
+                                color: "#414141",
+                              }}
+                            >
+                              <InfoIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+
+                      {/* Category Select */}
+                      <FormControl fullWidth error={!!errors.category} sx={{ mt: 2 }}>
+                        <Select name="category" value={values.category} onChange={handleChange}>
+                          <MenuItem value=""><em>Choose Category</em></MenuItem>
+                          {categories.map((cate) => <MenuItem key={cate} value={cate}>{cate}</MenuItem>)}
+                        </Select>
+                        <FormHelperText>{errors.category}</FormHelperText>
+                      </FormControl>
+                      <TextField
+                        variant="outlined"
+                        name="description"
+                        label="Product Description"
+                        value={values.description}
+                        onChange={handleChange}
+                        error={!!errors.description}
+                        helperText={errors.description}
+                        multiline
+                        rows={3}
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <DescriptionIcon
+                                className="descriptionIcon"
+                              />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+
+                      {/* Image Upload */}
+                      <Button
+                        className="loginButton"
+                        variant="contained"
+                        component="label"
+                        startIcon={<CloudUploadIcon />}
+                        fullWidth
+                        sx={{ mb: 2, mt: 2}}
+                      >
+                        Upload Images
+                        <input
+                          type="file"
+                          hidden
+                          ref={fileInputRef}
+                          accept=".webp,.jpeg,.jpg, .JPEG, .JPG"
+                          multiple
+                          onChange={validateImageUpload}
+                        />
+                      </Button>
+                      {errors.images && <FormHelperText error>{errors.images}</FormHelperText>}
+
+                      {/* Image Preview */}
+                      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 2 }}>
+                        {values.images.length > 0 &&
+                          values.images.map((file, index) => (
+                            <img
+                              key={index}
+                              src={URL.createObjectURL(file)}
+                              alt="Preview"
+                              style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 4 }}
+                            />
+                          ))}
+                      </Box>
+
                       <Button
                         variant="contained"
-                        color="primary"
-                        className="uploadAvatarButton"
-                        startIcon={
-                          <CloudUploadIcon
-                            style={{
-                              color: "#FFFFFF",
-                            }}
-                          />
-                        }
-                        onClick={handleImageUpload}
+                        className="loginButton"
+                        fullWidth
+                        type="submit"
+                        disabled={loading ? true : false}
                       >
-                        <p className="uploadAvatarText">
-                          Upload Images
-                        </p>
+                        Create
                       </Button>
-                    </label>
-                  </div>
+                    </form>
+                  </Card>
+                </Grid>
 
-                  <Box className="imageArea">
-                    {imagesPreview &&
-                      imagesPreview.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image}
-                          alt="Product Preview"
-                          className="image"
-                        />
-                      ))}
-                  </Box>
-
-                  <Button
-                    variant="contained"
-                    className="loginButton"
-                    fullWidth
-                    type="submit"
-                    disabled={loading ? true : false}
-                  >
-                    Create
-                  </Button>
-                </form>
-              </div>
-            </div>
-          </div>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
       )}
     </>

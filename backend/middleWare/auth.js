@@ -3,39 +3,40 @@ const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const ErrorHandler = require("../utils/errorHandler");
 
+// Middleware to authenticate users
+exports.isAuthentictedUser = asyncWrapper(async (req, res, next) => {
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1]; 
 
+    // If no token is found
+    if (!token) {
+        return next(new ErrorHandler("Unauthorized: Please login to access this resource", 401));
+    }
 
-exports.isAuthentictedUser = asyncWrapper(async (req , res , next) =>{
-    const { token } = req.cookies; 
-// if there is no token found
-if(!token){
-    return next(new ErrorHandler("Please Login to access this resource", 401)); 
-}
+    try {
+        // Verify token
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-// now verify that token with seceret key . 
-    const deCodeToken = jwt.verify(token, process.env.JWT_SECRET);
+        // Fetch user and check existence
+        const user = await userModel.findById(decodedToken.id);
+        if (!user) {
+            return next(new ErrorHandler("User not found. Please login again.", 401));
+        }
 
-    // now get user id from deCodeToken because when we make token in userSchema so we added userID in payLoad section. with that id get user and store inside req object .
+        req.user = user; // Attach user to request
+        next();
+    } catch (error) {
+        return next(new ErrorHandler("Invalid or expired token. Please login again.", 401));
+    }
+});
 
-    const user = await userModel.findById(deCodeToken.id); 
-
-    req.user = user; // now we have user in req.user
- 
-    next();
-
-})
-
-
-      // taking role as param and converting it into array using spread operator. for using array method
-exports.authorizeRoles = (...roles) =>{
- return (req , res , next) =>{
-     if (roles.includes(req.user.role) ===false){ 
-        return next(
-            new ErrorHandler(`Role: ${req.user.role} is not allowed to access this resouce `,
-                403)
-        )
-     }
-   
-    next();
- }
-}  
+// Middleware to authorize user roles
+exports.authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!req.user || !roles.includes(req.user.role)) {
+            return next(
+                new ErrorHandler(`Access denied. Role '${req.user?.role || "Unknown"}' is not allowed.`, 403)
+            );
+        }
+        next();
+    };
+};

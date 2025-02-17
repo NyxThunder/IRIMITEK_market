@@ -32,3 +32,24 @@ input::-webkit-inner-spin-button {
 .redColor { 
   color: red !important;
 }
+
+.mainButton {
+  background-color: #212121  !important;
+  color: white !important;
+  border-radius: 4px !important;
+  font-weight: bold !important;
+  width: 100% !important;
+  height: 45px !important;
+}
+
+.mainButton:disabled {  /* Need */
+  background-color: #444444 !important;
+  color: #fff !important;
+  border-color: #444444 !important;
+}
+
+.mainButton:hover {
+  background-color: #ed1c24 !important;
+  color: #212121 !important;
+  font-weight: bold !important;
+}

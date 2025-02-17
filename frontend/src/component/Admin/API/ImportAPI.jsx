@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import MetaData from "../layouts/MataData/MataData";
-import Loader from "../layouts/loader/Loader";
-import Sidebar from "./Siderbar";
-import { createApi, clearErrors } from "../../actions/apiAction";
+import MetaData from "../../layouts/MataData/MataData";
+import Loader from "../../layouts/loader/Loader";
+import Sidebar from "../Siderbar";
+import { createApi, clearErrors } from "../../../actions/apiAction";
 import { useNavigate } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import StorageIcon from "@mui/icons-material/Storage";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { NEW_API_RESET } from "../../constants/apiConstatns";
+import { NEW_API_RESET } from "../../../constants/apiConstatns";
 
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import "../User/LoginFromStyle.css";
 import {
   Avatar,
@@ -21,7 +21,9 @@ import {
   Button,
 } from "@mui/material";
 
-function NewAPI() {
+function ImportAPI() {
+
+  const { name: apiName } = useParams();  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();

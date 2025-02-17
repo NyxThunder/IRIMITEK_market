@@ -41,13 +41,13 @@ const LazyProductList = React.lazy(() =>
   import("./component/Admin/ProductList")
 );
 const LazyAPIIntegration = React.lazy(() =>
-  import("./component/Admin/APIIntegration")
+  import("./component/Admin/API/APIIntegration")
 );
 const LazyUpdateAPI = React.lazy(() =>
-  import("./component/Admin/UpdateAPI")
+  import("./component/Admin/API/UpdateAPI")
 );
 const LazyNewAPI = React.lazy(() =>
-  import("./component/Admin/NewAPI")
+  import("./component/Admin/API/NewAPI")
 );
 const LazyOrderList = React.lazy(() => import("./component/Admin/OrderList"));
 const LazyUserList = React.lazy(() => import("./component/Admin/UserList"));
@@ -150,7 +150,7 @@ function App() {
             <LazyAPIIntegration />
           </Suspense>
         )} />} />
-        <Route path="/admin/api_integration/:id" element={<PrivateRoute isAdmin={true} component={() => (
+        <Route path="/admin/api/:id" element={<PrivateRoute isAdmin={true} component={() => (
           <Suspense fallback={<IrimiLoader />}>
             <LazyUpdateAPI />
           </Suspense>

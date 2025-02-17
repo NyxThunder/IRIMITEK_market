@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import "./ProductReviews.css"; //Check ProductList.css
-import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import {
@@ -8,17 +6,20 @@ import {
   clearErrors,
   deleteProductReview,
 } from "../../actions/productAction";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarIcon from "@mui/icons-material/Star";
+import { Grid, Card } from "@mui/material";
+import MUIDataTable from "mui-datatables";
 import {
   Avatar,
   Button,
   TextField,
   Typography,
   InputAdornment,
+  useMediaQuery,
 } from "@mui/material";
 import Navbar from "./Navbar";
 import Sidebar from "./Siderbar";
@@ -37,6 +38,7 @@ function ProductReviews() {
     (state) => state.deleteReview
   );
 
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [productId, setProductId] = useState("");
 
   // togle handler =>
@@ -49,7 +51,7 @@ function ProductReviews() {
     navigate("/admin/reviews");
   }, [navigate]);
 
-  
+
 
   useEffect(() => {
     if (productId.length === 24) {
@@ -88,7 +90,7 @@ function ProductReviews() {
 
   // delet review from given prodcuts reviews =>
   const deleteReviewHandler = (reviewId) => {
- 
+
     dispatch(deleteProductReview(reviewId, productId));
   };
 
@@ -97,89 +99,48 @@ function ProductReviews() {
     dispatch(getAllreviews(productId)); // get this product reviews
   };
   const columns = [
+    { name: "id", label: "Review ID", options: { filter: false, sort: true } },
+    { name: "user", label: "User", options: { filter: false, sort: true, display: isMobile ? "excluded" : "true" } },
+    { name: "comment", label: "Comment", options: { filter: false, sort: false } },
+    { name: "recommend", label: "Recommend", options: { filter: true, sort: true, display: isMobile ? "excluded" : "true" } },
+    { name: "rating", label: "Rating", options: { filter: true, sort: true, display: isMobile ? "excluded" : "true" } },
     {
-      field: "id",
-      headerName: "Review ID",
-      minWidth: 230,
-      flex: 0.5,
-      headerClassName: "column-header",
-    },
-    {
-      field: "user",
-      headerName: "User",
-      flex: 0.8,
-      magin: "0 auto",
-      headerClassName: "column-header hide-on-mobile",
-    },
-
-    {
-      field: "comment",
-      headerName: "Comment",
-      minWidth: 350,
-      flex: 0.8,
-    },
-    {
-      field: "recommend",
-      headerName: "Recommend",
-      minWidth: 100,
-      flex: 1,
-      headerClassName: "column-header hide-on-mobile",
-      cellClassName: (params) => {
-        return params.getValue(params.id, "recommend") === true
-          ? "greenColor"
-          : "redColor"; // if rating of review greater then class green else red
-      },
-    },
-
-    {
-      field: "rating",
-      headerName: "Rating",
-      type: "number",
-      minWidth: 200,
-      flex: 0.5,
-      headerClassName: "column-header hide-on-mobile",
-      cellClassName: (params) => {
-        return params.getValue(params.id, "rating") >= 3
-          ? "greenColor"
-          : "redColor"; // if rating of review greater then class green else red
-      },
-    },
-
-    {
-      field: "actions",
-      flex: 1,
-      headerName: "Actions",
-      minWidth: 230,
-      headerClassName: "column-header1",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <div 
-              onClick={() =>
-                deleteReviewHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon className="iconbtn" style={{ marginLeft: "1rem" }} />
-            </div>
-          </>
-        );
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta) => (
+          <DeleteIcon
+            sx={{ cursor: "pointer", color: "red", "&:hover": { color: "darkred" } }}
+            onClick={() => deleteReviewHandler(tableMeta.rowData[0])}
+          />
+        ),
       },
     },
   ];
 
-  const rows = [];
+  const data = reviews?.map((item) => [
+    item._id,
+    item.name,
+    item.comment,
+    item.recommend ? "Yes" : "No",
+    item.ratings,
+  ]) || [];
 
-  reviews &&
-    reviews.forEach((item) => {
-      rows.push({
-        id: item._id,
-        user: item.name,
-        comment: item.comment,
-        rating: item.ratings,
-        recommend: item.recommend ? "Yes" : "No",
-      });
-    });
+  const options = {
+    filterType: "dropdown",
+    responsive: "standard",
+    selectableRows: "none",
+    textLabels: {
+      body: { noMatch: "No Reviews Found" },
+    },
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
+    setTableProps: () => ({
+      style: { width: "100%", overflowX: "auto" },
+    }),
+  };
 
   return (
     <>
@@ -187,91 +148,72 @@ function ProductReviews() {
         <Loader />
       ) : (
         <>
-          <MetaData title="All Reviews" />
+          <MetaData title={`ALL PRODUCTS - Admin`} />
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
 
-          <div className="updateUser1">
-            <div
-              className={
-                !toggle ? "firstBox_01" : "toggleBox_01"
-              }
-            >
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
+            </Grid>
 
-            <div className="secondBox_01">
-              <div className="navBar_01">
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }}>
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12}>
                 <Navbar toggleHandler={toggleHandler} />
-              </div>
-              <div className="formSection">
-                <form
-                  className = "form"
-                  onSubmit={productReviewsSubmitHandler}
-                >
-                  <Avatar className="avatar">
-                    <StarRateIcon />
-                  </Avatar>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    className="heading"
-                  >
-                    All Reviews
-                  </Typography>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    className="nameInput textField"
-                    label="Product Id"
-                    required
-                    value={productId}
-                    onChange={(e) => setProductId(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <StarIcon
-                            style={{
-                              fontSize: 20,
-                              color: "#414141",
-                            }}
-                          />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+              </Grid>
 
-                  <Button
-                    id="createProductBtn"
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    className="loginButton"
-                    disabled={
-                      loading ? true : false || productId === "" ? true : false
-                    }
-                  >
-                    Search
-                  </Button>
-                </form>
+              {/* Input Section */}
+              {/* Review Search Form */}
+              <Grid item spacing={2} sx={{ mt: 2 }}>
+                <Grid item xs={12}>
+                  <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
+                    <form onSubmit={productReviewsSubmitHandler} style={{ textAlign: "center" }}>
+                      <Avatar sx={{ bgcolor: "black", mx: "auto", mb: 1 }}>
+                        <StarRateIcon />
+                      </Avatar>
+                      <Typography variant="h5" sx={{ fontWeight: "bold", color: "#414141", mb: 2 }}>
+                        Search Reviews
+                      </Typography>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        label="Product ID"
+                        required
+                        value={productId}
+                        onChange={(e) => setProductId(e.target.value)}
+                        sx={{ mb: 2 }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <StarIcon sx={{ color: "#414141" }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ bgcolor: "black", "&:hover": { bgcolor: "red" } }}
+                        disabled={loading || productId === ""}
+                      >
+                        Search
+                      </Button>
+                    </form>
+                  </Card>
+                </Grid>
+              </Grid>
 
-                {reviews && reviews.length > 0 ? (
-                  <div className="productListContainer">
-                    <h4 id="productListHeading">ALL PRODUCTS</h4>
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      pageSize={10}
-                      autoHeight
-                      disableSelectionOnClick
-                      className="productListTable"
-                    />
-                  </div>
-                ) : (
-                  <h1 className="heading_02">No Reviews Found</h1>
-                )}
-              </div>
-              ;
-            </div>
-          </div>
+
+              {/* Reviews Table */}
+              <Grid item xs={12} sx={{ mt: 3, overflowX: "auto" }}>
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
+                  <MUIDataTable title={"All Reviews"} data={data} columns={columns} options={options} />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
       )}
     </>

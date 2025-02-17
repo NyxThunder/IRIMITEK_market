@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./ProductList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
+import { Grid, Card } from "@mui/material";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstant";
 
 function OrderList() {
@@ -141,8 +141,16 @@ function OrderList() {
 
   const options = {
     filterType: "dropdown",
-    responsive: "scroll",
-    selectableRows: true
+    responsive: "standard",
+    selectableRows: true,
+    textLabels: {
+      body: { noMatch: "No Orders Found" },
+    },
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
+    setTableProps: () => ({
+      style: { width: "100%", overflowX: "auto" },
+    }),
   };
 
   return (
@@ -151,26 +159,37 @@ function OrderList() {
         <Loader />
       ) : (
         <>
-          <MetaData title={`ALL Orders - Admin`} />
-          <div className="product-list" style={{ marginTop: 0 }}>
-            <div className={!toggle ? "listSidebar" : "toggleBox"}>
+          <MetaData title={"All Order's List"} />
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
+
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
-            <div className="list-table">
-              <Navbar toggleHandler={toggleHandler} />
-              <div className="productListContainer">
-                <h4 id="productListHeading" style={{fontSize: 24}}>ALL ORDERS</h4>
-                <MUIDataTable
-                  title={"All Orders"}
-                  data={data}
-                  columns={columns_dataTable}
-                  options={options}
-                />
-              </div>
-            </div>
-          </div>
+            </Grid>
+
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }}>
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12}>
+                <Navbar toggleHandler={toggleHandler} />
+              </Grid>
+
+              {/* Order Table Section */}
+              <Grid item xs={12} sx={{ mt: 3}}>
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
+                  <MUIDataTable
+                    title={"All Orders"}
+                    data={data}
+                    columns={columns_dataTable}
+                    options={options}
+                  />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
-      )}
+      )
+      }
     </>
   );
 }

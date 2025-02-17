@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import MetaData from "../layouts/MataData/MataData";
-import Loader from "../layouts/loader/Loader";
+import MetaData from "../../layouts/MataData/MataData";
+import Loader from "../../layouts/loader/Loader";
 import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
-import { UPDATE_API_RESET } from "../../constants/apiConstatns";
+import { UPDATE_API_RESET } from "../../../constants/apiConstatns";
 import {
   Avatar,
   Button,
@@ -13,19 +13,19 @@ import {
   Typography,
   FormControl,
 } from "@mui/material";
-import Sidebar from "./Siderbar";
+import Sidebar from "../Siderbar";
 import {
   updateApi,
   clearErrors,
   getApiDetails,
-} from "../../actions/apiAction";
+} from "../../../actions/apiAction";
 import { useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Navbar from "./Navbar";
-import "../User/LoginFromStyle.css";
+import Navbar from "../Navbar";
+import "../../User/LoginFromStyle.css";
 
 function UpdateAPI() {
   const dispatch = useDispatch();

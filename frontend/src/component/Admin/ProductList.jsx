@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./ProductList.css";
-import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
@@ -17,6 +15,7 @@ import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
+import { Grid, Card } from "@mui/material";
 import { DELETE_PRODUCT_RESET } from "../../constants/productsConstatns";
 
 function ProductList() {
@@ -115,8 +114,16 @@ function ProductList() {
 
   const options = {
     filterType: "dropdown",
-    responsive: "scroll",
-    selectableRows: true
+    responsive: "standard",
+    selectableRows: true,
+    textLabels: {
+      body: { noMatch: "No Products Found" },
+    },
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
+    setTableProps: () => ({
+      style: { width: "100%", overflowX: "auto" },
+    }),
   };
 
   const toggleHandler = () => {
@@ -144,23 +151,33 @@ function ProductList() {
       ) : (
         <>
           <MetaData title={`ALL PRODUCTS - Admin`} />
-          <div className="product-list" style={{ marginTop: 0 }}>
-            <div className={!toggle ? "listSidebar" : "toggleBox"} style={{ flex: 1 }}>
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
+
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
-            <div className="list-table" style={{ flex: 4 }}>
-              <Navbar toggleHandler={toggleHandler} />
-              <div className="productListContainer" style={{ padding: "20px" }}>
-                <h4 id="productListHeading" style={{ fontSize: "24px" }}>ALL PRODUCTS</h4>
-                <MUIDataTable
-                  title={"All Products"}
-                  data={data}
-                  columns={columns_dataTable}
-                  options={options}
-                />
-              </div>
-            </div>
-          </div>
+            </Grid>
+
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }} >
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12} sm={12}>
+                <Navbar toggleHandler={toggleHandler} />
+              </Grid>
+
+              {/* Input Section */}
+              <Grid item xs={12} sx={{ mt: 3 }}>
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
+                  <MUIDataTable
+                    title={"All Products"}
+                    data={data}
+                    columns={columns_dataTable}
+                    options={options}
+                  />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
       )}
     </>

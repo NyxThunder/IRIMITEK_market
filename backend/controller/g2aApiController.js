@@ -29,13 +29,19 @@ const authenticate = async (authData) => {
     }
 };
 
+// Function to get headers for API requests
+const getHeaders = () => {
+    return {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${accessToken}`,
+    };
+};
+
 // Import products from G2A
 const importProducts = async (params = {}) => {
     try {
-        const headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${accessToken}`,
-        };
+        
+        const headers = getHeaders();
         const response = await axios.get(`https://api.g2a.com/v1/products`, {
             headers,
             params: {

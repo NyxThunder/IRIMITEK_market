@@ -145,13 +145,18 @@ const PaymentComponent = () => {
       //     },
       //   },
       // });
-      const result = "succeeded";
+      const result = {
+        paymentIntent: {
+          id: "random_id",
+          status: "succeeded",
+        },
+      };
       if (result.error) {
         // if error then again enable the button on
 
         alert.error(result.error.message);
       } else {
-        if (result.paymentIntent.status === "succeeded") { //result.paymentIntent.status === "succeeded"
+        if ( result.paymentIntent.status === "succeeded") {
           // add new property inside order object
           order.paymentInfo = {
             id: result.paymentIntent.id,

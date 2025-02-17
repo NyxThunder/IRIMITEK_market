@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./ProductList.css";
-import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
@@ -12,6 +10,7 @@ import MUIDataTable from "mui-datatables";
 import Sidebar from "./Siderbar";
 import Navbar from "./Navbar";
 import Loader from "../layouts/loader/Loader";
+import { Grid, Card } from "@mui/material";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstanat";
 import { useNavigate } from "react-router-dom";
@@ -126,8 +125,16 @@ function UserList() {
 
   const options = {
     filterType: "dropdown",
-    responsive: "scroll",
-    selectableRows: true
+    responsive: "standard",
+    selectableRows: true,
+    textLabels: {
+      body: { noMatch: "No Users Found" },
+    },
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
+    setTableProps: () => ({
+      style: { width: "100%", overflowX: "auto" },
+    }),
   };
 
 
@@ -158,26 +165,34 @@ function UserList() {
         <Loader />
       ) : (
         <>
-          <MetaData title={`ALL Users - Admin`} />
+          <MetaData title={"All Users - Admin"} />
+          <Grid container spacing={2} justifyContent="center" sx={{ px: 2, overflowX: "hidden" }}>
+            {/* Sidebar - 25% on `md+`, hidden on `sm` */}
 
-          <div className="product-list" style={{ marginTop: 0 }}>
-            <div className={!toggle ? "listSidebar" : "toggleBox"}>
+            <Grid item md={3} lg={3} xl={3} className={!toggle ? "firstBox" : "toggleBox"}>
               <Sidebar />
-            </div>
+            </Grid>
 
-            <div className="list-table">
-              <Navbar toggleHandler={toggleHandler} />
-              <div className="productListContainer">
-                <h4 id="productListHeading">ALL USERS</h4>
-                <MUIDataTable
-                  title={"All Users"}
-                  data={data}
-                  columns={columns_dataTable}
-                  options={options}
-                />
-              </div>
-            </div>
-          </div>
+            {/* Main Content - 75% on `md+`, 100% on `sm` */}
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9} sx={{ overflowX: "auto" }}>
+              {/* Navbar (Full Width) */}
+              <Grid item xs={12} sm={12}>
+                <Navbar toggleHandler={toggleHandler} />
+              </Grid>
+
+              {/* Table Section */}
+              <Grid item xs={12} sx={{ mt: 3 }}>
+                <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
+                  <MUIDataTable
+                    title={"All Users"}
+                    data={data}
+                    columns={columns_dataTable}
+                    options={options}
+                  />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
         </>
       )}
     </>

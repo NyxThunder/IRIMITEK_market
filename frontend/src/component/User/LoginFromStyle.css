@@ -116,22 +116,24 @@
 }
 
 .loginButton {
-  color: #fff !important;
-  background-color: #000 !important;
-  border: 2px solid #000 !important;
-  margin: 24px 0 !important; /* Assuming theme.spacing(3) is 24px */
-  margin-top: 1rem !important;
+  background-color: #212121  !important;
+  color: white !important;
+  border-radius: 4px !important;
+  font-weight: bold !important;
+  width: 100% !important;
+  height: 45px !important;
 }
 
-.loginButton:disabled {
+.loginButton:disabled {  /* Need */
   background-color: #444444 !important;
   color: #fff !important;
   border-color: #444444 !important;
 }
 
 .loginButton:hover {
-  background-color: #ff0000 !important;
-  border-color: #ff0000 !important;
+  background-color: #ed1c24 !important;
+  color: #212121 !important;
+  font-weight: bold !important;
 }
 
 .privacyText {
