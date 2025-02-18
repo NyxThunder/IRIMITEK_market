@@ -1,9 +1,8 @@
 // get Apis
-export const ALL_API_REQUEST ="ALL_API_REQUEST"
+export const ALL_API_REQUEST = "ALL_API_REQUEST";
 export const ALL_API_SUCCESS = "ALL_API_SUCCESS";
 export const ALL_API_FAIL = "ALL_API_FAIL";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
-
 
 // admin API request
 export const ADMIN_API_REQUEST = "ADMIN_API_REQUEST";
@@ -11,18 +10,16 @@ export const ADMIN_API_SUCCESS = "ADMIN_API_SUCCESS";
 export const ADMIN_API_FAIL = "ADMIN_API_FAIL";
 
 // create new API --> admin
-
 export const NEW_API_REQUEST = "NEW_API_REQUEST";
 export const NEW_API_SUCCESS = "NEW_API_SUCCESS";
 export const NEW_API_RESET = "NEW_API_RESET";
 export const NEW_API_FAIL = "NEW_API_FAIL";
 
-// API details --> 
+// API details
 export const API_DETAILS_REQUEST = "API_DETAILS_REQUEST";
 export const API_DETAILS_SUCCESS = "API_DETAILS_SUCCESS";
 export const API_DETAILS_RESET = "API_DETAILS_RESET";
 export const API_DETAILS_FAIL = "API_DETAILS_FAIL";
-
 
 // Delete API
 export const DELETE_API_REQUEST = "DELETE_API_REQUEST";
@@ -30,9 +27,26 @@ export const DELETE_API_SUCCESS = "DELETE_API_SUCCESS";
 export const DELETE_API_RESET = "DELETE_API_RESET";
 export const DELETE_API_FAIL = "DELETE_API_FAIL";
 
-//Udate API =>
+// Update API
 export const UPDATE_API_REQUEST = "UPDATE_API_REQUEST";
 export const UPDATE_API_SUCCESS = "UPDATE_API_SUCCESS";
 export const UPDATE_API_RESET = "UPDATE_API_RESET";
 export const UPDATE_API_FAIL = "UPDATE_API_FAIL";
 
+// Connect API
+export const CONNECT_API_REQUEST = "CONNECT_API_REQUEST";
+export const CONNECT_API_SUCCESS = "CONNECT_API_SUCCESS";
+export const CONNECT_API_FAIL = "CONNECT_API_FAIL";
+export const CONNECT_API_RESET = "CONNECT_API_RESET";
+
+// Import API
+export const IMPORT_API_REQUEST = "IMPORT_API_REQUEST";
+export const IMPORT_API_SUCCESS = "IMPORT_API_SUCCESS";
+export const IMPORT_API_FAIL = "IMPORT_API_FAIL";
+export const IMPORT_API_RESET = "IMPORT_API_RESET";
+
+//Export API
+export const EXPORT_API_REQUEST = "EXPORT_API_REQUEST";
+export const EXPORT_API_SUCCESS = "EXPORT_API_SUCCESS";
+export const EXPORT_API_FAIL = "EXPORT_API_FAIL";
+export const EXPORT_API_RESET = "EXPORT_API_RESET";

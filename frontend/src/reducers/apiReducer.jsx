@@ -22,6 +22,18 @@ import {
   UPDATE_API_SUCCESS,
   UPDATE_API_FAIL,
   UPDATE_API_RESET,
+  CONNECT_API_REQUEST,
+  CONNECT_API_FAIL,
+  CONNECT_API_SUCCESS,
+  CONNECT_API_RESET,
+  IMPORT_API_REQUEST,
+  IMPORT_API_SUCCESS,
+  IMPORT_API_FAIL,
+  IMPORT_API_RESET,
+  EXPORT_API_REQUEST,
+  EXPORT_API_FAIL,
+  EXPORT_API_SUCCESS,
+  EXPORT_API_RESET,
 } from "../constants/apiConstatns";
 
 export const apisReducer = (state = { apis: [] }, action) => {
@@ -68,7 +80,7 @@ export const apisReducer = (state = { apis: [] }, action) => {
   }
 };
 
-// product detalis  :
+// api detalis  :
 export const apiDetailsReducer = (state = { api: {} }, action) => {
   switch (action.type) {
     case API_DETAILS_REQUEST: {
@@ -89,11 +101,11 @@ export const apiDetailsReducer = (state = { api: {} }, action) => {
         error: action.payload,
 
       };
-      case API_DETAILS_RESET:
-        return {
-         success: false,
+    case API_DETAILS_RESET:
+      return {
+        success: false,
         ...state,
-        };
+      };
 
     // error msg clear
     case CLEAR_ERRORS:
@@ -199,4 +211,116 @@ export function deleteUpdateApiReducer(state = { api: {} }, action) {
       return state;
   }
 }
+
+// Connect API reducer
+export const connectApiReducer = (state = { connected: false }, action) => {
+  switch (action.type) {
+    case CONNECT_API_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CONNECT_API_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        connected: action.payload,
+      };
+    case CONNECT_API_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    case CONNECT_API_RESET:
+      return {
+        ...state,
+        connected: false,
+      };
+    default:
+      return state;
+  }
+};
+
+// Import API reducer
+export const importApiReducer = (state = { imported: false }, action) => {
+  switch (action.type) {
+    case IMPORT_API_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case IMPORT_API_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        imported: action.payload,
+      };
+    case IMPORT_API_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    case IMPORT_API_RESET:
+      return {
+        ...state,
+        imported: false,
+      };
+    default:
+      return state;
+  }
+};
+
+
+// Export API reducer
+export const exportApiReducer = (state = { exported: false }, action) => {
+  switch (action.type) {
+    case EXPORT_API_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EXPORT_API_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        exported: action.payload,
+      };
+    case EXPORT_API_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    case EXPORT_API_RESET:
+      return {
+        ...state,
+        exported: false,
+      };
+    default:
+      return state;
+  }
+};
+
+
+
+
+
+
 

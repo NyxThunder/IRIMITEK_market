@@ -18,6 +18,10 @@ import {
   Grid,
   Card,
   InputAdornment,
+  FormControl,
+  Select,
+  MenuItem,
+  FormHelperText,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -31,26 +35,29 @@ function NewAPI() {
   const { loading, error, success } = useSelector((state) => state.addNewAPI);
   const [toggle, setToggle] = useState(false);
 
+  const categories = [
+    "G2A", "KeySender", "Amazon", "Flipkart", "Ebay", "Walmart", "Shopify", "AliExpress", "BestBuy", "Others"
+  ];
+
   // Validation rules
   const validationRules = {
-    name: (value) =>
-      !value.trim() || value.length < 3 ? "API Name must be at least 1 characters." : "",
+    name: (value) => (!value ? "Please select a category." : ""),
     clientId: (value) =>
       !value.trim() || value.length < 5 ? "Client ID must be at least 5 characters." : "",
     clientSecret: (value) =>
       !value.trim() || value.length < 8 ? "Client Secret must be at least 8 characters." : "",
   };
 
-  // Use validation hook
   const { values, setValues, errors, handleChange, validateForm } = useFormValidation(
     { name: "", clientId: "", clientSecret: "" },
-    validationRules
+    validationRules,
+    { imageValidation: false } // No image validation needed
   );
 
   const toggleHandler = () => setToggle(!toggle);
 
-  const redirectToAdminDashboard = useCallback(() => {
-    navigate("/admin/dashboard");
+  const redirectToAPIDashboard = useCallback(() => {
+    navigate("/admin/api_integration");
   }, [navigate]);
 
   useEffect(() => {
@@ -61,10 +68,10 @@ function NewAPI() {
 
     if (success) {
       alert.success("API Created Successfully");
-      redirectToAdminDashboard();
+      redirectToAPIDashboard();
       dispatch({ type: NEW_API_RESET });
     }
-  }, [dispatch, alert, error, redirectToAdminDashboard, success]);
+  }, [dispatch, alert, error, redirectToAPIDashboard, success]);
 
   const createApiSubmitHandler = (e) => {
     e.preventDefault();
@@ -112,25 +119,14 @@ function NewAPI() {
                       </Typography>
 
                       {/* API Name */}
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        label="API Name"
-                        required
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                        error={!!errors.name}
-                        helperText={errors.name}
-                        sx={{ mb: 2 }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ShoppingCartOutlinedIcon sx={{ fontSize: 20, color: "#414141" }} />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
+                      {/* Category Select */}
+                      <FormControl fullWidth error={!!errors.name} sx={{ mb: 2 }}>
+                        <Select name="name" value={values.name} onChange={handleChange}>
+                          <MenuItem value=""><em>Choose Category</em></MenuItem>
+                          {categories.map((cate) => <MenuItem key={cate} value={cate}>{cate}</MenuItem>)}
+                        </Select>
+                        <FormHelperText>{errors.name}</FormHelperText>
+                      </FormControl>
 
                       {/* Client ID */}
                       <TextField
@@ -160,7 +156,6 @@ function NewAPI() {
                         label="Client Secret"
                         required
                         name="clientSecret"
-                        type="password"
                         value={values.clientSecret}
                         onChange={handleChange}
                         error={!!errors.clientSecret}
@@ -177,7 +172,7 @@ function NewAPI() {
 
                       {/* Submit Button */}
                       <Button
-                        className = "mainButton"
+                        className="mainButton"
                         variant="contained"
                         fullWidth
                         type="submit"

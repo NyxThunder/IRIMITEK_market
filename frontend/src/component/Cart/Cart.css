@@ -527,7 +527,7 @@ align-items: center;
   transition: transform 0.3s ease 0s;
   border-style: 2px solid;
 }
-
+/* 
 input[type="number"] {
   width: 32px;
   font-size: 1rem;
@@ -545,7 +545,7 @@ input[type="number"] {
 
   -moz-appearance: textfield;
   appearance: textfield;
-}
+} */
 
 
  

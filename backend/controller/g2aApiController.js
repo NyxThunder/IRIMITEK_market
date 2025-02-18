@@ -38,18 +38,19 @@ const getHeaders = () => {
 };
 
 // Import products from G2A
-const importProducts = async (params = {}) => {
-    try {
-        
-        const headers = getHeaders();
+const importProducts = async (token, params = {}) => {
+    try {        
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`.replace(/"/g, ""),
+        };
         const response = await axios.get(`https://api.g2a.com/v1/products`, {
             headers,
             params: {
                 page: params.page || 1,
-                id: params.id,
                 minQty: params.minQty,
-                minPriceFrom: params.minPriceFrom,
-                minPriceTo: params.minPriceTo,
+                // minPriceFrom: params.minPriceFrom,
+                // minPriceTo: params.minPriceTo,
                 includeOutOfStock: params.includeOutOfStock || 'false',
                 updatedAtFrom: params.updatedAtFrom,
                 updatedAtTo: params.updatedAtTo,

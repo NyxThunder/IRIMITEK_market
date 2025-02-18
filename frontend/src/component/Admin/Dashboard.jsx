@@ -282,7 +282,7 @@ function Dashboard() {
               <Grid
                 container
                 sx={{
-                  mt: 1,
+                  mt: 2,
                   display: "grid",
                   gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
                   gap: 2,  // Adds even spacing between items

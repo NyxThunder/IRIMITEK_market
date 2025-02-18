@@ -57,11 +57,12 @@ function NewProduct() {
     category: (value) => (!value ? "Please select a category." : ""),
   };
 
-  // Use the custom hook
+  
   const { values, setValues, errors, handleChange, validateImageUpload, validateForm } = useFormValidation(
-    { name: "", price: "", Stock: "", info: "", description: "", category: "", images: [] },
-    validationRules
-  );
+    { name: "", price: "", Stock: "", description: "", category: "", images: [] },
+    validationRules,
+    { imageValidation: true } // Image validation enabled
+);
 
 
 

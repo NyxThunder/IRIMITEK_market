@@ -417,20 +417,20 @@ button {
   border-style: 2px solid;
 }
 
-input[type="number"] {
+.productDetailsinput[type="number"] {
   width: 32px;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+.productDetailsinput[type="number"]::-webkit-outer-spin-button,
+.productDetailsinput[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+.productDetailsinput[type="number"] {
   -moz-appearance: textfield;
 }
 

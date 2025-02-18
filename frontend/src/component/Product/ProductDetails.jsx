@@ -222,7 +222,7 @@ useEffect(() => {
                           readOnly
                           type="number"
                           value={quantity}
-                          className="input"
+                          className="productDetailsinput"
                         />
                         <IconButton
                           onClick={increaseQuantityHandler}

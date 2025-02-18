@@ -8,6 +8,7 @@ import {
   clearErrors,
   getAdminApis,
   deleteApi,
+  connectApi,
 } from "../../../actions/apiAction";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,7 +18,7 @@ import Loader from "../../layouts/loader/Loader";
 
 import Sidebar from "../Siderbar";
 import Navbar from "../Navbar";
-import { DELETE_API_RESET } from "../../../constants/apiConstatns";
+import { DELETE_API_RESET, CONNECT_API_RESET } from "../../../constants/apiConstatns";
 import { Button, Grid, Card } from "@mui/material";
 
 function ApiList() {
@@ -28,6 +29,7 @@ function ApiList() {
 
   const { error, apis, loading } = useSelector((state) => state.apis) || {};
   const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateApi) || {};
+  const { error: connectError, connected } = useSelector((state) => state.connectApi) || {};
 
   useEffect(() => {
     if (error) {
@@ -38,47 +40,49 @@ function ApiList() {
       alert.error(deleteError);
       dispatch(clearErrors());
     }
+    if (connectError) {
+      alert.error(connectError);
+      dispatch(clearErrors());
+    }
     if (isDeleted) {
       alert.success("API gateway deleted Successfully");
       dispatch({ type: DELETE_API_RESET });
     }
+    if (connected) {
+      alert.success("API gateway connected Successfully");
+      dispatch({ type: CONNECT_API_RESET });
+    }
     dispatch(getAdminApis());
-  }, [dispatch, error, alert, deleteError, isDeleted]);
+  }, [dispatch, error, alert, deleteError, connectError, isDeleted, connected]);
 
   const deleteApiHandler = (id) => {
     dispatch(deleteApi(id));
   };
 
+  const [data, setData] = useState([]);
 
-
-  const [data, setData] = useState([
-    { id: "1", name: "G2A", status: "Active" },
-    { id: "2", name: "Kinguin", status: "Inactive" },
-    { id: "3", name: "Kyesender", status: "Active" },
-  ]);
-
-  const handleToggleStatus = (id) => {
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.id === id ? { ...item, status: item.status === "Active" ? "Inactive" : "Active" } : item
-      )
-    );
-    const updatedItem = data.find((item) => item.id === id);
-    if (updatedItem && updatedItem.status === "Inactive") {
-      // fetchDataFromAPI(id);
+  useEffect(() => {
+    if (apis) {
+      const filteredData = apis.map(api => ({
+        id: api._id,
+        name: api.name,
+        clientId: api.clientId,
+        clientSecret: api.clientSecret,
+      }));
+      setData(filteredData);
     }
-  };
+  }, [apis]);
 
-  const handleConnectAPI = (name) => {
-    navigate(`/admin/new/api/connect?name=${name}`);
+  const handleConnectAPI = async (id) => {
+    await dispatch(connectApi(id));
   };
   
-  const handleImportProductFromAPI = (name) => {
-    navigate(`/admin/new/api/import?name=${name}`);
+  const handleImportProductFromAPI = (id, name) => {
+    navigate(`/admin/api/import/${id}?name=${name}`);
   };
 
-  const handleExportProductFromAPI = (name) => {
-    navigate(`/admin/new/api/export?name=${name}`);
+  const handleExportProductFromAPI = (id) => {
+    navigate(`/admin/api/export/${id}`);
   };
 
   const columns_dataTable = [
@@ -123,7 +127,7 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleConnectAPI(tableMeta.rowData[1])}
+              onClick={() => handleConnectAPI(tableMeta.rowData[0])}
               variant="contained"
               color="secondary"
             >
@@ -142,7 +146,7 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleImportProductFromAPI(tableMeta.rowData[1])}
+              onClick={() => handleImportProductFromAPI(tableMeta.rowData[0], tableMeta.rowData[1])}
               variant="contained"
               color="primary"
             >
@@ -161,7 +165,7 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleExportProductFromAPI(tableMeta.rowData[1])}
+              onClick={() => handleExportProductFromAPI(tableMeta.rowData[0])}
               variant="contained"
               color="primary"
             >

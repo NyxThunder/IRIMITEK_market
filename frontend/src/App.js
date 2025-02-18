@@ -46,6 +46,12 @@ const LazyAPIIntegration = React.lazy(() =>
 const LazyUpdateAPI = React.lazy(() =>
   import("./component/Admin/API/UpdateAPI")
 );
+const LazyImportAPI = React.lazy(() =>
+  import("./component/Admin/API/ImportAPI")
+);
+const LazyExportAPI = React.lazy(() =>
+  import("./component/Admin/API/ExportAPI")
+);
 const LazyNewAPI = React.lazy(() =>
   import("./component/Admin/API/NewAPI")
 );
@@ -155,6 +161,16 @@ function App() {
             <LazyUpdateAPI />
           </Suspense>
         )} />} />
+        <Route path="/admin/api/import/:id" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyImportAPI />
+          </Suspense>
+        )} />} />
+        <Route path="/admin/api/export/:id" element={<PrivateRoute isAdmin={true} component={() => (
+          <Suspense fallback={<IrimiLoader />}>
+            <LazyExportAPI />
+          </Suspense>
+        )} />} />
         <Route path="/admin/new/api" element={<PrivateRoute isAdmin={true} component={() => (
           <Suspense fallback={<IrimiLoader />}>
             <LazyNewAPI />
@@ -195,10 +211,11 @@ function App() {
             <LazyUpdateUser />
           </Suspense>
         )} />} />
-
-        {/* Stripe Payment Route */}
+      </Routes>
+      <Routes>
         <Route path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)}>{<><Header /><Payment /></>}</Elements>} />
       </Routes>
+
     </>
   );
 }

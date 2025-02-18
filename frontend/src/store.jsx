@@ -29,7 +29,7 @@ import {
   
 
 } from "./reducers/orderReducer";
-import { newApiReducer,  apisReducer, deleteUpdateApiReducer, apiDetailsReducer} from "./reducers/apiReducer";
+import { newApiReducer,  apisReducer, deleteUpdateApiReducer, apiDetailsReducer, connectApiReducer, importApiReducer, exportApiReducer} from "./reducers/apiReducer";
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -53,7 +53,10 @@ const rootReducer = combineReducers({
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
   deleteReview :deleteReviewReducer,
-  getAllReview : getALLReviewReducer
+  getAllReview : getALLReviewReducer,
+  connectApi : connectApiReducer,
+  importApi : importApiReducer,
+  exportApi : exportApiReducer,
 });
 
 // get all Cart values from local storage and pass this initial state into store

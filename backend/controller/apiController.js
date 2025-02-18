@@ -3,142 +3,156 @@ const ProductModel = require("../model/ProductModel");
 const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ApiFeatures = require("../utils/apiFeatures");
-const G2AApi = require("./g2aApiController");
-const { authenticate, importProducts, exportProduct, getBestsellers } = require("./g2aApiController");
+const { authenticate, importProducts } = require("./g2aApiController");
 const cloudinary = require("cloudinary");
-const axios = require('axios');
-const productController = require("./productController");
+const FormData = require("form-data");
 
-// >>>>>>>>>>>>>>>>>>>>> createApi Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
-exports.createApi = asyncWrapper(async (req, res) => {
-  let images = [];
+// Create API Admin route
+exports.createApi = asyncWrapper(async (req, res, next) => {
+  const { name, clientId, clientSecret } = req.body;
 
-  if (req.body.name == "G2A") {
-
-    const myForm = new FormData();
-    myForm.set("grant_type", "client_credentials");
-    myForm.set("client_id", req.body.clientId);
-    myForm.set("client_secret", req.body.clientSecret);
-
-    const response = await authenticate(myForm);
-
-    if (response) {
-      const products = await importProducts({ page: 1 });
-
-      for (const product of products.docs) {
-        const productData = {
-          body: {
-            name: product.name,
-            price: product.minPrice,
-            description: product.name,
-            category: product.categories[0].name,
-            Stock: product.qty,
-            info: product.platform,
-            images: product.thumbnail,
-            user: req.user.id,
-          }          
-        };
-
-        if (productData.body.images) {
-          if (typeof productData.body.images === "string") {
-            images.push(productData.body.images);
-          } else {
-            images = productData.body.images;
-          }
-
-          const imagesLinks = [];
-
-          // Split images into chunks due to cloudinary upload limits only 3 images can be uploaded at a time so we are splitting into chunks and uploading them separately eg: 9 images will be split into 3 chunks and uploaded separately
-          const chunkSize = 3;
-          const imageChunks = [];
-          while (images.length > 0) {
-            imageChunks.push(images.splice(0, chunkSize));
-          }
-
-
-          // Upload images in separate requests. for loop will run 3 times if there are 9 images to upload each time uploading 3 images at a time
-          for (let chunk of imageChunks) {
-            const uploadPromises = chunk.map((img) =>
-              cloudinary.v2.uploader.upload(img, {
-                folder: "Products",
-                timeout: 120000, // Increase timeout to 2 minutes
-              })
-            );
-
-            try {
-              const results = await Promise.all(uploadPromises); // wait for all the promises to resolve and store the results in results array eg: [{}, {}, {}] 3 images uploaded successfully and their details are stored in results array
-
-              for (let result of results) {
-                imagesLinks.push({
-                  product_id: result.public_id,
-                  url: result.secure_url,
-                });
-              }
-            } catch (error) {
-              console.error("Error uploading images to Cloudinary:", error);
-              // Retry logic can be added here if needed
-            }
-          }
-
-          productData.body.images = imagesLinks;
-        }
-
-        await ProductModel.create(productData.body);
-      }
-    }
+  if (!name || !clientId || !clientSecret) {
+    return next(new ErrorHandler("Please provide all required fields", 400));
   }
-  // const data = await apiModel.create(req.body);
-  res.status(200).json({ success: true, data: req.body });
+
+  const api = await apiModel.create({
+    name,
+    clientId,
+    clientSecret,
+    user: req.user.id,
+  });
+
+  res.status(201).json({
+    success: true,
+    api,
+  });
 });
 
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all apis >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exports.connectApi = asyncWrapper(async (req, res) => {
+  let api = await apiModel.findById(req.params.id);
+
+  if (api._doc.name === "G2A") {
+    const myForm = new FormData();
+    myForm.append("grant_type", "client_credentials");
+    myForm.append("client_id", api.clientId);
+    myForm.append("client_secret", api.clientSecret);
+
+    const g2aToken = await authenticate(myForm);
+
+    res.status(200).json({ success: true, data: { name: api.name, token: g2aToken } });
+  }
+});
+
+exports.importApi = asyncWrapper(async (req, res) => {
+  const { token, filter } = req.body;
+  let images = [];
+
+  if (token) {
+    const filterOptions = {
+      page: filter.page || 1,
+      minPriceFrom: filter.minPriceFrom || 0,
+      minPriceTo: filter.minPriceTo || Number.MAX_SAFE_INTEGER,
+      minQty: filter.minQty || 0,
+      includeOutOfStock: filter.includeOutOfStock || false,
+      updatedAtFrom: filter.updatedAtFrom || new Date(0),
+      updatedAtTo: filter.updatedAtTo || new Date(),
+    };
+
+    const products = await importProducts(token, filterOptions);
+
+    for (const product of products.docs) {
+      const productData = {
+        body: {
+          name: product.name,
+          price: product.minPrice,
+          description: product.name,
+          category: product.categories[0].name,
+          Stock: product.qty,
+          info: product.platform,
+          images: product.coverImage,
+          user: req.user.id,
+        },
+      };
+
+      if (productData.body.images) {
+        if (typeof productData.body.images === "string") {
+          images.push(productData.body.images);
+        } else {
+          images = productData.body.images;
+        }
+
+        const imagesLinks = [];
+        const chunkSize = 3;
+        const imageChunks = [];
+
+        while (images.length > 0) {
+          imageChunks.push(images.splice(0, chunkSize));
+        }
+
+        for (let chunk of imageChunks) {
+          const uploadPromises = chunk.map((img) =>
+            cloudinary.v2.uploader.upload(img, {
+              folder: "Products",
+              timeout: 120000,
+            })
+          );
+
+          try {
+            const results = await Promise.all(uploadPromises);
+
+            for (let result of results) {
+              imagesLinks.push({
+                product_id: result.public_id,
+                url: result.secure_url,
+              });
+            }
+          } catch (error) {
+            console.error("Error uploading images to Cloudinary:", error);
+          }
+        }
+        productData.body.images = imagesLinks;
+      }
+      await ProductModel.create(productData.body);
+    }
+  }
+  res.status(200).json({ success: true, data: "All products imported successfully!" });
+});
+
+// Get all APIs
 exports.getAllApis = asyncWrapper(async (req, res) => {
   const resultPerPage = 6;
   const apisCount = await apiModel.countDocuments();
 
-  // Create an instance of the ApiFeatures class, passing the apiModel.find() query and req.query (queryString)
   const apiFeature = new ApiFeatures(apiModel.find(), req.query)
-    .search() // Apply search filter based on the query parameters
-    .filter(); // Apply additional filters based on the query parameters
+    .search()
+    .filter();
 
-  let apis = await apiFeature.query; // Fetch the apis based on the applied filters and search
+  let apis = await apiFeature.query;
+  let filteredApiCount = apis.length;
 
-  let filteredApiCount = apis.length; // Number of apis after filtering (for pagination)
-
-  apiFeature.Pagination(resultPerPage); // Apply pagination to the apis
-
-  // Mongoose no longer allows executing the same query object twice, so use .clone() to retrieve the products again
-  apis = await apiFeature.query.clone(); // Retrieve the paginated apis
+  apiFeature.Pagination(resultPerPage);
+  apis = await apiFeature.query.clone();
 
   res.status(201).json({
     success: true,
-    apis: apis,
-    apisCount: apisCount,
-    resultPerPage: resultPerPage,
-    filteredApiCount: filteredApiCount,
+    apis,
+    apisCount,
+    resultPerPage,
+    filteredApiCount,
   });
 });
 
-
-
-
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all api admin route>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+// Get all APIs for admin
 exports.getAllApisAdmin = asyncWrapper(async (req, res) => {
-
   const apis = await apiModel.find();
 
   res.status(201).json({
     success: true,
     apis,
   });
-
 });
 
-
-
-
-//>>>>>>>>>>>>>>>>>> Update Admin Route >>>>>>>>>>>>>>>>>>>>>>>
+// Update API Admin route
 exports.updateApi = asyncWrapper(async (req, res, next) => {
   let api = await apiModel.findById(req.params.id);
 
@@ -154,12 +168,11 @@ exports.updateApi = asyncWrapper(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    api: api,
+    api,
   });
 });
 
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  delete api --admin  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Delete API Admin route
 exports.deleteApi = asyncWrapper(async (req, res, next) => {
   let api = await apiModel.findById(req.params.id);
 
@@ -171,20 +184,21 @@ exports.deleteApi = asyncWrapper(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    message: "Api delete successfully",
+    message: "Api deleted successfully",
   });
 });
 
-//>>>>>>>>>>>>>>>>>>>>>>> Detils of api >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Get API details
 exports.getApiDetails = asyncWrapper(async (req, res, next) => {
   const id = req.params.id;
   const api = await apiModel.findById(id);
+
   if (!api) {
     return next(new ErrorHandler("Product not found", 404));
   }
+
   res.status(201).json({
-    succes: true,
-    api: api,
+    success: true,
+    api,
   });
 });
-
