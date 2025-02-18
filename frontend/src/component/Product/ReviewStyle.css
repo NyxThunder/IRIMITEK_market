@@ -185,7 +185,7 @@
   border-radius: 10px !important;
 }
 
-.container {
+.review-container {
   display: flex !important;
   flex-direction: row !important;
   overflow-x: scroll !important;
@@ -194,17 +194,17 @@
   margin-top: 1rem !important;
 }
 
-.container::-webkit-scrollbar {
+.review-container::-webkit-scrollbar {
   width: 0.5em !important;
   height: 0.5em !important;
 }
 
-.container::-webkit-scrollbar-thumb {
+.review-container::-webkit-scrollbar-thumb {
   background-color: #414141 !important;
   border-radius: 10px !important;
 }
 
-.container::-webkit-scrollbar-track {
+.review-container::-webkit-scrollbar-track {
   background-color: #000 !important;
   border-radius: 10px !important;
 }

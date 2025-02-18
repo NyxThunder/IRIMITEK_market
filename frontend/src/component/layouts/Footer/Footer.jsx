@@ -149,10 +149,9 @@ const Footer = () => {
               <div className="foot_logo">
                 <Link to="/" style={{ textDecoration: "none" }}>
                   <img
-                    src={require("../../../Image/Footer/logo_footer.webp")}
+                    src={require("../../../Image/icono.png")}
                     alt="Irmitek logo"
                   />
-                  <h1 className="Foot_heading">Irmitek oü</h1>
                 </Link>
               </div>
 

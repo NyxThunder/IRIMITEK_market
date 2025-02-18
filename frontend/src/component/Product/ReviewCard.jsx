@@ -100,7 +100,7 @@ const ReviewCard = ({ product }) => {
         </Grid>
       </Grid>
 
-      <div className="container">
+      <div className="review-container">
         {product?.reviews?.map((review) => (
           <MyCard key={review._id} review={review} />
         ))}

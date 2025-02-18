@@ -228,7 +228,7 @@
 
 @media screen and (max-width: 1100px) {
   .filterBox {
-    width: 30vmax !important;
+    width: 40vmax !important;
   }
   .page-link {
     font: 300 1.2vmax "Roboto" !important;
@@ -263,7 +263,7 @@
     margin-top: 10px !important;
   }
   .filterBox {
-    width: 60% !important;
+    width: 80% !important;
     margin: 1rem 0 0 0 !important;
   }
   .products {
