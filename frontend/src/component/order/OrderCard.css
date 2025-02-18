@@ -1,4 +1,4 @@
-.root {
+.orderCardRoot {
     padding: 1rem;
 }
 
@@ -179,7 +179,7 @@
 
 /* Responsive Styles for sm: 768px */
 @media (max-width: 768px) {
-    .root {
+    .orderCardRoot {
         width: 100%;
     }
 

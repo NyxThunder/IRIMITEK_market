@@ -64,10 +64,6 @@
     letter-spacing: 2px;
 }
 
-.buttonGroup > * {
-    margin: 16px;
-}
-
 @media (max-width: 768px) {
     .buttonGroup {
         display: flex;

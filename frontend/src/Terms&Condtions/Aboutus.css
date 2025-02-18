@@ -68,31 +68,3 @@
     width: 100%;
     margin-top: 1rem;
 }
-
-.button1_about {
-    background-color: #000000 !important;
-    color: white !important;
-    width: fit-content !important;
-    padding: 0.8rem 2rem !important;
-    margin-left: 3.3rem !important;
-    border-radius: 5px !important;
-}
-
-.button1_about:hover {
-    background-color: #ed1c24 !important;
-    color: white !important;
-}
-
-.button2_about {
-    background-color: #292929 !important;
-    color: white !important;
-    width: fit-content !important;
-    padding: 0.8rem 2rem !important;
-    margin-left: 1.3rem !important;
-    border-radius: 5px !important;
-}
-
-.button2_about:hover {
-    background-color: #ed1c24 !important;
-    color: white !important;
-}

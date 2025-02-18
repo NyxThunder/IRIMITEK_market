@@ -75,25 +75,25 @@ const About_UsPage = () => {
             Why Choose Us
           </Typography>
           <Typography variant="body1" className="infoText_about">
-            Irmitek is not just another digital marketplace; we are your trusted partner in discovering and purchasing genuine software and game keys. Our platform is built on the foundation of **authenticity**, **customer satisfaction**, and **security**.
+            Irmitek is not just another digital marketplace; we are your trusted partner in discovering and purchasing genuine software and game keys. Our platform is built on the foundation of authenticity, customer satisfaction, and security.
           </Typography>
           <Typography variant="body1" className="infoText_about">
-            We provide a **wide selection** of digital products, including **game keys**, **software licenses**, and **subscriptions**, all backed by excellent customer support. We believe in building long-term relationships with our customers by offering competitive prices, fast delivery, and a commitment to providing high-quality products.
+            We provide a wide selection of digital products, including game keys, software licenses, and subscriptions, all backed by excellent customer support. We believe in building long-term relationships with our customers by offering competitive prices, fast delivery, and a commitment to providing high-quality products.
           </Typography>
-          <div className="buttonContainer_about">
+          <div className="buttonContainer_about" style={{display: "flex", justifyContent: "center", gap: "1rem"}}>
             <Link
               to="/products"
-              style={{ textDecoration: "none", color: "none" }}
+              style={{ textDecoration: "none", color: "none", flex: 1 }}
             >
-              <Button variant="contained" className="button1_about">
+              <Button variant="contained" className="mainButton">
                 Our Products
               </Button>
             </Link>
             <Link
               to="/contact"
-              style={{ textDecoration: "none", color: "none" }}
+              style={{ textDecoration: "none", color: "none", flex: 1 }}
             >
-              <Button variant="contained" className="button2_about">
+              <Button variant="contained" className="mainButton">
                 Contact Us
               </Button>
             </Link>

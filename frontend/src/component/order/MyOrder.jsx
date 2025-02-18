@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Box, Grid, Card } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { myOrders, clearErrors } from "../../actions/orderAction";
 import MetaData from "../layouts/MataData/MataData";
@@ -32,23 +32,22 @@ const MyOrder = () => {
       {loading ? (
         <IrimiLoader />
       ) : (
-        <div>
-          <MetaData title="My Orders" />
-          <div className="orderPageContainer">
-            <Typography variant="h6" className="orderPageTitle">
+
+        <Box sx={{ maxWidth: "1200px", margin: "auto", paddingTop: "140px", paddingBottom: "20px" }}>
+          <Box sx={{ textAlign: "center", mb: 3 }}>
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Your Order
             </Typography>
-            <Typography variant="body1" className="orderPageText">
+            <Typography variant="body2" sx={{ color: "gray" }}>
               {orders.length} order placed in {currentYear}
             </Typography>
-          </div>
-
+          </Box>
           {orders.map((item) => (
             <div key={item._id}>
               <OrderCard item={item} user={user} />
             </div>
           ))}
-        </div>
+        </Box >
       )}
     </>
   );

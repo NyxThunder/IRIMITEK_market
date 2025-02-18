@@ -21,7 +21,7 @@ app.use(fileUpload());
 
 // Enable CORS (Cross-Origin Resource Sharing)
 app.use(cors({
-  origin: ["http://68.183.59.192:3001", "http://localhost:3001"], // Enable CORS for specified origins
+  origin: ["http://68.183.59.192:3001", "https://www.g2a.com", "https://sandboxapi.g2a.com", "http://localhost:3000"], // Enable CORS for specified origins
   credentials: true,  // If you're sending cookies or credentials
 }));
 

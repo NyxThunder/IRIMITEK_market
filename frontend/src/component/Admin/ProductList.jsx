@@ -25,7 +25,7 @@ function ProductList() {
   const [toggle, setToggle] = useState(false);
 
   const { error, products, loading } = useSelector((state) => state.products) || {};
-  const { error: deleteError, isDeleted } = useSelector((state) => state.deleteUpdateProduct) || {};
+  const { error: deleteError, loading: deleting, isDeleted } = useSelector((state) => state.deleteUpdateProduct) || {};
 
   useEffect(() => {
     if (error) {
@@ -146,7 +146,7 @@ function ProductList() {
 
   return (
     <>
-      {loading ? (
+      {loading || deleting? (
         <Loader />
       ) : (
         <>

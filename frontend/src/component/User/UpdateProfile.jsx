@@ -31,6 +31,11 @@ function UpdateProfile() {
   const [isValidName, setIsValidEName] = useState(true);
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("");
+  const [originalData, setOriginalData] = useState({
+    name: user?.name || "",
+    email: user?.email || "",
+    avatar: user?.avatar?.url || "https://res.cloudinary.com/drosmiklv/image/upload/v1739068351/default_avatar_pd5xgd.jpg",
+  });
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -57,8 +62,21 @@ function UpdateProfile() {
     setIsValidEName(event.target.value.length >= 4);
   };
 
+
+  // Check if any change was made before enabling the submit button
+  const isProfileChanged =
+    name !== originalData.name ||
+    email !== originalData.email ||
+    avatar !== originalData.avatar;
+
+
   const UpdateProfileSubmitHandler = (e) => {
     e.preventDefault();
+    if (!isProfileChanged) {
+      alert.info("No changes detected!");
+      return;
+    }
+
     const myForm = new FormData();
     myForm.set("name", name);
     myForm.set("email", email);
@@ -74,7 +92,12 @@ function UpdateProfile() {
       // console.log(user, "user");
       setName(user.name);
       setEmail(user.email);
-      setAvatarPreview(user.avatar.url);
+      setAvatarPreview(user.avatar?.url || "https://res.cloudinary.com/drosmiklv/image/upload/v1739068351/default_avatar_pd5xgd.jpg");
+      setOriginalData({
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar?.url || "https://res.cloudinary.com/drosmiklv/image/upload/v1739068351/default_avatar_pd5xgd.jpg",
+      });
     }
 
     if (error) {

@@ -4,6 +4,8 @@ import {
   Typography,
   Button,
   Divider,
+  Grid,
+  Box,
   useMediaQuery,
 } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
@@ -13,17 +15,13 @@ import { useAlert } from "react-alert";
 import { addItemToCart } from "../../actions/cartAction";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../Product/DialogBox";
-import "./OrderCard.css";
 
-
-const createdAt = (user) => {
-  const createdAt = new Date(user.createdAt);
+const formatDate = (dateString) => {
+  const createdAt = new Date(dateString);
   if (isNaN(createdAt.getTime())) {
-    // Handle invalid date
-    console.error("Invalid date value:", user.createdAt);
     return "Invalid date";
   }
-  const options = {
+  return createdAt.toLocaleString("en-IN", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -31,190 +29,151 @@ const createdAt = (user) => {
     minute: "2-digit",
     hour12: true,
     timeZone: "Asia/Kolkata",
-  };
-
-  const formatter = new Intl.DateTimeFormat("en-IN", options);
-  const formattedDate = formatter.format(createdAt);
-  return formattedDate;
+  });
 };
-
 
 const OrderCard = ({ item, user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();
   const [open, setOpen] = useState(false);
-
   const isSmallScreen = useMediaQuery("(max-width: 999px)");
   const { shippingInfo, orderItems } = item;
 
-  const addToCartHandler = (id, qty = 0) => {
-    dispatch(addItemToCart(id, qty))
-    alert.success("Item Added to Cart")
-    navigate("/cart")
-  }
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    console.log("called");
-    setOpen(false);
+  const addToCartHandler = (id, qty = 1) => {
+    dispatch(addItemToCart(id, qty));
+    alert.success("Item Added to Cart");
+    navigate("/cart");
   };
 
   return (
-    <div className="root">
-      {orderItems.map((product) => (
-        <Card className="orderCard">
-          <div className="firstBlock">
-            {/* Left side */}
-            <div className="leftSide">
-              <Typography
-                variant="subtitle1"
-                className="orderPlaced"
-                style={{ fontWeight: "500" }}
-              >
+    <Box sx={{ width: "100%", px: 2, my: 2 }}>
+      {orderItems.map((product, index) => (
+        <Card
+          key={index}
+          sx={{
+            p: 2,
+            boxShadow: 3,
+            borderRadius: 2,
+            mb: 2,
+          }}
+        >
+          {/* First Row - Order Info & Total */}
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle1" fontWeight="500">
                 ORDER PLACED
               </Typography>
-              <Typography
-                variant="body2"
-                className="orderDate"
-                color="#141414"
-              >
-                {createdAt(item)}
+              <Typography variant="body2" color="text.secondary">
+                {formatDate(item.createdAt)}
               </Typography>
-              <Typography
-                variant="body2"
-                className="orderId"
-                style={{ fontWeight: "500" }}
-              >
+              <Typography variant="body2" fontWeight="500">
                 ORDER-ID: #{item._id}
               </Typography>
-            </div>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
+              <Typography variant="subtitle1" fontWeight="500">
+                Total:
+              </Typography>
+              <Typography variant="body2">
+                <strong> $</strong>
+                {product.price * product.quantity}
+              </Typography>
+            </Grid>
 
-            {/* Right side */}
-            {!isSmallScreen && (
-              <div className="rightSide">
-                <Typography
-                  variant="subtitle1"
-                  className="totalPrice"
-                  style={{ fontWeight: "500" }}
-                >
-                  Total:
-                </Typography>
-                <Typography variant="body2" color="141414">
-                  <strong> $</strong>
-                  {product.price * product.quantity}
-                </Typography>
-              </div>
-            )}
-          </div>
+          </Grid>
 
-          {/* Second block */}
-          <div className="secondBlock">
-            {/* Left side */}
-            <div className="secondBlock_left">
-              <div className="productDetailsContainer">
-                <div style={{ width: "25%" }}>
-                  <img
+          <Divider sx={{ my: 2 }} />
+
+          {/* Product & Address */}
+          <Grid container spacing={3} alignItems="center">
+            {/* Product Image & Details */}
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={2}>
+                {/* Product Image */}
+                <Grid item xs={4}>
+                  <Box
+                    component="img"
                     src={product.image}
                     alt={product.name}
-                    style={{ width: "100%", height: "160px" }}
+                    sx={{
+                      width: "100%",
+                      height: 160,
+                      borderRadius: 1,
+                      objectFit: "cover",
+                    }}
                   />
-                </div>
+                </Grid>
 
-                <div>
-                  <Typography
-                    variant="subtitle1"
-                    className="productName"
-                    style={{ fontWeight: "500" }}
-                  >
+                {/* Product Details */}
+                <Grid item xs={8}>
+                  <Typography variant="subtitle1" fontWeight="500">
                     {product.name}
                   </Typography>
-                  <Typography variant="body2" className="productQty">
+                  <Typography variant="body2">
                     <strong>QTY:</strong> {product.quantity}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    className="deliveryStatus"
-                  >
+                  <Typography variant="body2">
                     <strong>Delivery Status:</strong>{" "}
-                    <span
-                      style={{
-                        color:
-                          item.orderStatus === "Delivered" ? "green" : "red",
-                      }}
-                    >
+                    <span style={{ color: item.orderStatus === "Delivered" ? "green" : "red" }}>
                       {item.orderStatus}
                     </span>
                   </Typography>
-                  <div className="buttonsContainer">
+
+                  <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
                     <Button
                       variant="outlined"
-                      className="buyAgainButton"
-                      onClick={() => addToCartHandler(product.productId, 1)}
+                      size="small"
+                      startIcon={<ReplayIcon />}
+                      onClick={() => addToCartHandler(product.productId)}
                     >
-                      <ReplayIcon style={{ marginRight: "8px" }} />
                       Buy Again
                     </Button>
                     <Button
                       variant="outlined"
-                      className="button"
-                      onClick={() =>
-                        navigate(`/product/${product.productId}`)
-                      }
+                      size="small"
+                      onClick={() => navigate(`/product/${product.productId}`)}
                     >
                       View item
                     </Button>
-                  </div>
-                </div>
-              </div>
-              <Divider className="divider" />
-              <div style={{ padding: "1rem" }}>
-                <Button
-                  variant="outlined"
-                  className="reviewButton"
-                  onClick={handleClickOpen}
-                >
-                  <EditIcon style={{ marginRight: "8px" }} />
-                  Write A Product Review
-                </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
 
-                <DialogBox
-                  open={open}
-                  handleClose={handleClose}
-                  id={product.productId}
-                  className="dialog"
-                />
-              </div>
-            </div>
-
-            {/* Right side */}
+            {/* Shipping Address (Hidden in Small Screens) */}
             {!isSmallScreen && (
-              <div className="secondBlock_right">
-                <div className="addressBlock">
+              <Grid item xs={12} md={6}>
+                <Box sx={{ p: 2, borderRadius: 2, boxShadow: 2, bgcolor: "#f5f5f5" }}>
                   <Typography variant="h6">{user.name}</Typography>
-                  <Typography variant="subtitle1" style={{ fontWeight: 400 }}>
-                    Delivery Address :
+                  <Typography variant="subtitle1" fontWeight="400">
+                    Delivery Address:
                   </Typography>
-                  <Typography variant="body2" className="addressText">
-                    {shippingInfo.address}
+                  <Typography variant="body2">{shippingInfo.address}</Typography>
+                  <Typography variant="body2">
+                    {shippingInfo.city}, {shippingInfo.state}, {shippingInfo.country} -{" "}
+                    {shippingInfo.pinCode}
                   </Typography>
-                  <Typography variant="body2" className="addressText">
-                    {shippingInfo.city}, {shippingInfo.state},{" "}
-                    {shippingInfo.country} - {shippingInfo.pinCode}
-                  </Typography>
-                  <Typography variant="body2" className="addressText">
-                    Phone: {shippingInfo.phoneNo}
-                  </Typography>
-                </div>
-              </div>
+                  <Typography variant="body2">Phone: {shippingInfo.phoneNo}</Typography>
+                </Box>
+              </Grid>
             )}
-          </div>
+          </Grid>
+
+          <Divider sx={{ my: 2 }} />
+
+          {/* Write Review Button */}
+          <Box sx={{ textAlign: "center" }}>
+            <Button variant="outlined" startIcon={<EditIcon />} onClick={() => setOpen(true)}>
+              Write A Product Review
+            </Button>
+          </Box>
+
+          {/* Review Dialog Box */}
+          <DialogBox open={open} handleClose={() => setOpen(false)} id={product.productId} />
         </Card>
       ))}
-    </div>
+    </Box>
   );
 };
 
