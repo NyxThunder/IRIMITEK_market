@@ -6,7 +6,6 @@ import MetaData from "../layouts/MataData/MataData";
 import IrimiLoader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
 import OrderCard from "./OrderCard";
-import "./Myorder.css";
 
 const MyOrder = () => {
   const currentYear = new Date().getFullYear();
@@ -43,7 +42,7 @@ const MyOrder = () => {
             </Typography>
           </Box>
           {orders.map((item) => (
-            <div key={item._id}>
+            <div style={{paddingLeft: 0}} key={item._id}>
               <OrderCard item={item} user={user} />
             </div>
           ))}

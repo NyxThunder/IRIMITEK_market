@@ -47,7 +47,7 @@ const OrderCard = ({ item, user }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", px: 2, my: 2 }}>
+    <Box sx={{ px: 2, my: 2 }}>
       {orderItems.map((product, index) => (
         <Card
           key={index}
@@ -59,7 +59,7 @@ const OrderCard = ({ item, user }) => {
           }}
         >
           {/* First Row - Order Info & Total */}
-          <Grid container spacing={2} alignItems="center">
+          <Grid container spacing={2} alignItems="center" display="flex" justifyContent={"space-between"}>
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" fontWeight="500">
                 ORDER PLACED
@@ -98,9 +98,9 @@ const OrderCard = ({ item, user }) => {
                     alt={product.name}
                     sx={{
                       width: "100%",
-                      height: 160,
+                      height: "100%",
                       borderRadius: 1,
-                      objectFit: "cover",
+                      objectFit: "contain", // Changed from "cover" to "contain"
                     }}
                   />
                 </Grid>
