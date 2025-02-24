@@ -26,7 +26,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
 function ProcessOrder() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const { id: orderId } = useParams();
 

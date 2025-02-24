@@ -26,7 +26,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function UpdateUser() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const { id: userId } = useParams();
   const navigate = useNavigate();
 

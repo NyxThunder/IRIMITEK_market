@@ -10,7 +10,7 @@ import HomeSlider from "./HomeSlider";
 import FeaturedSlider from "./FeatureSlider";
 function Home() {
   // we provided all parameter for react-alert at index.js
-  const alert = useAlert();
+  
 
   const dispatch = useDispatch();
   const { loading, error, products } = useSelector((state) => state.products);

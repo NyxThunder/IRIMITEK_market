@@ -43,7 +43,7 @@ function Signup() {
   const navigateRef = useRef(navigate);
 
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
 
   const { isAuthenticated, error } = useSelector((state) => state.userData);
 

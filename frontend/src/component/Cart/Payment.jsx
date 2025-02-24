@@ -44,7 +44,7 @@ import "./Payment.css";
 
 const PaymentComponent = () => {
   const navigate = useNavigate();
-  const alert = useAlert();
+  
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();

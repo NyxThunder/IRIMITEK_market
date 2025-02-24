@@ -20,7 +20,7 @@ import { DELETE_PRODUCT_RESET } from "../../constants/productsConstatns";
 
 function ProductList() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 

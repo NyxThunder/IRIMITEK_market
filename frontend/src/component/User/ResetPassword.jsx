@@ -19,7 +19,7 @@ function ResetPassword() {
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
 
   const { error, success, loading } = useSelector(
     (state) => state.forgetPassword

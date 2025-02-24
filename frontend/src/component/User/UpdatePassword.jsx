@@ -20,7 +20,7 @@ function UpdatePassword() {
   const { loading, isUpdated, error } = useSelector(
     (state) => state.profileData
   );
-  const alert = useAlert();
+  
 
   const [showPassword, setShowPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState("");

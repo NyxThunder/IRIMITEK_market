@@ -42,7 +42,7 @@
 //   const dispatch = useDispatch();
 //   const params = useParams();
 //   const productId = params.id;
-//   const alert = useAlert();
+//   
 
 
 //   const handleTitleChange = (event) => {
@@ -236,7 +236,7 @@ const DialogBox = ({ open, handleClose, id }) => {
   const dispatch = useDispatch();
   const params = useParams();
   const productId = params.id;
-  const alert = useAlert();
+  
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setComment(event.target.value);

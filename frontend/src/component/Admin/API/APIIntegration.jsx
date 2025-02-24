@@ -23,7 +23,7 @@ import { Button, Grid, Card } from "@mui/material";
 
 function ApiList() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 export default function ForgetPassowrd() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const { error, message, loading } = useSelector(
     (state) => state.forgetPassword
   );

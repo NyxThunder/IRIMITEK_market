@@ -17,7 +17,7 @@ import { DELETE_ORDER_RESET } from "../../constants/orderConstant";
 function OrderList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
   const [toggle, setToggle] = useState(false);
 
   const { error, loading, orders } = useSelector((state) => state.allOrders);

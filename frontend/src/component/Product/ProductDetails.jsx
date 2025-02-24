@@ -31,7 +31,7 @@ import { PRODUCT_DETAILS_RESET } from "../../constants/productsConstatns";
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
 
   const [quantity, setQuantity] = useState(1);
 

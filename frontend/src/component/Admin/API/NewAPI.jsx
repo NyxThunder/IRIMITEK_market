@@ -30,7 +30,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 function NewAPI() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
 
   const { loading, error, success } = useSelector((state) => state.addNewAPI);
   const [toggle, setToggle] = useState(false);

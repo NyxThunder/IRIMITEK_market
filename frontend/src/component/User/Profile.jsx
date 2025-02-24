@@ -16,7 +16,7 @@ import { logout } from "../../actions/userAction";
 import NotificationService, { NotificationContainer } from '../NotificationService';
 
 const ProfilePage = () => {
-  const alert = useAlert();
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);

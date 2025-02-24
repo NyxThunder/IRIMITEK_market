@@ -21,7 +21,7 @@ function UserList() {
   const { error: deleteError, isDeleted, message } = useSelector(
     (state) => state.profileData
   );
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
 

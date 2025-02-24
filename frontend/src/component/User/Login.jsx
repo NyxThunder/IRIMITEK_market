@@ -27,7 +27,7 @@ export default function Login() {
   const loaction = useLocation();
 
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
 
   const { isAuthenticated, loading, error } = useSelector(
     (state) => state.userData

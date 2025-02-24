@@ -55,7 +55,7 @@ function Products() {
     resultPerPage,
     // filterdProductCount,
   } = useSelector((state) => state.products);
-  const alert = useAlert();
+  
 
   const [currentPage, setCurrentPage] = React.useState();
   const [price, setPrice] = React.useState([0, 100000]); // initial limit from min=0 to max=100000

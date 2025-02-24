@@ -18,7 +18,7 @@ import {
 import "./Shipping.css";
 
 const Shipping = () => {
-  const alert = useAlert();
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { shippingInfo } = useSelector((state) => state.cart);

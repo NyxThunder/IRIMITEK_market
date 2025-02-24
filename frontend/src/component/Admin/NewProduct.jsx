@@ -36,7 +36,7 @@ import {
 function NewProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
 
   const { loading, error, success } = useSelector(
     (state) => state.addNewProduct

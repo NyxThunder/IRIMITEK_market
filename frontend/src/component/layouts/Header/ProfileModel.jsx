@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/userAction";
 
 const ProfileModal = ({ user, isAuthenticated }) => {
-  const alert = useAlert();
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);

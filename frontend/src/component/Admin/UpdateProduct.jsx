@@ -37,7 +37,7 @@ import InfoIcon from "@mui/icons-material/Info";
 
 function UpdateProduct() {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const { id: productId } = useParams();
 

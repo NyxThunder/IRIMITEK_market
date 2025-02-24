@@ -12,7 +12,7 @@ const DialogBox = lazy(() => import("./DialogBox"));
 
 const ReviewCard = ({ product }) => {
   const { isAuthenticated } = useSelector((state) => state.userData);
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   const [sortValue, setSortValue] = useState("highest");
   const [open, setOpen] = useState(false);

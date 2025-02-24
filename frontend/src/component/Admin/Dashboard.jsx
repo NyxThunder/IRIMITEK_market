@@ -43,7 +43,7 @@ function Dashboard() {
 
 
 
-  const alert = useAlert();
+  
 
   const getAllMetrics = async () => {
     try {

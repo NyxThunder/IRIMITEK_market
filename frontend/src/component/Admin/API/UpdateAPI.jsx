@@ -30,7 +30,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 function UpdateAPI() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
   const { id } = useParams();
 
   const { loading, error, api } = useSelector((state) => state.apiDetails);

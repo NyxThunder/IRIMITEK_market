@@ -29,7 +29,7 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 function ProductReviews() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
   const [toggle, setToggle] = useState(false);
   const { error, reviews, loading } = useSelector(
     (state) => state.getAllReview

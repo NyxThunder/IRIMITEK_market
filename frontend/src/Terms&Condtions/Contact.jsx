@@ -12,11 +12,11 @@ import {
 import NotificationService, { NotificationContainer } from '../component/NotificationService';
 import { useNavigate } from "react-router-dom";
 import MetaData from "../component/layouts/MataData/MataData";
-import useFormValidation from "../component/hook/useFormValidation"; 
+import useFormValidation from "../component/hook/useFormValidation";
 import "./Contact.css";
 
 const ContactForm = () => {
-  const alert = useAlert();
+  
   const navigate = useNavigate();
   
   // Validation rules

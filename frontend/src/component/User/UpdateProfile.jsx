@@ -19,7 +19,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 function UpdateProfile() {
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
-  const alert = useAlert();
+  
   const dispatch = useDispatch();
   const { error, isUpdated, loading } = useSelector(
     (state) => state.profileData

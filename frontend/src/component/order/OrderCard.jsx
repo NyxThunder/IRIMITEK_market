@@ -35,7 +35,7 @@ const formatDate = (dateString) => {
 const OrderCard = ({ item, user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
+  
   const [open, setOpen] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 999px)");
   const { shippingInfo, orderItems } = item;

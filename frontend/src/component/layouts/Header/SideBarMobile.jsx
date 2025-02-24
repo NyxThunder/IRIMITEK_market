@@ -16,7 +16,7 @@ import "./SideBarMobile.css";
 
 const Sidebar = ({ handleSideBarMenu, isAuthenticated, user }) => {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
 
   const logOutHandler = () => {
     dispatch(logout());

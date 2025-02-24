@@ -8,7 +8,7 @@ import NotificationService, { NotificationContainer } from '../NotificationServi
 import "./DummyCard.css";
 
 const DummyCard = ({ onClose }) => {
-const alert = useAlert();
+
   const handleValueCopy = (value) => {
     navigator.clipboard.writeText(value);
      NotificationService.success("Number Copied");
