@@ -164,59 +164,6 @@ function ExportAPI() {
                                                 sx={{ mb: 2, width: "100%" }}
                                             />
 
-                                            {/* Min Price To */}
-                                            <TextField
-                                                variant="outlined"
-                                                fullWidth
-                                                label="Min Price To"
-                                                type="number"
-                                                name="minPriceTo"
-                                                value={values.minPriceTo}
-                                                onChange={handleChange}
-                                                error={!!errors.minPriceTo}
-                                                helperText={errors.minPriceTo}
-                                                InputProps={{
-                                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                                }}
-                                                sx={{ mb: 2, width: "100%" }}
-                                            />
-
-                                            {/* Min Quantity */}
-                                            <TextField
-                                                variant="outlined"
-                                                fullWidth
-                                                label="Min Quantity"
-                                                type="number"
-                                                name="minQty"
-                                                value={values.minQty}
-                                                onChange={handleChange}
-                                                error={!!errors.minQty}
-                                                helperText={errors.minQty}
-                                                sx={{ mb: 2, width: "100%" }}
-                                            />
-
-                                            {/* Include Out of Stock */}
-                                            <FormControlLabel
-                                                control={
-                                                    <Switch
-                                                        name="includeOutOfStock"
-                                                        checked={values.includeOutOfStock}
-                                                        onChange={handleChange}
-                                                    />
-                                                }
-                                                label="Include Out of Stock"
-                                                sx={{ mb: 2, width: "100%" }}
-                                            />
-
-                                            {/* Updated At From */}
-                                            <Typography>Updated At (From)</Typography>
-                                            <DatePicker
-                                                selected={values.updatedAtFrom}
-                                                onChange={(date) => handleChange({ target: { name: "updatedAtFrom", value: date } })}
-                                                className="datePicker"
-                                                sx={{ mb: 2, width: "100%" }}
-                                            />
-
                                             {/* Updated At To */}
                                             <Typography>Updated At (To)</Typography>
                                             <DatePicker
