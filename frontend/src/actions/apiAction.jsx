@@ -167,14 +167,12 @@ export function exportApi(id, token, apiData, alert) {
       };
 
       if (data.success) {
-        NotificationService.success("API has been exported successfully!");
         dispatch({
           type: EXPORT_API_SUCCESS,
           payload: data.success,
         });
       }
     } catch (error) {
-      NotificationService.error("Connection has failed!:", error.response?.data?.message || error.message);
 
       dispatch({
         type: EXPORT_API_FAIL,
