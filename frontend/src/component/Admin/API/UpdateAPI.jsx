@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import { useNavigate, useParams } from "react-router-dom";
 import MetaData from "../../layouts/MataData/MataData";
 import Loader from "../../layouts/loader/Loader";
@@ -77,15 +77,15 @@ function UpdateAPI() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (updateError) {
-      alert.error(updateError);
+      NotificationService.error(updateError);
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      alert.success("API Updated Successfully");
+      NotificationService.success("API Updated Successfully");
       navigate("/admin/api_integration");
       dispatch({ type: UPDATE_API_RESET });
     }

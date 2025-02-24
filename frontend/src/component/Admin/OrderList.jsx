@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrders, clearErrors, deleteOrder } from "../../actions/orderAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import MUIDataTable from "mui-datatables";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
@@ -44,15 +44,15 @@ function OrderList() {
   // Fetch Orders and Handle Errors
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
-      alert.error(deleteError);
+      NotificationService.error(deleteError);
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success("Order Deleted Successfully");
+      NotificationService.success("Order Deleted Successfully");
       navigate("/admin/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }

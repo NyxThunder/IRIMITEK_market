@@ -4,7 +4,7 @@ import { TextField, Button, Typography, Avatar } from "@mui/material";
 import "./LoginFromStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { forgetPassword, clearErrors } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import MetaData from "../layouts/MataData/MataData";
 import IrimiLoader from "../layouts/loader/Loader";
 
@@ -43,12 +43,12 @@ export default function ForgetPassowrd() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (message) {
-      alert.success(message);
+      NotificationService.success(message);
       setEmail("");
     }
   }, [dispatch, error, alert, message, loading]);

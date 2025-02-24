@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 
 const ProfilePage = () => {
   const alert = useAlert();
@@ -24,7 +24,7 @@ const ProfilePage = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    alert.success("Logged out successfully");
+    NotificationService.success("Logged out successfully");
     navigate("/login");
   };
 

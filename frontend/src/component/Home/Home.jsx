@@ -5,7 +5,7 @@ import MataData from "../layouts/MataData/MataData";
 import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layouts/loader/Loader";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import HomeSlider from "./HomeSlider";
 import FeaturedSlider from "./FeatureSlider";
 function Home() {
@@ -17,7 +17,7 @@ function Home() {
 
   React.useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors);
     }
     dispatch(getProduct());

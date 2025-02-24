@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../component/NotificationService';
 import { useNavigate } from "react-router-dom";
 import MetaData from "../component/layouts/MataData/MataData";
 import useFormValidation from "../component/hook/useFormValidation"; 
@@ -42,7 +42,7 @@ const ContactForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    alert.success("Your message has been sent successfully");
+    NotificationService.success("Your message has been sent successfully");
     navigate("/");
   };
 

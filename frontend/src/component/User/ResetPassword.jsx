@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword, clearErrors } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import MetaData from "../layouts/MataData/MataData";
 import { useNavigate, useParams } from "react-router-dom";
 import IrimiLoader from "../layouts/loader/Loader";
@@ -50,12 +50,12 @@ function ResetPassword() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success("Password Updated Successfully");
+      NotificationService.success("Password Updated Successfully");
       navigateRef.current("/login");
     }
   }, [dispatch, error, alert, success]);
@@ -66,7 +66,7 @@ function ResetPassword() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert.error("Password and Confirm Password do not match");
+      NotificationService.error("Password and Confirm Password do not match");
       return;
     }
     const myForm = new FormData();

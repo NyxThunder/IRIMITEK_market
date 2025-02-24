@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartAction";
 import MetaData from "../layouts/MataData/MataData";
 import CheckoutSteps from "./CheckoutSteps ";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -103,12 +103,12 @@ const Shipping = () => {
       pinCode === "" ||
       phoneNo === ""
     ) {
-      alert.error("Please fill all the fields");
+      NotificationService.error("Please fill all the fields");
       return;
     }
 
     if (phoneNo && phoneNo.length !== 10) {
-      alert.error("Phone Number should be 10 digits Long");
+      NotificationService.error("Phone Number should be 10 digits Long");
       return;
     }
 

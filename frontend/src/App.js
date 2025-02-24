@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { load_UserProfile } from "./actions/userAction";
+import { NotificationContainer } from './component/NotificationService';
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -113,6 +114,7 @@ function App() {
 
   return (
     <>
+      <NotificationContainer />
       <Routes>
         <Route path="/" element={<><Header /><Home /><Services /><Footer /></>} />
         <Route path="/product/:id" element={<><Header /><ProductDetails /><Services /><Footer /></>} />

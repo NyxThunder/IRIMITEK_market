@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { myOrders, clearErrors } from "../../actions/orderAction";
 import MetaData from "../layouts/MataData/MataData";
 import IrimiLoader from "../layouts/loader/Loader";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import OrderCard from "./OrderCard";
 
 const MyOrder = () => {
@@ -17,7 +17,7 @@ const MyOrder = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 

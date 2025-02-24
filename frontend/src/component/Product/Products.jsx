@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./Products.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../layouts/loader/Loader";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useParams } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData";
 import { clearErrors, getProduct } from "../../actions/productAction";
@@ -65,7 +65,7 @@ function Products() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     dispatch(getProduct(keyword, currentPage, price, category, ratings));

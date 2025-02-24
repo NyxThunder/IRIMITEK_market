@@ -23,7 +23,7 @@
 // import { useSelector, useDispatch } from "react-redux";
 
 // import { useParams } from "react-router-dom";
-// import { useAlert } from "react-alert";
+// import NotificationService, { NotificationContainer } from '../NotificationService';
 // import { clearErrors, newReview } from "../../actions/productAction";
 
 
@@ -73,17 +73,17 @@
 //           myForm.set("productId", productId);
 //     }
 //     dispatch(newReview(myForm));
-//       alert.success("Review posted successfully");
+//       NotificationService.success("Review posted successfully");
 //     handleClose();
 //   };
 
 //   useEffect(() => {
 //     if (error) {
-//       alert.error(error);
+//       NotificationService.error(error);
 //       dispatch(clearErrors());
 //     }
 //     if (success) {
-//       alert.success("Review posted successfully");
+//       NotificationService.success("Review posted successfully");
 //       dispatch({ type: NEW_REVIEW_RESET });
 //     }
 //   }, [dispatch, alert, error, success]);
@@ -223,7 +223,7 @@ import Rating from "@mui/material/Rating";
 import { NEW_REVIEW_RESET } from "../../constants/productsConstatns";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { clearErrors, newReview } from "../../actions/productAction";
 
 const DialogBox = ({ open, handleClose, id }) => {
@@ -252,17 +252,17 @@ const DialogBox = ({ open, handleClose, id }) => {
     myForm.set("productId", id || productId);
 
     dispatch(newReview(myForm));
-    alert.success("Review posted successfully");
+    NotificationService.success("Review posted successfully");
     handleClose();
   };
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (success) {
-      alert.success("Review posted successfully");
+      NotificationService.success("Review posted successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
   }, [dispatch, alert, error, success]);

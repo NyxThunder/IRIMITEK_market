@@ -4,14 +4,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import "./DummyCard.css";
 
 const DummyCard = ({ onClose }) => {
 const alert = useAlert();
   const handleValueCopy = (value) => {
     navigator.clipboard.writeText(value);
-     alert.success("Number Copied");
+     NotificationService.success("Number Copied");
   };
 
   return (

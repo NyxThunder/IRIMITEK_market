@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { Button } from "@mui/material";
 import MetaData from "../layouts/MataData/MataData";
 import EditIcon from "@mui/icons-material/Edit";
@@ -32,16 +32,16 @@ function UserList() {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
-      alert.error(deleteError);
+      NotificationService.error(deleteError);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      alert.success(message);
+      NotificationService.success(message);
       navigateRef.current("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
     }

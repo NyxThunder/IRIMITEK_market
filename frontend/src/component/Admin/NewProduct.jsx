@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
 import { createProduct, clearErrors } from "../../actions/productAction";
@@ -106,12 +106,12 @@ function NewProduct() {
   ];
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success("Product Created Successfully");
+      NotificationService.success("Product Created Successfully");
       redirectToAdminDashboard();
       dispatch({ type: NEW_PRODUCT_RESET });
     }

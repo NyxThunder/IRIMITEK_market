@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import MetaData from "../../layouts/MataData/MataData";
 import Loader from "../../layouts/loader/Loader";
 import Sidebar from "../Siderbar";
@@ -73,15 +73,15 @@ function ExportAPI() {
 
     useEffect(() => {
         if (error) {
-            alert.error(error);
+            NotificationService.error(error);
             dispatch(clearErrors());
         }
         if (exportError) {
-            alert.error(exportError);
+            NotificationService.error(exportError);
             dispatch(clearErrors());
         }
         if (exported) {
-            alert.success("API Exported Successfully!");
+            NotificationService.success("API Exported Successfully!");
             navigate("/admin/api_integration");
             dispatch({ type: EXPORT_API_RESET });
         }

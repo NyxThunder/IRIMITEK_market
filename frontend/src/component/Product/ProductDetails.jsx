@@ -21,7 +21,7 @@ import {
   clearErrors,
   getProductDetails,
 } from "../../actions/productAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import MetaData from "../layouts/MataData/MataData";
 import { addItemToCart } from "../../actions/cartAction";
 import IrimiLoader from "../layouts/loader/Loader";
@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
 useEffect(() => {
   if (error) {
-    alert.error(error);
+    NotificationService.error(error);
     dispatch(clearErrors);
   }
   if (success) {
@@ -72,7 +72,7 @@ useEffect(() => {
   const handleAddItem = () => {
 
     dispatch(addItemToCart(id, quantity));
-    alert.success("Item Added To Cart");
+    NotificationService.success("Item Added To Cart");
   };
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import MetaData from "../../layouts/MataData/MataData";
 import Loader from "../../layouts/loader/Loader";
 import Sidebar from "../Siderbar";
@@ -62,12 +62,12 @@ function NewAPI() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success("API Created Successfully");
+      NotificationService.success("API Created Successfully");
       redirectToAPIDashboard();
       dispatch({ type: NEW_API_RESET });
     }

@@ -1,6 +1,6 @@
 // import React, { useEffect, useState, useCallback } from "react";
 // import { useDispatch, useSelector } from "react-redux";
-// import { useAlert } from "react-alert";
+// import NotificationService, { NotificationContainer } from '../NotificationService';
 // import { useNavigate, useParams, useLocation } from "react-router-dom";
 // import MetaData from "../../layouts/MataData/MataData";
 // import Loader from "../../layouts/loader/Loader";
@@ -73,16 +73,16 @@
 
 //   useEffect(() => {
 //     if (error) {
-//       alert.error(error);
+//       NotificationService.error(error);
 //       dispatch(clearErrors());
 //     }
 //     if (importError) {
-//       alert.error(importError);
-//       alert.error("Please connect first. later.");
+//       NotificationService.error(importError);
+//       NotificationService.error("Please connect first. later.");
 //       dispatch(clearErrors());
 //     }
 //     if (imported) {
-//       alert.success("API Imported Successfully!");
+//       NotificationService.success("API Imported Successfully!");
 //       navigate("/admin/api_integration");
 //       dispatch({ type: IMPORT_API_RESET });
 //     }
@@ -251,7 +251,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import MetaData from "../../layouts/MataData/MataData";
 import Loader from "../../layouts/loader/Loader";
@@ -321,12 +321,12 @@ function ImportAPI() {
 
   useEffect(() => {
     if (importError) {
-      alert.error(importError);
-      alert.error("Please connect first. later.");
+      NotificationService.error(importError);
+      NotificationService.error("Please connect first. later.");
       dispatch(clearErrors());
     }
     if (imported) {
-      alert.success("API Imported Successfully!");
+      NotificationService.success("API Imported Successfully!");
       navigate("/admin/api_integration");
       dispatch({ type: IMPORT_API_RESET });
     }

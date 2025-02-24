@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductDetails, updateProduct, clearErrors } from "../../actions/productAction";
 import { UPDATE_PRODUCT_RESET } from "../../constants/productsConstatns";
@@ -96,17 +96,17 @@ function UpdateProduct() {
     }
 
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert.error(updateError);
+      NotificationService.error(updateError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Product Updated Successfully");
+      NotificationService.success("Product Updated Successfully");
       navigate("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }

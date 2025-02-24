@@ -7,7 +7,7 @@ import {
   updateProfile,
   load_UserProfile,
 } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstanat";
 import MetaData from "../layouts/MataData/MataData";
 import { useNavigate} from "react-router-dom";
@@ -73,7 +73,7 @@ function UpdateProfile() {
   const UpdateProfileSubmitHandler = (e) => {
     e.preventDefault();
     if (!isProfileChanged) {
-      alert.info("No changes detected!");
+      NotificationService.info("No changes detected!");
       return;
     }
 
@@ -101,12 +101,12 @@ function UpdateProfile() {
     }
 
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     // isUpadted is nothing But success message from response. once user updated then pop the message and show profile data
     if (isUpdated) {
-      alert.success("Profile Updated Successfully");
+      NotificationService.success("Profile Updated Successfully");
       // now get user New data from backend
       dispatch({
         type: UPDATE_PROFILE_RESET,

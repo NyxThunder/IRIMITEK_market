@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 
 import {
   clearErrors,
@@ -33,23 +33,23 @@ function ApiList() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
-      alert.error(deleteError);
+      NotificationService.error(deleteError);
       dispatch(clearErrors());
     }
     if (connectError) {
-      alert.error(connectError);
+      NotificationService.error(connectError);
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success("API gateway deleted Successfully");
+      NotificationService.success("API gateway deleted Successfully");
       dispatch({ type: DELETE_API_RESET });
     }
     if (connected) {
-      alert.success("API gateway connected Successfully");
+      NotificationService.success("API gateway connected Successfully");
       dispatch({ type: CONNECT_API_RESET });
     }
     dispatch(getAdminApis());

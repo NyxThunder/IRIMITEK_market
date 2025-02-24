@@ -5,7 +5,7 @@ import IrimiLoader from "../layouts/loader/Loader";
 import "./ReviewStyle.css";
 import MyCard from "./Card";
 import { useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useNavigate } from "react-router-dom";
 
 const DialogBox = lazy(() => import("./DialogBox"));
@@ -23,7 +23,7 @@ const ReviewCard = ({ product }) => {
 
   const handleClickOpen = () => {
     if (!isAuthenticated) {
-      alert.error("Please Login to write a review");
+      NotificationService.error("Please Login to write a review");
       navigate("/login");
       return;
     }

@@ -13,7 +13,7 @@ import MetaData from "../layouts/MataData/MataData";
 import { Link } from "react-router-dom";
 import { signUp, clearErrors } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useNavigate} from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -49,12 +49,12 @@ function Signup() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 
     if (isAuthenticated) {
-      alert.success("User Registered Successfully");
+      NotificationService.success("User Registered Successfully");
       navigateRef.current("/account");
     }
   }, [dispatch, isAuthenticated, loading, error, alert]);
@@ -126,7 +126,7 @@ function Signup() {
   
 
     if (password !== confirmPassword) {
-      alert.error("Password and Confirm Password do not match");
+      NotificationService.error("Password and Confirm Password do not match");
       setLoading(false);
       return;
     }

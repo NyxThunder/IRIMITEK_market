@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { login, clearErrors } from "../../actions/userAction";
 import IrimiLoader from "../layouts/loader/Loader";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { Link } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData"
 
@@ -63,7 +63,7 @@ export default function Login() {
     : "/account";
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 

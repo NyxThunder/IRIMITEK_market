@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 
 import {
   clearErrors,
@@ -29,15 +29,15 @@ function ProductList() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
-      alert.error(deleteError);
+      NotificationService.error(deleteError);
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success("Product Deleted Successfully");
+      NotificationService.success("Product Deleted Successfully");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
     dispatch(getAdminProducts());

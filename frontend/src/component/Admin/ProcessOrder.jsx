@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateOrder, clearErrors, getOrderDetails } from "../../actions/orderAction";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstant";
 
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import MetaData from "../layouts/MataData/MataData";
@@ -38,15 +38,15 @@ function ProcessOrder() {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (updateError) {
-      alert.error(updateError);
+      NotificationService.error(updateError);
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      alert.success("Order Updated Successfully");
+      NotificationService.success("Order Updated Successfully");
       navigate("/admin/orders");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
@@ -56,7 +56,7 @@ function ProcessOrder() {
   const updateOrderSubmitHandler = (e) => {
     e.preventDefault();
     if (!status) {
-      alert.error("Please select a valid status");
+      NotificationService.error("Please select a valid status");
       return;
     }
     const myForm = new FormData();

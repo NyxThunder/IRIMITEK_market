@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layouts/MataData/MataData";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import OrderDetailsSection from "./OrderDetails";
@@ -107,7 +107,7 @@ const PaymentComponent = () => {
   async function paymentSubmitHandler(e) {
     e.preventDefault();
     if (nameOnCard === "") {
-      alert.error("Please enter name on card");
+      NotificationService.error("Please enter name on card");
       return;
     }
 
@@ -154,7 +154,7 @@ const PaymentComponent = () => {
       if (result.error) {
         // if error then again enable the button on
 
-        alert.error(result.error.message);
+        NotificationService.error(result.error.message);
       } else {
         if ( result.paymentIntent.status === "succeeded") {
           // add new property inside order object
@@ -162,27 +162,27 @@ const PaymentComponent = () => {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
-          alert.success(result.paymentIntent.status);
+          NotificationService.success(result.paymentIntent.status);
 
           dispatch(createOrder(order));
 
           navigate("/success");
         } else {
-          alert.error("There's some issue while processing payment");
+          NotificationService.error("There's some issue while processing payment");
         }
       }
     } catch (error) {
       // if error while payment then again enable payment button
 
 
-      alert.error(error.message);
+      NotificationService.error(error.message);
     }
   }
 
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
 

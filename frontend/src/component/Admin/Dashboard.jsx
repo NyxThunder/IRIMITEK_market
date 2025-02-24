@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAdminProducts, clearErrors } from "../../actions/productAction";
 import MetaData from "../layouts/MataData/MataData";
 import Loader from "../layouts/loader/Loader";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { getAllOrders } from "../../actions/orderAction";
 import { getAllUsers } from "../../actions/userAction";
 import Navbar from "./Navbar";
@@ -70,7 +70,7 @@ function Dashboard() {
           getAllMetrics(),
         ]);
       } catch (error) {
-        alert.error(error);
+        NotificationService.error(error);
         dispatch(clearErrors());
       }
     };

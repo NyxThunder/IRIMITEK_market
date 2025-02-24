@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import {
   getAllreviews,
   clearErrors,
@@ -59,15 +59,15 @@ function ProductReviews() {
     }
 
     if (error) {
-      alert.error(error);
+      NotificationService.error(error);
       dispatch(clearErrors());
     }
     if (deleteError) {
-      alert.error(deleteError);
+      NotificationService.error(deleteError);
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success("Review Deleted Successfully");
+      NotificationService.success("Review Deleted Successfully");
       redirectAdminReviews();
       dispatch({ type: DELETE_REVIEW_RESET });
     }

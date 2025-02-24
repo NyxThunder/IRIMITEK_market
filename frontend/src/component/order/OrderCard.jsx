@@ -11,7 +11,7 @@ import {
 import ReplayIcon from "@mui/icons-material/Replay";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../NotificationService';
 import { addItemToCart } from "../../actions/cartAction";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../Product/DialogBox";
@@ -42,7 +42,7 @@ const OrderCard = ({ item, user }) => {
 
   const addToCartHandler = (id, qty = 1) => {
     dispatch(addItemToCart(id, qty));
-    alert.success("Item Added to Cart");
+    NotificationService.success("Item Added to Cart");
     navigate("/cart");
   };
 

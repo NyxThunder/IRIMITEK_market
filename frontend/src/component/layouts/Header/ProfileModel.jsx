@@ -11,7 +11,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./ProfileModel.css";
 import { useNavigate} from "react-router-dom";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/userAction";
 
@@ -84,7 +84,7 @@ const ProfileModal = ({ user, isAuthenticated }) => {
   function logoutUserHandler() {
      setIsOpen(false);
      dispatch(logout());
-    alert.success("Logout Successfully");
+    NotificationService.success("Logout Successfully");
   }
 
   function cartHandler() {

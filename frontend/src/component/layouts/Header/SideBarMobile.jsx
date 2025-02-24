@@ -2,7 +2,7 @@ import React from "react";
 import { logout } from "../../../actions/userAction";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import NotificationService, { NotificationContainer } from '../../NotificationService';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
@@ -20,7 +20,7 @@ const Sidebar = ({ handleSideBarMenu, isAuthenticated, user }) => {
 
   const logOutHandler = () => {
     dispatch(logout());
-    alert.success("Logout Successfully");
+    NotificationService.success("Logout Successfully");
   };
 
   return (
