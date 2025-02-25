@@ -8,6 +8,7 @@ import Sidebar from "../Siderbar";
 import Navbar from "../Navbar";
 import { exportApi, clearErrors } from "../../../actions/apiAction";
 import useFormValidation from "../../hook/useFormValidation";
+import axios from "axios";
 
 import {
     Avatar,
@@ -29,76 +30,37 @@ import { EXPORT_API_RESET } from "../../../constants/apiConstatns";
 function ExportAPI() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    const { id } = useParams();
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const apiName = queryParams.get("name");
     const [toggle, setToggle] = useState(false);
-    const error = null;
-
-    const { loading: loading, error: exportError, exported } = useSelector(
-        (state) => state.exportApi
-    );
-
-    // Validation rules
-    const validationRules = {
-        page: (value) => (value < 1 ? "Page number must be at least 1." : ""),
-        minPriceFrom: (value) => (value < 0 ? "Price must be non-negative." : ""),
-        minPriceTo: (value) => (value < 0 ? "Price must be non-negative." : ""),
-        minQty: (value) => (value < 0 ? "Quantity must be non-negative." : ""),
-        updatedAtFrom: (value) => (!value ? "Please select a start date." : ""),
-        updatedAtTo: (value) => (!value ? "Please select an end date." : ""),
-    };
-
-    const { values, setValues, errors, handleChange, validateForm } = useFormValidation(
-        {
-            page: 1,
-            minPriceFrom: 0,
-            minPriceTo: Number.MAX_SAFE_INTEGER,
-            minQty: 0,
-            includeOutOfStock: false,
-            updatedAtFrom: new Date(0),
-            updatedAtTo: new Date(),
-        },
-        validationRules,
-        { imageValidation: false }
-    );
-
     const toggleHandler = () => setToggle(!toggle);
 
-    const redirectToAPIDashboard = useCallback(() => {
-        navigate("/admin/api_integration");
-    }, [navigate]);
+    const [formData, setFormData] = useState({
+        productId: "",
+        retailPrice: "",
+        inventorySize: 1,
+        visibility: "all"
+    });
 
-    useEffect(() => {
-        if (error) {
-            NotificationService.error(error);
-            dispatch(clearErrors());
-        }
-        if (exportError) {
-            NotificationService.error(exportError);
-            dispatch(clearErrors());
-        }
-        if (exported) {
-            NotificationService.success("API Exported Successfully!");
-            navigate("/admin/api_integration");
-            dispatch({ type: EXPORT_API_RESET });
-        }
-    }, [dispatch, alert, error, exportError, exported, navigate]);
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    const createApiSubmitHandler = (e) => {
+    const handleExport = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
+        setLoading(true);
 
-        const myForm = new FormData();
-        Object.keys(values).forEach((key) => myForm.set(key, values[key]));
-
-        const token = localStorage.getItem(`${apiName}token`);
-        if (token) {
-            dispatch(exportApi(id, token, myForm, alert));
+        try {
+            const response = await axios.post("http://localhost:5000//api/v1/admin/api/export", formData);
+            NotificationService.success("Product exported successfully!");
+            navigate("/admin/g2a_dashboard"); // Redirect after success
+        } catch (error) {
+            NotificationService.error("Failed to export product.");
+            console.error("Export error:", error);
+        } finally {
+            setLoading(false);
         }
     };
+
+
 
     return (
         <>
@@ -120,62 +82,75 @@ function ExportAPI() {
                                 <Navbar toggleHandler={toggleHandler} />
                             </Grid>
 
-                            {/* Form Section */}
-                            <Grid container spacing={2} sx={{ mt: 1 }}>
-                                <Grid item xs={12}>
+                            <Grid container justifyContent="center">
+                                <Grid item xs={12} sm={10} md={8} lg={6}>
                                     <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
-                                        <form onSubmit={createApiSubmitHandler}>
-                                            <Avatar sx={{ bgcolor: "black", mx: "auto", mb: 1 }}>
-                                                <AddCircleOutlineIcon />
-                                            </Avatar>
-                                            <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
-                                                Export API Filters (*Need to be Reconsidered*)
-                                            </Typography>
+                                        <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
+                                            Export Product to G2A
+                                        </Typography>
 
-                                            {/* Page Number */}
+                                        <form onSubmit={handleExport}>
+                                            {/* Product ID */}
                                             <TextField
-                                                variant="outlined"
+                                                label="Product ID"
+                                                name="productId"
                                                 fullWidth
-                                                label="Page Number"
-                                                type="number"
-                                                name="page"
-                                                value={values.page}
+                                                required
+                                                value={formData.productId}
                                                 onChange={handleChange}
-                                                error={!!errors.page}
-                                                helperText={errors.page}
-                                                sx={{ mb: 2, width: "100%" }}
+                                                sx={{ mb: 2 }}
                                             />
 
-                                            {/* Min Price From */}
+                                            {/* Retail Price */}
                                             <TextField
-                                                variant="outlined"
+                                                label="Retail Price"
+                                                name="retailPrice"
                                                 fullWidth
-                                                label="Min Price From"
                                                 required
                                                 type="number"
-                                                name="minPriceFrom"
-                                                value={values.minPriceFrom}
+                                                value={formData.retailPrice}
                                                 onChange={handleChange}
-                                                error={!!errors.minPriceFrom}
-                                                helperText={errors.minPriceFrom}
                                                 InputProps={{
                                                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                                 }}
-                                                sx={{ mb: 2, width: "100%" }}
+                                                sx={{ mb: 2 }}
                                             />
 
-                                            {/* Updated At To */}
-                                            <Typography>Updated At (To)</Typography>
-                                            <DatePicker
-                                                selected={values.updatedAtTo}
-                                                onChange={(date) => handleChange({ target: { name: "updatedAtTo", value: date } })}
-                                                className="datePicker"
-                                                sx={{ mb: 2, width: "100%" }}
+                                            {/* Inventory Size */}
+                                            <TextField
+                                                label="Inventory Size"
+                                                name="inventorySize"
+                                                fullWidth
+                                                required
+                                                type="number"
+                                                value={formData.inventorySize}
+                                                onChange={handleChange}
+                                                sx={{ mb: 2 }}
                                             />
+
+                                            {/* Visibility */}
+                                            <Select
+                                                name="visibility"
+                                                fullWidth
+                                                value={formData.visibility}
+                                                onChange={handleChange}
+                                                sx={{ mb: 2 }}
+                                            >
+                                                <MenuItem value="all">All</MenuItem>
+                                                <MenuItem value="retail">Retail</MenuItem>
+                                                <MenuItem value="business">Business</MenuItem>
+                                            </Select>
 
                                             {/* Submit Button */}
-                                            <Button variant="contained" fullWidth type="submit" sx={{ mt: 3 }} className="mainButton">
-                                                Export
+                                            <Button
+                                                type="submit"
+                                                variant="contained"
+                                                color="primary"
+                                                fullWidth
+                                                disabled={loading}
+                                                sx={{ mt: 2 }}
+                                            >
+                                                {loading ? "Exporting..." : "Export Product"}
                                             </Button>
                                         </form>
                                     </Card>

@@ -207,24 +207,26 @@ exports.getApiDetails = asyncWrapper(async (req, res, next) => {
 // Export API Admin route
 exports.exportApi = asyncWrapper(async (req, res) => {
   try {
-    const { productName, price, stock, description, category, imageUrl } = req.body;
+    const { productId, retailPrice, inventorySize, visibility } = req.body;
 
-    if (!productName || !price || !stock || !category || !imageUrl) {
+    if (!productId || !retailPrice || !inventorySize || !visibility) {
       return res.status(400).json({ error: "Missing required product fields" });
     }
 
     const productPayload = {
-      name: productName,
-      price: price, // Adjust for dropshipping
-      stock: stock,
-      category: category,
-      description: description,
-      imageUrl: imageUrl
+      productId,
+      retailPrice,
+      inventorySize,
+      visibility,
     };
-    
+
     const response = exportProduct(productPayload);
 
-    res.status(200).json({ message: "Product exported successfully!", data: response });
+    res.json({
+      success: true,
+      message: "Product exported successfully!",
+      jobId: response,
+    });
 
   } catch (error) {
     console.error("Error exporting product:", error.response?.data || error.message);

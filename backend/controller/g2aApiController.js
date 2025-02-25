@@ -39,7 +39,7 @@ const getHeaders = () => {
 
 // Import products from G2A
 const importProducts = async (token, params = {}) => {
-    try {        
+    try {
         const headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             Authorization: `Bearer ${token}`.replace(/"/g, ""),
@@ -90,16 +90,34 @@ const getBestsellers = async (params = {}) => {
 // Export a product to G2A
 const exportProduct = async (productPayload) => {
     try {
-        const response = await axios.post(`https://api.g2a.com/v3/sales/order`, productPayload, {
-            headers: {
-                "Authorization": `Bearer ${G2A_API_KEY}`,
-                "Content-Type": "application/json"
+        const response = await axios.post(
+            `https://api.g2a.com/v3/sales/offers`,
+            {
+                offerType: "dropshipping",
+                variants: [
+                    {
+                        price: { retail: productPayload.retailPrice },
+                        productId: productPayload.productId,
+                        active: true,
+                        inventory: { size: productPayload.inventorySize },
+                        visibility: productPayload.visibility,
+                    }
+                ]
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                }
             }
-        });
-        return response.data;
+        );
+        return response.data.data.jobId;
     } catch (error) {
-        console.error("Error exporting product:", error.response?.data || error.message);
-        throw new Error("Failed to export product to G2A.");
+        console.error("Export failed:", error.response?.data || error.message);
+        res.status(500).json({
+            error: "Failed to export product.",
+            details: error.response?.data || error.message
+        });
     }
 };
 
