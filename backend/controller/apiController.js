@@ -3,7 +3,7 @@ const ProductModel = require("../model/ProductModel");
 const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ApiFeatures = require("../utils/apiFeatures");
-const { authenticate, importProducts } = require("./g2aApiController");
+const { authenticate, importProducts, exportProduct } = require("./g2aApiController");
 const cloudinary = require("cloudinary");
 const FormData = require("form-data");
 
@@ -201,4 +201,33 @@ exports.getApiDetails = asyncWrapper(async (req, res, next) => {
     success: true,
     api,
   });
+});
+
+
+// Export API Admin route
+exports.exportApi = asyncWrapper(async (req, res) => {
+  try {
+    const { productName, price, stock, description, category, imageUrl } = req.body;
+
+    if (!productName || !price || !stock || !category || !imageUrl) {
+      return res.status(400).json({ error: "Missing required product fields" });
+    }
+
+    const productPayload = {
+      name: productName,
+      price: price, // Adjust for dropshipping
+      stock: stock,
+      category: category,
+      description: description,
+      imageUrl: imageUrl
+    };
+    
+    const response = exportProduct(productPayload);
+
+    res.status(200).json({ message: "Product exported successfully!", data: response });
+
+  } catch (error) {
+    console.error("Error exporting product:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to export product to G2A" });
+  }
 });

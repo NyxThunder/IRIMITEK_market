@@ -88,16 +88,17 @@ const getBestsellers = async (params = {}) => {
 
 
 // Export a product to G2A
-const exportProduct = async (productData) => {
+const exportProduct = async (productPayload) => {
     try {
-        const headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${accessToken}`,
-        };
-        const response = await axios.post(`https://api.g2a.com/v1/products`, productData, { headers });
+        const response = await axios.post(`https://api.g2a.com/v3/sales/order`, productPayload, {
+            headers: {
+                "Authorization": `Bearer ${G2A_API_KEY}`,
+                "Content-Type": "application/json"
+            }
+        });
         return response.data;
     } catch (error) {
-        console.error("Error Exporting Product:", error.response?.data || error.message);
+        console.error("Error exporting product:", error.response?.data || error.message);
         throw new Error("Failed to export product to G2A.");
     }
 };
