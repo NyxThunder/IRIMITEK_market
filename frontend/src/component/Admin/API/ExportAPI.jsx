@@ -9,7 +9,6 @@ import Navbar from "../Navbar";
 import { exportApi, clearErrors } from "../../../actions/apiAction";
 import useFormValidation from "../../hook/useFormValidation";
 import axios from "axios";
-
 import {
     Avatar,
     TextField,
@@ -20,11 +19,11 @@ import {
     InputAdornment,
     FormControlLabel,
     Switch,
-    Box
+    Box,
+    MenuItem,
+    Select
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // DatePicker styles
 import { EXPORT_API_RESET } from "../../../constants/apiConstatns";
 
 function ExportAPI() {
@@ -49,9 +48,9 @@ function ExportAPI() {
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:5000//api/v1/admin/api/export", formData);
+            const response = await axios.post("http://localhost:5000/api/v1/admin/api/export", formData);
             NotificationService.success("Product exported successfully!");
-            navigate("/admin/g2a_dashboard"); // Redirect after success
+            navigate("/admin/g2a_dashboard");
         } catch (error) {
             NotificationService.error("Failed to export product.");
             console.error("Export error:", error);
@@ -59,8 +58,6 @@ function ExportAPI() {
             setLoading(false);
         }
     };
-
-
 
     return (
         <>
@@ -82,14 +79,18 @@ function ExportAPI() {
                                 <Navbar toggleHandler={toggleHandler} />
                             </Grid>
 
-                            <Grid container justifyContent="center">
-                                <Grid item xs={12} sm={10} md={8} lg={6}>
+                            {/* Form Section */}
+                            <Grid container spacing={2} sx={{ mt: 1 }}>
+                                <Grid item xs={12}>
                                     <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
-                                        <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
-                                            Export Product to G2A
-                                        </Typography>
-
                                         <form onSubmit={handleExport}>
+                                            <Avatar sx={{ bgcolor: "black", mx: "auto", mb: 1 }}>
+                                                <AddCircleOutlineIcon />
+                                            </Avatar>
+                                            <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
+                                                Export Product to G2A
+                                            </Typography>
+
                                             {/* Product ID */}
                                             <TextField
                                                 label="Product ID"
