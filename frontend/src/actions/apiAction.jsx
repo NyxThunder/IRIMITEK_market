@@ -28,6 +28,15 @@ import {
   EXPORT_API_REQUEST,
   EXPORT_API_SUCCESS,
   EXPORT_API_FAIL,
+  GET_OFFERS_REQUEST,
+  GET_OFFERS_SUCCESS,
+  GET_OFFERS_FAIL,
+  DELETE_OFFER_REQUEST,
+  DELETE_OFFER_SUCCESS,
+  DELETE_OFFER_FAIL,
+  UPDATE_RETAIL_PRICE_REQUEST,
+  UPDATE_RETAIL_PRICE_SUCCESS,
+  UPDATE_RETAIL_PRICE_FAIL,
 } from "../constants/apiConstatns";
 import { alertTitleClasses } from "@mui/material";
 
@@ -155,33 +164,87 @@ export function importApi(id, token, apiData) {
   };
 }
 
+///Offer requests
 
-export function exportApi(id, token, apiData, alert) {
-  return async function (dispatch) {
-    try {
-      dispatch({ type: EXPORT_API_REQUEST });
+// export function exportApi(id, token, apiData, alert) {
+//   return async function (dispatch) {
+//     try {
+//       dispatch({ type: EXPORT_API_REQUEST });
       
-      //Just for testing
-      const data = {
-        success: true
-      };
+//       //Just for testing
+//       const data = {
+//         success: true
+//       };
 
-      if (data.success) {
-        dispatch({
-          type: EXPORT_API_SUCCESS,
-          payload: data.success,
-        });
-      }
-    } catch (error) {
+//       if (data.success) {
+//         dispatch({
+//           type: EXPORT_API_SUCCESS,
+//           payload: data.success,
+//         });
+//       }
+//     } catch (error) {
 
-      dispatch({
-        type: EXPORT_API_FAIL,
-        payload: error.response?.data?.message || error.message,
-      });
-    }
-  };
-}
+//       dispatch({
+//         type: EXPORT_API_FAIL,
+//         payload: error.response?.data?.message || error.message,
+//       });
+//     }
+//   };
+// }
+// Fetch Offers
+export const getOffers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_OFFERS_REQUEST });
 
+    const { data } = await axios.get("/api/v1/admin/offers");
+
+    dispatch({ type: GET_OFFERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: GET_OFFERS_FAIL, payload: error.response?.data?.message || error.message });
+  }
+};
+
+// Delete Offer
+export const deleteOffer = (offerId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_OFFER_REQUEST });
+
+    await axios.delete(`/api/v1/admin/offers/${offerId}`);
+
+    dispatch({ type: DELETE_OFFER_SUCCESS, payload: offerId });
+  } catch (error) {
+    dispatch({ type: DELETE_OFFER_FAIL, payload: error.response?.data?.message || error.message });
+  }
+};
+
+// Update Retail Price
+export const updateRetailPrice = (offerId, data) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_RETAIL_PRICE_REQUEST });
+
+    const response = await axios.put(`/api/v1/admin/offers/${offerId}`, data);
+
+    dispatch({ type: UPDATE_RETAIL_PRICE_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: UPDATE_RETAIL_PRICE_FAIL, payload: error.response?.data?.message || error.message });
+  }
+};
+
+// Export Product
+export const exportApi = (productData) => async (dispatch) => {
+  try {
+    dispatch({ type: EXPORT_API_REQUEST });
+
+    const response = await axios.post("/api/v1/admin/offers/export", productData);
+
+    dispatch({ type: EXPORT_API_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: EXPORT_API_FAIL, payload: error.response?.data?.message || error.message });
+  }
+};
+
+
+///End Offer requests
 // Delete Api request
 
 export function deleteApi(id) {

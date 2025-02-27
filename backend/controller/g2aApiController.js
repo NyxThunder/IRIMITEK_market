@@ -86,9 +86,8 @@ const getBestsellers = async (params = {}) => {
     }
 };
 
-
-// Export a product to G2A
-const exportProduct = async (productPayload) => {
+// Export product as a dropshipping offer
+const exportProduct = async (productPayload, accessToken) => {
     try {
         const response = await axios.post(
             `https://api.g2a.com/v3/sales/offers`,
@@ -114,11 +113,147 @@ const exportProduct = async (productPayload) => {
         return response.data.data.jobId;
     } catch (error) {
         console.error("Export failed:", error.response?.data || error.message);
-        res.status(500).json({
-            error: "Failed to export product.",
-            details: error.response?.data || error.message
-        });
+        throw new Error(error.response?.data || error.message);
     }
 };
+
+// Get the list of offers (dropshipping)
+const getOffersList = async (accessToken, page = 1, itemsPerPage = 20) => {
+    try {
+        const response = await axios.get(
+            `https://api.g2a.com/v3/sales/offers`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                params: {
+                    page: page,
+                    itemsPerPage: itemsPerPage,
+                    type: 'dropshipping',
+                }
+            }
+        );
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch offers:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+// Get details of a specific offer by offerId
+const getOfferDetails = async (offerId, accessToken) => {
+    try {
+        const response = await axios.get(
+            `https://api.g2a.com/v3/sales/offers/${offerId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        );
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch offer details:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+// Update an existing offer
+const updateOffer = async (offerId, productPayload, accessToken) => {
+    try {
+        const response = await axios.patch(
+            `https://api.g2a.com/v3/sales/offers/${offerId}`,
+            {
+                offerType: "dropshipping",
+                variant: {
+                    visibility: productPayload.visibility,
+                    active: productPayload.active,
+                    inventory: { size: productPayload.inventorySize },
+                    price: { retail: productPayload.retailPrice },
+                }
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+        return response.data.data.jobId;
+    } catch (error) {
+        console.error("Failed to update offer:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+// Delete a dropshipping offer
+const deleteOffer = async (offerId, accessToken) => {
+    try {
+        const response = await axios.delete(
+            `https://api.g2a.com/v3/sales/offers/${offerId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Failed to delete offer:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+// Get the seller orders list
+const getSellerOrders = async (accessToken, page = 1, itemsPerPage = 20, orderStatus = 'completed') => {
+    try {
+        const response = await axios.get(
+            `https://api.g2a.com/v4/sales/orders`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                params: {
+                    page: page,
+                    itemsPerPage: itemsPerPage,
+                    statuses: [orderStatus],
+                }
+            }
+        );
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch seller orders:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+// Get details of a specific seller order by orderId
+const getSellerOrderDetails = async (orderId, accessToken) => {
+    try {
+        const response = await axios.get(
+            `https://api.g2a.com/v4/sales/orders/${orderId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        );
+        return response.data.data;
+    } catch (error) {
+        console.error("Failed to fetch order details:", error.response?.data || error.message);
+        throw new Error(error.response?.data || error.message);
+    }
+};
+
+module.exports = {
+    exportProduct,
+    getOffersList,
+    getOfferDetails,
+    updateOffer,
+    deleteOffer,
+    getSellerOrders,
+    getSellerOrderDetails
+};
+
 
 module.exports = { authenticate, importProducts, exportProduct, getBestsellers };
