@@ -34,6 +34,18 @@ import {
   EXPORT_API_FAIL,
   EXPORT_API_SUCCESS,
   EXPORT_API_RESET,
+  GET_OFFERS_REQUEST,
+  GET_OFFERS_SUCCESS,
+  GET_OFFERS_FAIL,
+  GET_OFFERS_RESET,
+  DELETE_OFFER_REQUEST,
+  DELETE_OFFER_SUCCESS,
+  DELETE_OFFER_FAIL,
+  DELETE_OFFER_RESET,
+  UPDATE_RETAIL_PRICE_REQUEST,
+  UPDATE_RETAIL_PRICE_SUCCESS,
+  UPDATE_RETAIL_PRICE_FAIL,
+  UPDATE_RETAIL_PRICE_RESET,
 } from "../constants/apiConstatns";
 
 export const apisReducer = (state = { apis: [] }, action) => {
@@ -312,6 +324,112 @@ export const exportApiReducer = (state = { exported: false }, action) => {
       return {
         ...state,
         exported: false,
+      };
+    default:
+      return state;
+  }
+};
+
+
+// Get Offers reducer
+export const allOffersReducer = (state = { offers: [] }, action) => {
+  switch (action.type) {
+    case GET_OFFERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_OFFERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        offers: action.payload,
+      };
+    case GET_OFFERS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case GET_OFFERS_RESET:
+      return {
+        ...state,
+        offers: [],
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// Delete Offer reducer
+export const deleteUpdateOfferReducer = (state = { offer: {} }, action) => {
+  switch (action.type) {
+    case DELETE_OFFER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_OFFER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+    case DELETE_OFFER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_OFFER_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// Update Retail Price reducer
+export const updateRetailPriceReducer = (state = { updated: false }, action) => {
+  switch (action.type) {
+    case UPDATE_RETAIL_PRICE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_RETAIL_PRICE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updated: action.payload,
+      };
+    case UPDATE_RETAIL_PRICE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_RETAIL_PRICE_RESET:
+      return {
+        ...state,
+        updated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
