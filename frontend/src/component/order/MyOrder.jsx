@@ -38,7 +38,7 @@ const MyOrder = () => {
               Your Order
             </Typography>
             <Typography variant="body2" sx={{ color: "gray" }}>
-              {orders.length} order placed in {currentYear}
+              {orders ? orders.length : 0} order placed in {currentYear}
             </Typography>
           </Box>
           {orders.map((item) => (

@@ -347,7 +347,7 @@ const PaymentComponent = () => {
           <div className="payemntAmount">
             <div className="order_summary">
               <h4>
-                Order Summary &nbsp; ( {cartItems.length}{" "}
+                Order Summary &nbsp; ( {cartItems ? cartItems.length : 0}{" "}
                 {cartItems.length > 1 ? "items" : "item"} )
               </h4>
               <div className="order_summary_details">

@@ -4,7 +4,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./CartIcon.css"
 const CartIcon = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  const cartItemCount = cartItems.length;
+  const cartItemCount = cartItems ? cartItems.length : 0;
 
   return (
     <div className="cartIconWrapper">

@@ -325,7 +325,7 @@ const Cart = () => {
                   Shopping Cart
                 </Typography>
                 <Typography variant="body2">
-                  TOTAL ({cartItems.length} items) <b>{final}</b>
+                  TOTAL ({cartItems ? cartItems.length : 0} items) <b>{final}</b>
                 </Typography>
               </Box>
               <Typography
@@ -382,7 +382,7 @@ const Cart = () => {
               <Grid item >
                 <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2 }}>
                   <Typography variant="h6" fontWeight="bold">
-                    Order Summary ({cartItems.length} {cartItems.length > 1 ? "items" : "item"})
+                    Order Summary ({cartItems ? cartItems.length : 0} {cartItems.length > 1 ? "items" : "item"})
                   </Typography>
 
                   <Divider sx={{ my: 2 }} />

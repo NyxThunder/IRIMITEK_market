@@ -193,7 +193,7 @@ function Dashboard() {
         type: "pie",
         name: "Share",
         data: [
-          ["In Stock", products.length - metrics.OutOfStock],
+          ["In Stock", products ? products.length - metrics.OutOfStock : 0],
 
           {
             name: "Out of Stock",
@@ -293,7 +293,7 @@ function Dashboard() {
                   <TotalAmountCard
                     icon={ShoppingCartIcon}
                     title="Total Products"
-                    amount={products.length}
+                    amount={products ? products.length : 0}
                     percentage={1.5}
                     isPositive={true}
                     onExpand={() => navigate("/admin/products")}
@@ -313,7 +313,7 @@ function Dashboard() {
                   <TotalAmountCard
                     icon={AssignmentIndIcon}
                     title="Total Orders"
-                    amount={orders.length}
+                    amount={orders ? orders.length : 0}
                     percentage={3.6}
                     isPositive={false}
                     onExpand={() => navigate("/admin/orders")}
@@ -323,7 +323,7 @@ function Dashboard() {
                   <TotalAmountCard
                     icon={PeopleIcon}
                     title="Total Users"
-                    amount={users.length}
+                    amount={users ? users.length : 0}
                     percentage={1.5}
                     isPositive={true}
                     onExpand={() => navigate("/admin/users")}
