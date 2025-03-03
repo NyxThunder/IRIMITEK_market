@@ -302,28 +302,36 @@ export const exportApiReducer = (state = { exported: false }, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case EXPORT_API_SUCCESS:
       return {
         ...state,
         loading: false,
-        exported: action.payload,
+        exported: action.payload.success,
+        message: action.payload.message,
+        jobId: action.payload.jobId,
       };
     case EXPORT_API_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        exported: false,
+        error: action.payload.message,
+        status: action.payload.status,
       };
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
+        status: null,
       };
     case EXPORT_API_RESET:
       return {
         ...state,
         exported: false,
+        message: null,
+        jobId: null,
       };
     default:
       return state;

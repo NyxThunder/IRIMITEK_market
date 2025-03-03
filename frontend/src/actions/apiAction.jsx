@@ -164,52 +164,43 @@ export function importApi(id, token, apiData) {
   };
 }
 
-///Offer requests
-
-// export function exportApi(id, token, apiData, alert) {
-//   return async function (dispatch) {
-//     try {
-//       dispatch({ type: EXPORT_API_REQUEST });
-      
-//       //Just for testing
-//       const data = {
-//         success: true
-//       };
-
-//       if (data.success) {
-//         dispatch({
-//           type: EXPORT_API_SUCCESS,
-//           payload: data.success,
-//         });
-//       }
-//     } catch (error) {
-
-//       dispatch({
-//         type: EXPORT_API_FAIL,
-//         payload: error.response?.data?.message || error.message,
-//       });
-//     }
-//   };
-// }
 // Fetch Offers
-export const getOffers = () => async (dispatch) => {
+export const getOffers = (token) => async (dispatch) => {
   try {
     dispatch({ type: GET_OFFERS_REQUEST });
 
-    const { data } = await axios.get("/api/v1/admin/offers");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const requestData = {
+      token
+    }
 
-    dispatch({ type: GET_OFFERS_SUCCESS, payload: data });
+    const { data } = await axios.get("/api/v1/admin/api/offers", requestData, config);
+
+    dispatch({ type: GET_OFFERS_SUCCESS, payload: data.offers });
   } catch (error) {
     dispatch({ type: GET_OFFERS_FAIL, payload: error.response?.data?.message || error.message });
   }
 };
 
 // Delete Offer
-export const deleteOffer = (offerId) => async (dispatch) => {
+export const deleteOffer = (token, offerId) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_OFFER_REQUEST });
 
-    await axios.delete(`/api/v1/admin/offers/${offerId}`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const requestData = {
+      token
+    }
+
+    await axios.delete(`/api/v1/admin/api/offers/${offerId}`, requestData, config);
 
     dispatch({ type: DELETE_OFFER_SUCCESS, payload: offerId });
   } catch (error) {
@@ -218,41 +209,81 @@ export const deleteOffer = (offerId) => async (dispatch) => {
 };
 
 // Update Retail Price
-export const updateRetailPrice = (offerId, data) => async (dispatch) => {
+export const updateRetailPrice = (token, offerId, sendData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_RETAIL_PRICE_REQUEST });
 
-    const response = await axios.put(`/api/v1/admin/offers/${offerId}`, data);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const requestData = {
+      token,
+      data: sendData,
+    }
 
-    dispatch({ type: UPDATE_RETAIL_PRICE_SUCCESS, payload: response.data });
+    const { data } = await axios.post(`/api/v1/admin/api/offers/${offerId}`, requestData, config);
+
+    dispatch({ type: UPDATE_RETAIL_PRICE_SUCCESS, payload: data.success });
   } catch (error) {
     dispatch({ type: UPDATE_RETAIL_PRICE_FAIL, payload: error.response?.data?.message || error.message });
   }
 };
 
 // Export Product
-export const exportApi = (productData) => async (dispatch) => {
+// Export Product
+export const exportApi = (id, token, productData) => async (dispatch) => {
   try {
     dispatch({ type: EXPORT_API_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const requestData = {
+      token,
+      data: productData,
+    };
 
-    const response = await axios.post("/api/v1/admin/offers/export", productData);
+    const response = await axios.post(`/api/v1/admin/api/offers/export/${id}`, requestData, config);
 
-    dispatch({ type: EXPORT_API_SUCCESS, payload: response.data });
+    dispatch({
+      type: EXPORT_API_SUCCESS,
+      payload: {
+        success: response.data.success,
+        message: response.data.message,
+        jobId: response.data.jobId,
+      },
+    });
   } catch (error) {
-    dispatch({ type: EXPORT_API_FAIL, payload: error.response?.data?.message || error.message });
+    dispatch({
+      type: EXPORT_API_FAIL,
+      payload: {
+        status: error.response?.status,
+        message: error.response?.data?.error || "Something went wrong!",
+      },
+    });
   }
 };
-
 
 ///End Offer requests
 // Delete Api request
 
-export function deleteApi(id) {
+export function deleteApi(token, id) {
   return async function (dispatch) {
     try {
       dispatch({ type: DELETE_API_REQUEST });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const requestData = {
+        token
+      }
 
-      const { data } = await axios.delete(`/api/v1/admin/api/${id}`);
+      const { data } = await axios.delete(`/api/v1/admin/api/${id}`, requestData, config);
 
       dispatch({ type: DELETE_API_SUCCESS, payload: data.success });
     } catch (error) {

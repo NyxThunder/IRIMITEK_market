@@ -64,11 +64,11 @@ const importProducts = async (token, params = {}) => {
 };
 
 // Get bestsellers from G2A
-const getBestsellers = async (params = {}) => {
+const getBestsellers = async (token, params = {}) => {
     try {
         const headers = {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`.replace(/"/g, ""),
         };
         const response = await axios.get(`https://api.g2a.com/v3/sales/bestsellers`, {
             headers,
@@ -89,8 +89,15 @@ const getBestsellers = async (params = {}) => {
 // Export product as a dropshipping offer
 const exportProduct = async (productPayload, accessToken) => {
     try {
+        const inventorySize = parseInt(productPayload.inventorySize, 10);
+        if (isNaN(inventorySize)) {
+            throw new Error("Invalid inventory size. It must be an integer.");
+        }
+
+        console.log(`Bearer ${accessToken}`.replace(/"/g, ""));
+
         const response = await axios.post(
-            `https://api.g2a.com/v3/sales/offers`,
+            "https://api.g2a.com/v3/sales/offers",
             {
                 offerType: "dropshipping",
                 variants: [
@@ -98,22 +105,40 @@ const exportProduct = async (productPayload, accessToken) => {
                         price: { retail: productPayload.retailPrice },
                         productId: productPayload.productId,
                         active: true,
-                        inventory: { size: productPayload.inventorySize },
-                        visibility: productPayload.visibility,
+                        inventory: { size: inventorySize },
+                        visibility: "retail",
                     }
                 ]
             },
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
                     "Content-Type": "application/json"
                 }
             }
         );
+
         return response.data.data.jobId;
     } catch (error) {
-        console.error("Export failed:", error.response?.data || error.message);
-        throw new Error(error.response?.data || error.message);
+        if (error.response) {
+            const { status, data } = error.response;
+
+            if (status === 401) {
+                console.error("Unauthorized: Invalid or expired access token.");
+                throw new Error("Unauthorized: Invalid or expired access token.");
+            }
+
+            if (status === 409) {
+                console.error("Conflict: The product already exists as a dropshipping offer.", data);
+                throw new Error(`Conflict: Offer already exists (Offer ID: ${data?.data?.offerId || 'Unknown'})`);
+            }
+
+            console.error("Export failed with status:", status, "and message:", data.message);
+            throw new Error(`Export failed: ${data.message}`);
+        } else {
+            console.error("Export failed:", error.message);
+            throw new Error(error.message);
+        }
     }
 };
 
@@ -124,7 +149,8 @@ const getOffersList = async (accessToken, page = 1, itemsPerPage = 20) => {
             `https://api.g2a.com/v3/sales/offers`,
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
+                    "Content-Type": "application/json"
                 },
                 params: {
                     page: page,
@@ -147,9 +173,11 @@ const getOfferDetails = async (offerId, accessToken) => {
             `https://api.g2a.com/v3/sales/offers/${offerId}`,
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
+                    "Content-Type": "application/json"
+                },
+            },
+
         );
         return response.data.data;
     } catch (error) {
@@ -174,9 +202,9 @@ const updateOffer = async (offerId, productPayload, accessToken) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
                     "Content-Type": "application/json"
-                }
+                },
             }
         );
         return response.data.data.jobId;
@@ -193,7 +221,8 @@ const deleteOffer = async (offerId, accessToken) => {
             `https://api.g2a.com/v3/sales/offers/${offerId}`,
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
+                    "Content-Type": "application/json"
                 }
             }
         );
@@ -211,7 +240,8 @@ const getSellerOrders = async (accessToken, page = 1, itemsPerPage = 20, orderSt
             `https://api.g2a.com/v4/sales/orders`,
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
+                    "Content-Type": "application/json"
                 },
                 params: {
                     page: page,
@@ -234,7 +264,8 @@ const getSellerOrderDetails = async (orderId, accessToken) => {
             `https://api.g2a.com/v4/sales/orders/${orderId}`,
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`.replace(/"/g, ""),
+                    "Content-Type": "application/json"
                 }
             }
         );

@@ -57,6 +57,14 @@ function ProductList() {
       }
     },
     {
+      name: "IdG2A",
+      label: "Product ID of G2A",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
       name: "name",
       label: "Name",
       options: {
@@ -73,8 +81,24 @@ function ProductList() {
       }
     },
     {
-      name: "price",
-      label: "Price",
+      name: "minPprice",
+      label: "MinPrice",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: "retailMinprice",
+      label: "RetailMinPrice",
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: "retailMinBasePrice",
+      label: "RetailMinBasePrice",
       options: {
         filter: true,
         sort: true,
@@ -106,9 +130,12 @@ function ProductList() {
   const data = products
     ? products.map((item) => [
       item._id,
+      item.productId,
       item.name,
       item.Stock,
       item.price,
+      item.retailMinPrice,
+      item.retailMinBasePrice
     ])
     : [];
 

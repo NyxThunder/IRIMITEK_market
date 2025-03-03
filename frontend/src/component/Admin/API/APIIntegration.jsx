@@ -81,8 +81,8 @@ function ApiList() {
     navigate(`/admin/api/import/${id}?name=${name}`);
   };
 
-  const handleExportProductFromAPI = (id) => {
-    navigate(`/admin/api/export/${id}`);
+  const handleExportProductFromAPI = (id, name) => {
+    navigate(`/admin/api/export/${id}?name=${name}`); 
   };
 
   const columns_dataTable = [
@@ -165,7 +165,7 @@ function ApiList() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button
-              onClick={() => handleExportProductFromAPI(tableMeta.rowData[0])}
+              onClick={() => handleExportProductFromAPI(tableMeta.rowData[0], tableMeta.rowData[1])}
               variant="contained"
               color="primary"
             >

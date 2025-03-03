@@ -5,11 +5,26 @@ const productSchema = mongoose.Schema({
     required: [true, "Please Enter prodcut name"],
     trim: true,
   },
+  productId: {
+    type: String,
+    required: [true, "Please Enter prodcut ID"],
+    unique: true,
+  },
   description: {
     type: String,
     required: [true, "Please Enter prodcut description"],
   },
   price: {
+    type: Number,
+    required: [true, "Please Enter product Price"],
+    maxLength: [8, "Price cannot exceed 9 characters"],
+  },
+  retailMinPrice: {
+    type: Number,
+    required: [true, "Please Enter product Price"],
+    maxLength: [8, "Price cannot exceed 9 characters"],
+  },
+  retailMinBasePrice: {
     type: Number,
     required: [true, "Please Enter product Price"],
     maxLength: [8, "Price cannot exceed 9 characters"],
