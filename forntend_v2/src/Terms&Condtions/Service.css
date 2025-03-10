@@ -1,0 +1,47 @@
+.Services_section {
+    background-color: #000 !important;
+    padding-top: 0.5rem !important; /* Adjust this value as per your theme spacing */
+    padding-bottom: 0.5rem !important; /* Adjust this value as per your theme spacing */
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.Services_wrapper {
+    display: flex !important;
+    gap: 2.5rem !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    height: auto !important;
+    padding-top: 20px !important;
+    justify-content: center !important;
+}
+
+.Services_card {
+    display: flex !important;
+    align-items: center !important;
+    background-color: #111 !important;
+    border-radius: 0.5rem !important; /* Adjust this value as per your theme spacing */
+    padding: 1rem !important; /* Adjust this value as per your theme spacing */
+    margin-bottom: 1rem !important; /* Adjust this value as per your theme spacing */
+}
+
+.Services_icon {
+    color: #ed1c24 !important;
+    font-size: 3rem !important;
+    margin-right: 1.25rem !important; /* Adjust this value as per your theme spacing */
+}
+
+.Services_icon svg {
+    font-size: 3rem !important;
+}
+
+.Services_cardTitle {
+    color: #fff !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+}
+
+.Services_cardInfo {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 300 !important;
+    font-size: 0.8rem !important;
+}
