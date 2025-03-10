@@ -1,0 +1,72 @@
+.shippingPage {
+    background-color: white;
+    padding: 2rem 0.5rem;
+
+    overflow: hidden;
+
+}
+
+select {
+    border: none;
+    width: "-webkit-fill-available";
+    font-size: 16px;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    select {
+        width: "-webkit-fill-available";
+        font-size: 16px;
+        justify-content: space-around;
+        padding: 0rem;
+    }
+}
+
+.shippingRoot {
+    width: 60%;
+    margin: auto;
+}
+
+.heading {
+    margin-bottom: 2rem;
+    align-self: flex-start;
+}
+
+.formControl {
+    margin-bottom: 2rem;
+    min-width: 200px;
+}
+
+.submitButton {
+    margin-top: 2rem;
+    width: 50%;
+    background-color: #000000;
+    color: #FFFFFF;
+    height: 3rem;
+}
+
+.submitButton:hover {
+    background-color: #ed1c24;
+    color: #FFFFFF;
+}
+
+.outlinedInput .MuiOutlinedInput-root fieldset {
+    border-color: #000000;
+}
+
+.outlinedInput .MuiOutlinedInput-root:hover fieldset {
+    border-color: #000000;
+}
+
+.outlinedInput .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #000000;
+}
+
+.outlinedInput .MuiInputBase-input {
+    color: #000000;
+}
+
+.outlinedInput .MuiInputLabel-root {
+    color: #000000;
+}
