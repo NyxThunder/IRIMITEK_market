@@ -1,0 +1,182 @@
+.root_contactus {
+  padding: 8rem 0;
+  background-color: white;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact_Container_contactus {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.title_contact_us {
+  color: #414141;
+  font-size: 1.5rem !important;
+  padding: 1rem 3rem;
+  font-family: Roboto;
+  font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .title_contact_us {
+    font-size: 14px;
+    padding: 1rem 0;
+  }
+}
+
+.divider_contact {
+  width: 90%;
+  background-color: #b6b6b6;
+  margin: 1rem 0 !important;
+}
+
+.helpTitle_contact_us {
+  font-size: 18px;
+  color: #414141;
+  padding: 2rem 0;
+}
+
+.para_contact {
+  padding-bottom: 3rem;
+  margin-left: 0.5rem;
+  color: #414141;
+  line-height: 1.5rem;
+  font-size: 16px !important;
+  width: 90%;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .para_contact {
+    width: 100%;
+  }
+}
+
+.address_contacts {
+  padding-bottom: 3rem;
+  margin-left: 0.5rem;
+  color: #414141;
+  line-height: 1.5rem;
+  font-size: 16px !important;
+  width: 90%;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .buttonGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.supportButton {
+  background-color: #292929 !important;
+  color: white !important;
+  width: fit-content !important;
+  padding: 0.8rem 2rem !important;
+  margin-left: 3.3rem !important;
+  border-radius: 5px !important;
+}
+
+.supportButton:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .supportButton {
+    margin-left: 15px !important;
+  }
+}
+
+.callButton {
+  background-color: #292929 !important;
+  color: white !important;
+  width: fit-content !important;
+  padding: 0.8rem 2rem !important;
+  margin-left: 1.3rem !important;
+  border-radius: 5px !important;
+}
+
+.callButton:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .callButton {
+    padding: 0.8rem 3.4rem !important;
+  }
+}
+
+.formContainer_container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formField_contact {
+  width: 100%;
+}
+
+.submitButtons {
+  align-self: flex-start;
+  background-color: #292929 !important;
+  color: white !important;
+  width: fit-content !important;
+  padding: 1rem 3rem !important;
+  border-radius: 5px !important;
+}
+
+.submitButtons:hover {
+  background-color: #ed1c24 !important;
+  color: white !important;
+}
+
+.SelectOption_contact {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.SelectOption_contact .MuiOutlinedInput-root_contactus fieldset {
+  border-color: #000;
+  border-radius: none !important;
+}
+
+.SelectOption_contact .MuiOutlinedInput-root_contactus:hover fieldset {
+  border-color: #000;
+}
+
+.SelectOption_contact .MuiOutlinedInput-root_contactus.Mui-focused fieldset {
+  border-color: #000;
+}
+
+.SelectOption_contact .MuiSelect-root_contactus {
+  background-color: white;
+  color: black;
+}
+
+.SelectOption_contact .MuiSelect-icon {
+  color: black;
+}
+
+.SelectOption_contact .MuiList-root_contactus {
+  background-color: white;
+  color: black;
+}
+
+.lableText_contact {
+  color: #000;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.menu_contact .MuiList-root_contactus {
+  background-color: white;
+  color: black;
+}

@@ -1,0 +1,106 @@
+.slide {
+  height: calc(100vh - 64px) !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+@media (max-width: 768px) {
+  .slide {
+    /* height: 50vh; */
+    margin-top: 5rem !important;
+  }
+}
+
+.slideContent {
+  position: absolute !important;
+  top: 50% !important;
+  left: 10% !important;
+  transform: translateY(-50%) !important;
+  text-align: left !important;
+  color: #fff !important;
+  z-index: 1 !important;
+}
+
+@media (max-width: 768px) {
+  .slideContent {
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+.quote {
+  font-size: 16px !important;
+  width: 30vw !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+@media (max-width: 768px) {
+  .quote {
+    font-size: 14px !important;
+    width: 80vw !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .quote {
+    font-size: 12px !important;
+    width: 90vw !important;
+  }
+}
+
+.saleText {
+  font-size: 32px !important;
+  font-family: Roboto !important;
+  font-weight: 800 !important;
+  width: 45vw !important;
+  margin-bottom: 8px !important; /* Assuming theme.spacing(1) is 8px */
+}
+
+@media (max-width: 768px) {
+  .saleText {
+    font-size: 24px !important;
+    width: 80vw !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .saleText {
+    font-size: 20px !important;
+    width: 90vw !important;
+  }
+}
+
+.productButton {
+  background-color: transparent !important;
+  color: #fff !important;
+  border: 1px solid #fff !important;
+  border-radius: 4px !important; /* Assuming theme.shape.borderRadius is 4px */
+  padding: 8px 24px !important; /* Assuming theme.spacing(1, 3) is 8px 24px */
+  transition: background-color 0.3s ease-in-out !important;
+}
+
+.productButton:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+@media (max-width: 768px) {
+  .productButton {
+    font-size: 16px !important;
+    padding: 4px 16px !important; /* Assuming theme.spacing(0.5, 2) is 4px 16px */
+  }
+}
+
+@media (max-width: 576px) {
+  .productButton {
+    font-size: 14px !important;
+    padding: 4px 12px !important; /* Assuming theme.spacing(0.5, 1.5) is 4px 12px */
+  }
+}
+
+.slideImage {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}

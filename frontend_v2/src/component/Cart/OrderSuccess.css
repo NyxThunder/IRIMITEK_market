@@ -1,0 +1,42 @@
+.orderSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 9rem;
+  background-color: white; /* Replace with the appropriate color */
+}
+
+.successIcon {
+  font-size: 8rem;
+  color: green; /* Replace with the appropriate color */
+  margin-bottom: 32px; /* Replace with the appropriate spacing */
+}
+
+.successText {
+  margin-bottom: 16px; /* Replace with the appropriate spacing */
+  font-weight: bold;
+  font-size: 2rem;
+  color: black; /* Replace with the appropriate color */
+  text-shadow: 2px 2px 4px gray; /* Replace with the appropriate color */
+}
+
+.link {
+  text-decoration: none;
+}
+
+.viewOrdersButton {
+  margin-top: 32px; /* Replace with the appropriate spacing */
+  padding: 16px 32px; /* Replace with the appropriate spacing */
+  background-color: black; /* Replace with the appropriate color */
+  color: white; /* Replace with the appropriate color */
+  border-radius: 32px; /* Replace with the appropriate spacing */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.viewOrdersButton:hover {
+  background-color: #ed1c24;
+}

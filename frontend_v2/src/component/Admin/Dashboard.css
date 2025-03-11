@@ -1,0 +1,25 @@
+.firstBox {
+  width: 20% !important;
+  margin: 0rem !important;
+  height: fit-content !important;
+  border-radius: 5px !important;
+  display: block !important;
+}
+
+@media (max-width: 992px) {
+  .firstBox {
+    display: none !important;
+  }
+}
+
+.toggleBox {
+  width: 16rem !important;
+  margin: 0rem !important;
+  height: fit-content !important;
+  border-radius: 5px !important;
+  display: block !important;
+  z-index: 100 !important;
+  position: absolute !important;
+  top: 58px !important;
+  left: 17px !important;
+}
