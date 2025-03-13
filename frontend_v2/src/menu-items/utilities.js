@@ -1,9 +1,9 @@
 // assets
 // import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons-react';
-import TextFieldsIcon from '@mui/icons-material/TextFields';
-import PaletteIcon from '@mui/icons-material/Palette';
-import FilterDramaIcon from '@mui/icons-material/FilterDrama';
-import ToysIcon from '@mui/icons-material/Toys';
+import TextFieldsIcon from '@mui/icons-material/TextFieldsOutlined';
+import PaletteIcon from '@mui/icons-material/PaletteOutlined';
+import FilterDramaIcon from '@mui/icons-material/FilterDramaOutlined';
+import ToysIcon from '@mui/icons-material/ToysOutlined';
 
 // constant
 const icons = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Divider,
   Typography,
@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import NotificationService, { NotificationContainer } from '../component/NotificationService';
+import NotificationService from '../component/NotificationService';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../component/layouts/MataData/MataData';
 import useFormValidation from '../component/hook/useFormValidation';
@@ -62,7 +62,17 @@ const ContactForm = () => {
 
         <Typography variant="body1" className="para_contact">
           We have live chat available. If it isn’t there, call us at{' '}
-          <strong style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={handleCall}>
+          <strong
+            style={{ textDecoration: 'underline', cursor: 'pointer' }}
+            onClick={handleCall}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleCall();
+              }
+            }}
+          >
             +1 712 804 46
           </strong>
           .

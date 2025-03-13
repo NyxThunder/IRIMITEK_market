@@ -4,8 +4,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { load_UserProfile } from './actions/userAction';
 import { NotificationContainer } from './component/NotificationService';
-import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+
 import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -22,8 +23,9 @@ import Services from './Terms&Condtions/Service';
 import Footer from './component/layouts/Footer/Footer';
 import ProductDetails from './component/Product/ProductDetails';
 import Products from './component/Product/Products';
-import Signup from './component/User/SignUp';
 import Login from './component/User/Login';
+import SignUp from './component/User/SignUp';
+// import Login from './component/User/Login';
 import Profile from './component/User/Profile';
 import UpdateProfile from './component/User/UpdateProfile';
 import UpdatePassword from './component/User/UpdatePassword';
@@ -60,6 +62,8 @@ import MainLayout from './layout/MainLayout/MainLayout';
 import MinimalLayout from './layout/MinimalLayout';
 import NavigationScroll from 'layout/NavigationScroll';
 import theme from 'themes/index';
+import FirebaseRegister from './components/authentication/auth-forms/AuthRegister';
+import { ThemeProvider } from '@mui/material/styles';
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState('');
@@ -101,6 +105,9 @@ function App() {
   }, []);
 
   const location = useLocation();
+
+  // Check if current page is Home, Login, or Signup
+  const isStandalonePage = ['/', '/signin', '/signup'].includes(location.pathname);
   const customization = useSelector((state) => state.customization);
 
   return (
@@ -110,13 +117,28 @@ function App() {
         <ThemeProvider theme={theme(customization)}>
           <CssBaseline />
           <NavigationScroll>
-            {/* Always use MainLayout except for special cases like /pages */}
-            {location.pathname.startsWith('/pages') ? (
-              <MinimalLayout />
+            {/* ✅ Home, Login, and Signup Without MainLayout */}
+            {isStandalonePage ? (
+              <>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/signin" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                </Routes>
+              </>
             ) : (
               <MainLayout>
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
+                  {/* User Routes */}
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/orders" element={<MyOrder />} />
+                  </Route>
+
+                  {/* Admin Routes */}
+                  <Route element={<PrivateRoute isAdmin={true} />}>
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                  </Route>
                 </Routes>
               </MainLayout>
             )}

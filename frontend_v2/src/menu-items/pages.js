@@ -1,5 +1,5 @@
 // assets
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import VpnKeyIcon from '@mui/icons-material/VpnKeyOutlined';
 
 // constant
 const icons = {

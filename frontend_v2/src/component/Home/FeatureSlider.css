@@ -29,9 +29,11 @@
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.564);
 }
+
 .swiper-pagination-bullet-active {
   background-color: black;
 }
+
 .featured_title {
   font-family: 'Archivo', sans-serif;
   font-size: 16px;
@@ -39,6 +41,8 @@
   color: #000;
   margin-top: 30px;
   margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   text-align: center;
 }
 
@@ -83,6 +87,7 @@
   text-decoration: line-through;
   margin-left: 5px;
 }
+
 .featured_slides:hover .featured_title,
 .featured_slides:hover .final_price,
 .featured_slides:hover .old_price {
@@ -122,6 +127,7 @@
     height: fit-content;
     margin-right: 1px;
   }
+
   .featured_slides:hover {
     transform: scale(1.1);
     z-index: 2;
@@ -143,8 +149,11 @@
       font-weight: 400;
       margin-top: 20px;
       margin-bottom: 15px;
+      margin-left: 10px;
+      margin-right: 10px;
       text-align: center;
     }
+
     .featured_img img {
       width: 100%;
       height: 100%;

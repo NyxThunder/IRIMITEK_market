@@ -1,23 +1,33 @@
 import { Link as RouterLink } from 'react-router-dom';
-
-// material-ui
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 export default function Footer() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detects small screens
+
   return (
     <Stack
-      direction="row"
+      direction={isMobile ? 'column' : 'row'}
+      spacing={isMobile ? 2 : 0}
       sx={{
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: isMobile ? 'center' : 'space-between',
+        textAlign: isMobile ? 'center' : 'left',
         pt: 3,
-        mt: 'auto'
+        pb: 3,
+        px: isMobile ? 2 : 6,
+        bgcolor: 'background.default', // Keeps original color
+        borderRadius: 2, // Added border radius
+        mt: 3 // Added margin top
       }}
     >
+      {/* Company Info */}
       <Typography variant="caption">
-        &copy; All rights reserved{' '}
+        &copy; {new Date().getFullYear()} All rights reserved by{' '}
         <Typography
           component={Link}
           href="https://irmitek.com/about-us/"
@@ -28,60 +38,35 @@ export default function Footer() {
           Irmitek
         </Typography>
       </Typography>
+
+      {/* Social Media Links */}
       <Stack
         direction="row"
-        sx={{ gap: 1.5, alignItems: 'center', justifyContent: 'space-between' }}
+        spacing={1.5}
+        sx={{
+          flexWrap: 'wrap',
+          justifyContent: isMobile ? 'center' : 'flex-end'
+        }}
       >
-        <Link
-          component={RouterLink}
-          to="/mock-twitter"
-          underline="hover"
-          target="_blank"
-          variant="caption"
-          color="text.primary"
-        >
-          Twitter
-        </Link>
-        <Link
-          component={RouterLink}
-          to="/mock-discord"
-          underline="hover"
-          target="_blank"
-          variant="caption"
-          color="text.primary"
-        >
-          Discord
-        </Link>
-        <Link
-          component={RouterLink}
-          to="/mock-facebook"
-          underline="hover"
-          target="_blank"
-          variant="caption"
-          color="text.primary"
-        >
-          Facebook
-        </Link>
-        <Link
-          component={RouterLink}
-          to="/mock-instagram"
-          underline="hover"
-          target="_blank"
-          variant="caption"
-          color="text.primary"
-        >
-          Instagram
-        </Link>
-        <Link
-          component={RouterLink}
-          to="/mock-linkedin"
-          underline="hover"
-          target="_blank"
-          variant="caption"
-          color="text.primary"
-        >
-          LinkedIn
-        </Link>
+        {[
+          { name: 'Twitter', path: '/mock-twitter' },
+          { name: 'Discord', path: '/mock-discord' },
+          { name: 'Facebook', path: '/mock-facebook' },
+          { name: 'Instagram', path: '/mock-instagram' },
+          { name: 'LinkedIn', path: '/mock-linkedin' }
+        ].map((item) => (
+          <Link
+            key={item.name}
+            component={RouterLink}
+            to={item.path}
+            underline="hover"
+            target="_blank"
+            variant="caption"
+            color="text.primary"
+          >
+            {item.name}
+          </Link>
+        ))}
       </Stack>
     </Stack>
   );

@@ -10,13 +10,15 @@
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:jsx-a11y/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:prettier/recommended"
+        "plugin:react-hooks/recommended"
     ],
     "settings": {
         "import/resolver": {
             "node": {
-                "moduleDirectory": ["node_modules", "src/"]
+                "moduleDirectory": [
+                    "node_modules",
+                    "src/"
+                ]
             }
         }
     },
@@ -31,7 +33,11 @@
         "sourceType": "module",
         "requireConfigFile": false
     },
-    "plugins": ["prettier", "react", "react-hooks", "jsx-a11y"],
+    "plugins": [
+        "react",
+        "react-hooks",
+        "jsx-a11y"
+    ],
     "rules": {
         "react/jsx-filename-extension": 0,
         "no-param-reassign": 0,
@@ -49,18 +55,6 @@
             1,
             {
                 "ignoreRestSiblings": false
-            }
-        ],
-        "prettier/prettier": [
-            2,
-            {
-                "bracketSpacing": true,
-                "printWidth": 100,
-                "singleQuote": true,
-                "trailingComma": "none",
-                "tabWidth": 2,
-                "useTabs": false,
-                "endOfLine": "auto"
             }
         ]
     }

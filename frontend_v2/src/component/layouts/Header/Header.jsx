@@ -62,38 +62,6 @@ function Header() {
   return (
     <>
       <div className="header">
-        <div className="headerTop">
-          <div className="headerTopLeft">
-            <p>Exclusive Deals on Digital Games & Software</p>
-          </div>
-          <div className="headerTopRight">
-            <div className="headerRetailer">
-              <span>
-                <LocationOnIcon className="headerRetailer_Svg" />
-              </span>
-              <span>FIND LOCATION</span>
-            </div>
-
-            {/* <div className="headerFlag">
-              <span>
-                <FlagSelect value={country} onChange={handleCountryChange} />
-              </span>
-            </div> */}
-
-            <div className="headerLogin">
-              {isAuthenticated ? (
-                <Link to="/account" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <button>My Account</button>
-                </Link>
-              ) : (
-                <Link to="/signup" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <button>Sign Up</button>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* nav */}
         <div className="headerBottom">
           <div className="header_mobile_menu">
@@ -178,6 +146,7 @@ function Header() {
                 <CartIcon />
               </Link>
             </span>
+
             <span>
               <ProfileModal user={user} isAuthenticated={isAuthenticated} />
             </span>

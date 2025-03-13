@@ -1,11 +1,8 @@
-// project imports
-import Customization from 'layout/Customization';
-
-// ==============================|| MINIMAL LAYOUT ||============================== //
+import { Outlet } from 'react-router-dom';
 
 const MinimalLayout = () => (
   <>
-    <Customization />
+    <Outlet />
   </>
 );
 

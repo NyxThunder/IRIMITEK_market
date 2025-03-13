@@ -1,6 +1,6 @@
 // assets
-import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
-import HelpIcon from '@mui/icons-material/Help';
+import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderModeOutlined';
+import HelpIcon from '@mui/icons-material/HelpOutlined';
 
 // constant
 const icons = {

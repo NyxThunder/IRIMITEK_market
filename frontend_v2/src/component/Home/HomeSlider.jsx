@@ -64,56 +64,56 @@ export default function HomeSlider() {
   };
 
   return (
-    <>
-      <Carousel
-        autoPlay={true}
-        navButtonsAlwaysVisible
-        indicators={false}
-        animation="slide"
-        interval={5000}
-        timeout={500}
-        cycleNavigation={true}
-        navButtonsProps={{
-          style: {
-            backgroundColor: '#00000088',
-            borderRadius: 0,
-            padding: 0,
-            margin: 0,
-            height: '100%'
-          }
-        }}
-        prevButton={
-          <Button
-            className="slider-nav-btn prev"
-            onClick={handleBack}
-            startIcon={<ArrowBackIosIcon />}
-          ></Button>
+    <Carousel
+      autoPlay
+      navButtonsAlwaysVisible
+      indicators={false}
+      animation="slide"
+      interval={5000}
+      timeout={500}
+      cycleNavigation
+      navButtonsProps={{
+        style: {
+          backgroundColor: '#00000088',
+          borderRadius: 0,
+          height: '100%'
         }
-        nextButton={
-          <Button
-            className="slider-nav-btn next"
-            onClick={handleNext}
-            endIcon={<ArrowForwardIosIcon />}
-          ></Button>
-        }
-        fullHeightHover={false}
-        className="slide"
-        index={activeStep}
-        onChangeIndex={setActiveStep}
-      >
-        {slides.map((slide, index) => (
-          <div key={index} className="slide">
-            <img src={slide.image} alt="slider" className="slideImage" />
-            <div className="slideContent">
-              <h2 className="quote">{slide.quote}</h2>
-              <h3 className="saleText">{slide.saleText}</h3>
-              <Link to="/products">
-                <Button className="productButton">{slide.productText}</Button>
-              </Link>
-            </div>
+      }}
+      prevButton={
+        <Button
+          className="slider-nav-btn prev"
+          onClick={handleBack}
+          startIcon={<ArrowBackIosIcon />}
+        />
+      }
+      nextButton={
+        <Button
+          className="slider-nav-btn next"
+          onClick={handleNext}
+          endIcon={<ArrowForwardIosIcon />}
+        />
+      }
+      fullHeightHover={false}
+      className="slide"
+      index={activeStep}
+      onChangeIndex={setActiveStep}
+    >
+      {slides.map((slide, index) => (
+        <div key={index} className="slide">
+          <img src={slide.image} alt="slider" className="slideImage" />
+          <div className="slideContent">
+            <h2 className="quote" style={{ marginBottom: '20px' }}>
+              {slide.quote}
+            </h2>
+            <h3 className="saleText" style={{ marginBottom: '20px' }}>
+              {slide.saleText}
+            </h3>
+            <Link to="/pages/signin">
+              <Button className="productButton">Get Started</Button>
+            </Link>
           </div>
-        ))}
-      </Carousel>
-    </>
+        </div>
+      ))}
+    </Carousel>
   );
 }

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
 // material-ui
@@ -11,6 +12,8 @@ import { drawerWidth, gridSpacing } from '../../constants/layoutConstants';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Footer from '../Footer';
+import { Outlet } from 'react-router-dom';
+import Customization from 'layout/Customization';
 
 // styles
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -88,6 +91,8 @@ const MainLayout = ({ children }) => {
 
       {/* Main Content (Replaced by `children`) */}
       <Main theme={theme} open={leftDrawerOpened}>
+        <Outlet />
+        <Customization />
         {children}
         <Footer />
       </Main>

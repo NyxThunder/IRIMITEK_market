@@ -1,5 +1,5 @@
 // assets
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 
 // constant
 const icons = {

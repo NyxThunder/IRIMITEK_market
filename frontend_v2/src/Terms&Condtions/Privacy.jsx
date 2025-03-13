@@ -6,7 +6,7 @@ import MetaData from '../component/layouts/MataData/MataData';
 const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy-container">
-      <MetaData title={'Privacy Policy'} />
+      <MetaData title="Privacy Policy" />
       <div className="container___">
         <h1>Privacy Policy of IrmiTEK</h1>
         <p style={{ fontSize: '16px', fontWeight: '600' }}> Effective Date: 23-12-2021</p>
@@ -40,7 +40,7 @@ const PrivacyPolicy = () => {
           <li>Process and fulfill your orders</li>
           <li>Provide customer support and respond to inquiries</li>
           <li>
-            Send you promotional offers, newsletters, and marketing communications (you can opt-out
+            Send you promotional offers, newsletters, and marketing communications (you can opt out
             at any time)
           </li>
           <li>Improve our website, products, and services</li>
@@ -78,7 +78,7 @@ const PrivacyPolicy = () => {
           transmission over the internet or electronic storage is completely secure, and we cannot
           guarantee absolute security.
         </p>
-        <h2>5. Children's Privacy</h2>
+        <h2>5. Children&apos;s Privacy</h2>
         <p>
           Our website and services are not intended for children under the age of 13. We do not
           knowingly collect personal information from children. If we become aware that we have
@@ -95,8 +95,8 @@ const PrivacyPolicy = () => {
         <p>
           If you have any questions, concerns, or suggestions regarding this Privacy Policy, please
           contact us at{' '}
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 700 }}>
-            [insert contact information]
+          <Link to="/contact" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 700 }}>
+            Contact Us
           </Link>
         </p>
         <p>
